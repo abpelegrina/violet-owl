@@ -1,0 +1,13 @@
+#summary How to install the plug-in in Protégé 4 Beta
+#labels Phase-Deploy
+
+= Instalar el Plug-in =
+Si lo que quieres es generar tú mismo el plug-in a partir del código fuente, las instrucciones para ello en  la página correspondiente [Compilar]
+
+Para instalar el plug-in en Protégé 4 sigue los siguientes pasos:
+  # Descarga e instala Protégé 4 Beta para tu SO desde http://protege.stanford.edu/download/registered.html#p4
+  # Durante el proceso de instalación, se te preguntará por la carpeta donde quieres instalar Protégé, procura apuntarla o al menos memorizarla, puesto que la necesitaremos en los siguientes pasos http://lh4.ggpht.com/_bLiTBqZwnZk/SlcWarH2poI/AAAAAAAAARA/GvmBDpeYiaE/s800/Imagen%202.png
+  # Descarga el plug-in desde http://code.google.com/p/naoe/source/browse/trunk/org.protege.editor.owl.example.tab/build/org.protege.owl.examples.tab.jar
+  # En la carpeta donde está instalado Protégé, aparecerá una carpeta llamada *plugins*. Copia el plugin en esta carpeta.
+  # Abre Protégé y una vez abierta la ventana principal en el menú Tabs, selecciona Editor Gráfico de Ontologías
+  # Aparecerá una nueva pestaña correspondiente al plug-in. Si seleccionas esa pestaña deberás ver algo así: http://lh4.ggpht.com/_bLiTBqZwnZk/SlcVbXPjHiI/AAAAAAAAAQg/aXPv93GIdLI/s800/Imagen%201.png
