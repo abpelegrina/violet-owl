@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="build/|org/tigris/gef/demo/|src/org/|src/Acme/|src/Acme/JPM/Encoders/" kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/owleditor"/>
+	<classpathentry kind="lib" path="/owleditor/plugins/org.protege.common/lib/log4j.jar"/>
+	<classpathentry kind="lib" path="/owleditor/plugins/org.semanticweb.owl.owlapi/lib/owlapi-bin.jar"/>
+	<classpathentry kind="lib" path="/owleditor/plugins/org.protege.common/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="/Applications/ProgSoft/eclipse/plugins/org.eclipse.swt.carbon.macosx_3.4.1.v3449c.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
