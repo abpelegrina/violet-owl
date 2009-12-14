@@ -1,5 +1,6 @@
-#Index of this wiki
+#summary Index of this wiki
 
 = Index =
-# [InstallPlugin]
-# [Compilar]
+
+ #[InstallPlugin] 
+ #[Compilar]
