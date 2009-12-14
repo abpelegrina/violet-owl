@@ -1,5 +1,5 @@
 #summary How to install the plug-in in Protégé 4 Beta
-#labels Phase-Deploy,Languaje-Es-es
+#labels Phase-Deploy,Language-Es-es
 
 = Instalar el Plug-in =
 Si lo que quieres es generar tú mismo el plug-in a partir del código fuente, las instrucciones para ello en  la página correspondiente [Compilar]
