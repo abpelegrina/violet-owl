@@ -1,10 +1,10 @@
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.util.Hashtable;
 
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.presentation.NetNode;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.presentation.OntologyFig;
 
 public abstract class OntologyNode extends NetNode {
 

@@ -1,4 +1,4 @@
-package org.ugr.ontology.presentation;
+package org.ugr.violet.presentation;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -16,8 +16,8 @@ import org.tigris.gef.presentation.FigRRect;
 import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
-import org.ugr.ontology.base.Restriction;
-import org.ugr.ontology.graph.nodes.NodeRestriction;
+import org.ugr.violet.base.Restriction;
+import org.ugr.violet.graph.nodes.NodeRestriction;
 
 /**
  * 

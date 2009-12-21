@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.visitors;
+package org.ugr.violet.visitors;
 
 import java.util.HashSet;
 import java.util.Set;

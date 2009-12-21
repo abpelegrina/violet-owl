@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.presentation;
+package org.ugr.violet.graph.presentation;
 
 
 import java.awt.Point;
@@ -30,9 +30,9 @@ import org.tigris.gef.graph.GraphEdgeRenderer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
-import org.ugr.ontology.base.OntologyDiagram;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.ui.OntologyPalette;
+import org.ugr.violet.base.OntologyDiagram;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.ui.OntologyPalette;
 
 /**
  * Clase que representa el lienzo sobre el que se dibuja la representaci�n visual de la ontolog�a

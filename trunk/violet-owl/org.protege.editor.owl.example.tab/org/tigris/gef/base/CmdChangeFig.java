@@ -28,8 +28,7 @@
 
 package org.tigris.gef.base;
 
-import org.ugr.ontology.presentation.FigClass;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.presentation.OntologyFig;
 
 /**
  * Cmd to change the back-to-front ordering of Fig's.

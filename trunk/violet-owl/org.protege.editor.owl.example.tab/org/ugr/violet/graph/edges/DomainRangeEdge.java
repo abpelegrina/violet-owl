@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.edges;
+package org.ugr.violet.graph.edges;
 
 import java.awt.Color;
 
@@ -14,7 +14,7 @@ import org.tigris.gef.presentation.ArrowHeadGreater;
 import org.tigris.gef.presentation.FigEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
 import org.tigris.gef.presentation.FigText;
-import org.ugr.ontology.graph.nodes.NodeNAryRelation;
+import org.ugr.violet.graph.nodes.NodeNAryRelation;
 
 /**
  * @author anab

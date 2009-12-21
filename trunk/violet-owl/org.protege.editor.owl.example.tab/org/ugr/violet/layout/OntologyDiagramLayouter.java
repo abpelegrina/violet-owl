@@ -1,9 +1,9 @@
-package org.ugr.ontology.layout;
+package org.ugr.violet.layout;
 
 import java.awt.Dimension;
 
-import org.ugr.ontology.base.OntologyDiagram;
-import org.ugr.ontology.graph.nodes.OntologyNode;
+import org.ugr.violet.base.OntologyDiagram;
+import org.ugr.violet.graph.nodes.OntologyNode;
 
 public class OntologyDiagramLayouter implements Layouter {
 	

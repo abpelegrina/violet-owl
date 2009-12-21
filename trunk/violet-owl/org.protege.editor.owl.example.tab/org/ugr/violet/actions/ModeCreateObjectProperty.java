@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.actions;
+package org.ugr.violet.actions;
 
 import java.net.URI;
 
@@ -14,11 +14,11 @@ import org.semanticweb.owl.model.OWLDataFactory;
 import org.semanticweb.owl.model.OWLDeclarationAxiom;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.presentation.Fig;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.edges.DomainRangeEdge;
-import org.ugr.ontology.graph.nodes.NodeNAryRelation;
-import org.ugr.ontology.presentation.FigClass;
-import org.ugr.ontology.presentation.FigNAryRelation;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.edges.DomainRangeEdge;
+import org.ugr.violet.graph.nodes.NodeNAryRelation;
+import org.ugr.violet.presentation.FigClass;
+import org.ugr.violet.presentation.FigNAryRelation;
 
 /**
  * @author anab
@@ -33,7 +33,7 @@ public class ModeCreateObjectProperty extends ModeCreateAxiom {
 
 
 	/* (non-Javadoc)
-	 * @see org.ugr.ontology.actions.ModeCreateAxiom#accionReleaseMouse(org.ugr.ontology.graph.OntologyGraphModel)
+	 * @see org.ugr.violet.actions.ModeCreateAxiom#accionReleaseMouse(org.ugr.violet.graph.OntologyGraphModel)
 	 */
 	@Override
 	public void accionReleaseMouse(OntologyGraphModel ogm) {

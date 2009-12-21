@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.actions;
+package org.ugr.violet.actions;
 
 import java.net.URI;
 
@@ -22,7 +22,7 @@ import org.tigris.gef.base.ModePlace;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeHooks;
 import org.tigris.gef.graph.MutableGraphModel;
-import org.ugr.ontology.graph.nodes.NodeIndividual;
+import org.ugr.violet.graph.nodes.NodeIndividual;
 
 /**
  * @author anab

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.edges;
+package org.ugr.violet.graph.edges;
 
 import java.awt.Color;
 

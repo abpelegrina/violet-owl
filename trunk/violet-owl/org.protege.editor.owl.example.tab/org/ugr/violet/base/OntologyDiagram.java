@@ -1,9 +1,9 @@
-package org.ugr.ontology.base;
+package org.ugr.violet.base;
 
 import org.semanticweb.owl.model.OWLOntology;
 import org.tigris.gef.base.Diagram;
 import org.tigris.gef.base.LayerPerspective;
-import org.ugr.ontology.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OntologyGraphModel;
 
 /**
  * Diagrama asociado a una ontologia

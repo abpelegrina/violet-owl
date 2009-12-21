@@ -1,4 +1,4 @@
-package org.ugr.ontology.visitors;
+package org.ugr.violet.visitors;
 
 import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLObjectComplementOf;
@@ -6,8 +6,8 @@ import org.semanticweb.owl.model.OWLObjectIntersectionOf;
 import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
 import org.tigris.gef.graph.presentation.NetPort;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.nodes.OntologyNode;
 
 public class BooleanDescriptionDeleteVisitor extends
 OWLDescriptionVisitorAdapter {

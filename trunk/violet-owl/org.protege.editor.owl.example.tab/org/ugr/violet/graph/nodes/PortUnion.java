@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.presentation.NetPort;
