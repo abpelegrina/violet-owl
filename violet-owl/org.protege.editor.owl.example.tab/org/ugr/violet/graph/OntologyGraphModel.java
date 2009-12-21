@@ -611,6 +611,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * Actualiza los enlaces entre clases con restricciones cuando se inserta una nueva clase en el diagrama
 	 * @param nuevaClase nodo correspondiente a la nueva clase agregada al modelo
 	 */
+	@SuppressWarnings("unused")
 	private void updateRestrictionsLinks(NodeClass nuevaClase){
 
 		//1) Recorremos todos los nodos del modelo
