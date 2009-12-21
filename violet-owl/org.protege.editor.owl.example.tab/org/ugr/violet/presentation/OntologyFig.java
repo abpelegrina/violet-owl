@@ -1,4 +1,4 @@
-package org.ugr.ontology.presentation;
+package org.ugr.violet.presentation;
 
 import java.awt.Color;
 import java.awt.Point;

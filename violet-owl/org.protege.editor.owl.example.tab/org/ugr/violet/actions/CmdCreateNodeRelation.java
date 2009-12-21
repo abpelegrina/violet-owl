@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.actions;
+package org.ugr.violet.actions;
 
 import java.net.URI;
 import java.util.Random;
@@ -24,8 +24,8 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeHooks;
 import org.tigris.gef.graph.MutableGraphModel;
 import org.tigris.gef.graph.presentation.NetNode;
-import org.ugr.ontology.graph.nodes.NodeClass;
-import org.ugr.ontology.graph.nodes.NodeNAryRelation;
+import org.ugr.violet.graph.nodes.NodeClass;
+import org.ugr.violet.graph.nodes.NodeNAryRelation;
 
 /**
  * @author anab

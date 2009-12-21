@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.persistance;
+package org.ugr.violet.persistance;
 
 /**
  * @author anab

@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.ugr.ontology.actions;
+package org.ugr.violet.actions;
 
 import java.awt.event.MouseEvent;
 
 import org.tigris.gef.base.ModeCreate;
 import org.tigris.gef.presentation.Fig;
-import org.ugr.ontology.presentation.FigComment;
+import org.ugr.violet.presentation.FigComment;
 
 /**
  * @author anab

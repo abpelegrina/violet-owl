@@ -1,4 +1,4 @@
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -15,9 +15,9 @@ import org.semanticweb.owl.model.OWLDeclarationAxiom;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
-import org.ugr.ontology.layout.LayoutedNode;
-import org.ugr.ontology.presentation.FigIndividual;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.layout.LayoutedNode;
+import org.ugr.violet.presentation.FigIndividual;
+import org.ugr.violet.presentation.OntologyFig;
 
 
 public class NodeIndividual extends OntologyNode implements Serializable, LayoutedNode {

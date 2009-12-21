@@ -44,14 +44,11 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeHooks;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.MutableGraphModel;
-import org.tigris.gef.graph.presentation.NetNode;
 import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigNode;
 import org.tigris.gef.undo.Memento;
 import org.tigris.gef.undo.UndoManager;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.nodes.OntologyNode;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.graph.nodes.OntologyNode;
 
 /**
  * Mode to place new a FigNode on a node in a diagram. Normally invoked via

@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.ugr.ontology.actions;
+package org.ugr.violet.actions;
 
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.presentation.Fig;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.presentation.FigClass;
-import org.ugr.ontology.presentation.FigObjectProperty;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.presentation.FigClass;
+import org.ugr.violet.presentation.FigObjectProperty;
 
 /**
  * @author anab

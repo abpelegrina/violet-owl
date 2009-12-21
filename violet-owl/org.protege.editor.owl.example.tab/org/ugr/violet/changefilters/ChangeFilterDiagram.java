@@ -1,4 +1,4 @@
-package org.ugr.ontology.changefilters;
+package org.ugr.violet.changefilters;
 
 import java.util.Collections;
 
@@ -47,20 +47,20 @@ import org.semanticweb.owl.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owl.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owl.model.SWRLRule;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.edges.DisjointEdge;
-import org.ugr.ontology.graph.edges.EquivalentEdge;
-import org.ugr.ontology.graph.edges.InverseOfEdge;
-import org.ugr.ontology.graph.edges.OntologyEdge;
-import org.ugr.ontology.graph.edges.RangeEdge;
-import org.ugr.ontology.graph.edges.RestrictionEdge;
-import org.ugr.ontology.graph.nodes.NodeClass;
-import org.ugr.ontology.graph.nodes.NodeObjectProperty;
-import org.ugr.ontology.visitors.DataPropertyDomainAddVisitor;
-import org.ugr.ontology.visitors.DataPropertyDomainDeleteVisitor;
-import org.ugr.ontology.visitors.ObjectPropertyDomainAndRangeAddVisitor;
-import org.ugr.ontology.visitors.ObjectPropertyDomainAndRangeDeleteVisitor;
-import org.ugr.ontology.visitors.SuperClassesVisitor;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.edges.DisjointEdge;
+import org.ugr.violet.graph.edges.EquivalentEdge;
+import org.ugr.violet.graph.edges.InverseOfEdge;
+import org.ugr.violet.graph.edges.OntologyEdge;
+import org.ugr.violet.graph.edges.RangeEdge;
+import org.ugr.violet.graph.edges.RestrictionEdge;
+import org.ugr.violet.graph.nodes.NodeClass;
+import org.ugr.violet.graph.nodes.NodeObjectProperty;
+import org.ugr.violet.visitors.DataPropertyDomainAddVisitor;
+import org.ugr.violet.visitors.DataPropertyDomainDeleteVisitor;
+import org.ugr.violet.visitors.ObjectPropertyDomainAndRangeAddVisitor;
+import org.ugr.violet.visitors.ObjectPropertyDomainAndRangeDeleteVisitor;
+import org.ugr.violet.visitors.SuperClassesVisitor;
 
 /**
  * Filtra los cambios producidos en la ontología y actualiza el diagrama en consecuencia

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.visitors;
+package org.ugr.violet.visitors;
 
 import java.util.ArrayList;
 
@@ -21,16 +21,10 @@ import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.model.OWLObjectValueRestriction;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
 import org.tigris.gef.graph.presentation.NetPort;
-import org.ugr.ontology.base.Restriction;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.edges.OntologyEdge;
-import org.ugr.ontology.graph.edges.RangeEdge;
-import org.ugr.ontology.graph.nodes.NodeComplement;
-import org.ugr.ontology.graph.nodes.NodeIntersection;
-import org.ugr.ontology.graph.nodes.NodeOneOf;
-import org.ugr.ontology.graph.nodes.NodeRestriction;
-import org.ugr.ontology.graph.nodes.NodeUnion;
-import org.ugr.ontology.graph.nodes.OntologyNode;
+import org.ugr.violet.base.Restriction;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.edges.*;
+import org.ugr.violet.graph.nodes.*;
 
 /**
  * @author anab

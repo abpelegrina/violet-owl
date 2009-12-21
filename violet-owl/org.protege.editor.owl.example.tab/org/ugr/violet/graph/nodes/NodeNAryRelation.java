@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.net.URI;
 
@@ -9,8 +9,8 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.OWLClass;
 import org.tigris.gef.base.CmdChangeFig;
 import org.tigris.gef.base.Layer;
-import org.ugr.ontology.presentation.FigNAryRelation;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.presentation.FigNAryRelation;
+import org.ugr.violet.presentation.OntologyFig;
 
 /**
  * @author anab

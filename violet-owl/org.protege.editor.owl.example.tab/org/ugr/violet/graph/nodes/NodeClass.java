@@ -1,4 +1,4 @@
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -20,9 +20,9 @@ import org.semanticweb.owl.model.OWLSubClassAxiom;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
-import org.ugr.ontology.layout.LayoutedNode;
-import org.ugr.ontology.presentation.FigClass;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.layout.LayoutedNode;
+import org.ugr.violet.presentation.FigClass;
+import org.ugr.violet.presentation.OntologyFig;
 
 public class NodeClass extends OntologyNode implements Serializable, LayoutedNode, MouseListener {
 	/**

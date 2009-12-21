@@ -1,19 +1,12 @@
 /**
  * 
  */
-package org.ugr.ontology.actions;
-
-import java.awt.Point;
-import java.awt.event.MouseEvent;
+package org.ugr.violet.actions;
 
 import org.semanticweb.owl.model.OWLEntity;
-import org.tigris.gef.base.ModeCreatePolyEdge;
-import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
-import org.tigris.gef.presentation.FigPoly;
-import org.tigris.gef.undo.UndoManager;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.presentation.OntologyFig;
 
 /**
  * @author anab

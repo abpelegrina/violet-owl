@@ -1,4 +1,4 @@
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -14,10 +14,10 @@ import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.base.Layer;
-import org.ugr.ontology.base.Restriction;
-import org.ugr.ontology.layout.LayoutedNode;
-import org.ugr.ontology.presentation.FigRestriction;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.base.Restriction;
+import org.ugr.violet.layout.LayoutedNode;
+import org.ugr.violet.presentation.FigRestriction;
+import org.ugr.violet.presentation.OntologyFig;
 
 public class NodeRestriction extends OntologyNode implements Serializable, LayoutedNode {
 
@@ -328,7 +328,7 @@ public class NodeRestriction extends OntologyNode implements Serializable, Layou
 	}
 
 	/* (non-Javadoc)
-	 * @see org.ugr.ontology.graph.nodes.OntologyNode#asNodeIntersection()
+	 * @see org.ugr.violet.graph.nodes.OntologyNode#asNodeIntersection()
 	 */
 	@Override
 	public NodeIntersection asNodeIntersection() {
@@ -337,7 +337,7 @@ public class NodeRestriction extends OntologyNode implements Serializable, Layou
 	}
 
 	/* (non-Javadoc)
-	 * @see org.ugr.ontology.graph.nodes.OntologyNode#isNodeIntersection()
+	 * @see org.ugr.violet.graph.nodes.OntologyNode#isNodeIntersection()
 	 */
 	@Override
 	public boolean isNodeIntersection() {

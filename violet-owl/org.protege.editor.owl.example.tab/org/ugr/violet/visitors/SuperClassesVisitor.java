@@ -1,4 +1,4 @@
-package org.ugr.ontology.visitors;
+package org.ugr.violet.visitors;
 
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -22,7 +22,7 @@ import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.model.OWLObjectValueRestriction;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
-import org.ugr.ontology.base.Restriction;
+import org.ugr.violet.base.Restriction;
 
 /**
  * Visita una ontologia recuperando todas las restricciones asociadas a una clase OWL

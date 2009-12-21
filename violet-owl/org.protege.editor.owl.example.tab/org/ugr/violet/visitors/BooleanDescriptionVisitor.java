@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.visitors;
+package org.ugr.violet.visitors;
 
 import java.awt.Point;
 
@@ -10,13 +10,13 @@ import org.semanticweb.owl.model.OWLObjectComplementOf;
 import org.semanticweb.owl.model.OWLObjectIntersectionOf;
 import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.edges.ComplementEdge;
-import org.ugr.ontology.graph.edges.IntersectionEdge;
-import org.ugr.ontology.graph.edges.UnionEdge;
-import org.ugr.ontology.graph.nodes.NodeIntersection;
-import org.ugr.ontology.graph.nodes.NodeUnion;
-import org.ugr.ontology.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.edges.ComplementEdge;
+import org.ugr.violet.graph.edges.IntersectionEdge;
+import org.ugr.violet.graph.edges.UnionEdge;
+import org.ugr.violet.graph.nodes.NodeIntersection;
+import org.ugr.violet.graph.nodes.NodeUnion;
+import org.ugr.violet.graph.nodes.OntologyNode;
 
 /**
  * 

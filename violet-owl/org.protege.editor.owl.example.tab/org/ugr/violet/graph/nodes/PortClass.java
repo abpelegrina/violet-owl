@@ -1,4 +1,4 @@
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.util.ArrayList;
 import java.util.List;

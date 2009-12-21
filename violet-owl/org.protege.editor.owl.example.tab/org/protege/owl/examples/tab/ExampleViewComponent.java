@@ -14,10 +14,10 @@ import org.semanticweb.owl.model.OWLOntologyChangeListener;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.util.Localizer;
 import org.tigris.gef.util.ResourceLoader;
-import org.ugr.ontology.changefilters.ChangeFilterDiagram;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.presentation.JOntologyGraph;
-import org.ugr.ontology.ui.OntologyPalette;
+import org.ugr.violet.changefilters.ChangeFilterDiagram;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.presentation.JOntologyGraph;
+import org.ugr.violet.ui.OntologyPalette;
 
 /**
  * 

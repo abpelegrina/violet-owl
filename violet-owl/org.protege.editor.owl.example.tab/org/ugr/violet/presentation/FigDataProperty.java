@@ -1,4 +1,4 @@
-package org.ugr.ontology.presentation;
+package org.ugr.violet.presentation;
 
 import java.awt.Color;
 import java.util.Vector;
@@ -14,7 +14,7 @@ import org.tigris.gef.presentation.FigRRect;
 import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
-import org.ugr.ontology.graph.nodes.NodeDataProperty;
+import org.ugr.violet.graph.nodes.NodeDataProperty;
 
 /**
  * 

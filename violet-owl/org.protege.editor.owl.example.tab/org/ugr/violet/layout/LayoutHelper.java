@@ -22,7 +22,7 @@
 // CALIFORNIA HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT,
 // UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
-package org.ugr.ontology.layout;
+package org.ugr.violet.layout;
 
 import java.awt.Point;
 import java.awt.Rectangle;

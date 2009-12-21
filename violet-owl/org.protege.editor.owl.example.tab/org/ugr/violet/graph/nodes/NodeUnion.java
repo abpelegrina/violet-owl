@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.awt.Point;
 import java.util.Hashtable;
@@ -11,8 +11,8 @@ import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.tigris.gef.base.Layer;
-import org.ugr.ontology.presentation.FigUnion;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.presentation.FigUnion;
+import org.ugr.violet.presentation.OntologyFig;
 
 /**
  * @author anab

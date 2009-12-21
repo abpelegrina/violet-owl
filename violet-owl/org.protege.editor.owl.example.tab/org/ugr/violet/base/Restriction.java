@@ -1,4 +1,4 @@
-package org.ugr.ontology.base;
+package org.ugr.violet.base;
 
 import org.semanticweb.owl.model.OWLClass;
 

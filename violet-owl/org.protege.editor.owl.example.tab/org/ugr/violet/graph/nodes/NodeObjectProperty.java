@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ugr.ontology.graph.nodes;
+package org.ugr.violet.graph.nodes;
 
 import java.awt.Point;
 import java.net.URI;
@@ -16,8 +16,8 @@ import org.semanticweb.owl.model.OWLDeclarationAxiom;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
-import org.ugr.ontology.presentation.FigObjectProperty;
-import org.ugr.ontology.presentation.OntologyFig;
+import org.ugr.violet.presentation.FigObjectProperty;
+import org.ugr.violet.presentation.OntologyFig;
 
 /**
  * @author anab

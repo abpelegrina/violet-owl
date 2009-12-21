@@ -1,49 +1,15 @@
 /**
  * 
  */
-package org.ugr.ontology.visitors;
-
-import java.awt.Point;
-import java.util.Set;
+package org.ugr.violet.visitors;
 
 import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLDataAllRestriction;
-import org.semanticweb.owl.model.OWLDataExactCardinalityRestriction;
-import org.semanticweb.owl.model.OWLDataMaxCardinalityRestriction;
-import org.semanticweb.owl.model.OWLDataMinCardinalityRestriction;
-import org.semanticweb.owl.model.OWLDataSomeRestriction;
-import org.semanticweb.owl.model.OWLDataValueRestriction;
-import org.semanticweb.owl.model.OWLDescription;
-import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLObjectAllRestriction;
-import org.semanticweb.owl.model.OWLObjectComplementOf;
-import org.semanticweb.owl.model.OWLObjectExactCardinalityRestriction;
-import org.semanticweb.owl.model.OWLObjectIntersectionOf;
-import org.semanticweb.owl.model.OWLObjectMaxCardinalityRestriction;
-import org.semanticweb.owl.model.OWLObjectMinCardinalityRestriction;
-import org.semanticweb.owl.model.OWLObjectOneOf;
 import org.semanticweb.owl.model.OWLObjectProperty;
-import org.semanticweb.owl.model.OWLObjectSelfRestriction;
-import org.semanticweb.owl.model.OWLObjectSomeRestriction;
-import org.semanticweb.owl.model.OWLObjectUnionOf;
-import org.semanticweb.owl.model.OWLObjectValueRestriction;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
-import org.ugr.ontology.base.Restriction;
-import org.ugr.ontology.graph.OntologyGraphModel;
-import org.ugr.ontology.graph.edges.ComplementEdge;
-import org.ugr.ontology.graph.edges.IntersectionEdge;
-import org.ugr.ontology.graph.edges.OneOfEdge;
-import org.ugr.ontology.graph.edges.RangeEdge;
-import org.ugr.ontology.graph.edges.UnionEdge;
-import org.ugr.ontology.graph.nodes.NodeClass;
-import org.ugr.ontology.graph.nodes.NodeComplement;
-import org.ugr.ontology.graph.nodes.NodeIndividual;
-import org.ugr.ontology.graph.nodes.NodeIntersection;
-import org.ugr.ontology.graph.nodes.NodeObjectProperty;
-import org.ugr.ontology.graph.nodes.NodeOneOf;
-import org.ugr.ontology.graph.nodes.NodeRestriction;
-import org.ugr.ontology.graph.nodes.NodeUnion;
-import org.ugr.ontology.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.edges.RangeEdge;
+import org.ugr.violet.graph.nodes.NodeClass;
+import org.ugr.violet.graph.nodes.NodeObjectProperty;
 
 /**
  * @author anab

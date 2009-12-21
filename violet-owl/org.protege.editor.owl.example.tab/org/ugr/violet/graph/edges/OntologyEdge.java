@@ -1,8 +1,8 @@
-package org.ugr.ontology.graph.edges;
+package org.ugr.violet.graph.edges;
 
 import org.tigris.gef.graph.presentation.NetEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
-import org.ugr.ontology.layout.LayoutedEdge;
+import org.ugr.violet.layout.LayoutedEdge;
 
 
 public abstract class OntologyEdge extends NetEdge implements LayoutedEdge{
