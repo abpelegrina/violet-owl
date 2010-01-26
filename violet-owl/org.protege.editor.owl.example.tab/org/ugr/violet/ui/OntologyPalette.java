@@ -34,20 +34,24 @@ import java.io.FileOutputStream;
 
 import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.CmdAlign;
+import org.tigris.gef.base.CmdCreateNode;
 import org.tigris.gef.base.CmdSetMode;
 import org.tigris.gef.base.ModeBroom;
 import org.tigris.gef.base.ModeSelect;
 import org.tigris.gef.base.PrintAction;
 import org.tigris.gef.base.SaveSVGAction;
 import org.tigris.gef.graph.presentation.PaletteFig;
+import org.ugr.violet.actions.CmdCreateActivityStep;
 import org.ugr.violet.actions.CmdCreateNodeRelation;
 import org.ugr.violet.actions.ModeCreateComplement;
 import org.ugr.violet.actions.ModeCreateDisjoint;
 import org.ugr.violet.actions.ModeCreateDomain;
 import org.ugr.violet.actions.ModeCreateEquivalent;
+import org.ugr.violet.actions.ModeCreateFollowedBy;
 import org.ugr.violet.actions.ModeCreateObjectProperty;
 import org.ugr.violet.actions.ModeCreateRange;
 import org.ugr.violet.actions.ModeCreateSub;
+import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
 
 /** A class to define a custom palette for use in some demos.
  *
@@ -80,18 +84,22 @@ public class OntologyPalette extends PaletteFig {
         
 		this.addSeparator();
 		add(new CmdCreateNodeRelation());
+		add(new CmdCreateActivityStep());
+		
 		//add(new CmdCreateNode(NodeClass.class, "ClaseOWL"));
 		/*add(new CmdCreateNodeIndividual());
 		add(new CmdCreateNodeDataProperty());
 		add(new CmdCreateNodeObjectProperty());*/
 		
 		this.addSeparator();
+		add(new CmdSetMode(ModeCreateFollowedBy.class, "ObjectProperty"));
+		/*
 		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));		
 		add(new CmdSetMode(ModeCreateSub.class, "Sub"));		
 		add(new CmdSetMode(ModeCreateDisjoint.class, "Disjoint"));		
 		add(new CmdSetMode(ModeCreateEquivalent.class, "Equivalence"));
 		add(new CmdSetMode(ModeCreateComplement.class, "Not"));
-		
+		*/
 		this.addSeparator();		
 		add(new CmdSetMode(ModeCreateRange.class, "Range"));
 		add(new CmdSetMode(ModeCreateDomain.class, "Domain"));

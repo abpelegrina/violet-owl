@@ -9,13 +9,13 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLDataFactory;
 import org.semanticweb.owl.model.OWLDeclarationAxiom;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigObjectProperty;
 import org.ugr.violet.presentation.OntologyFig;
 

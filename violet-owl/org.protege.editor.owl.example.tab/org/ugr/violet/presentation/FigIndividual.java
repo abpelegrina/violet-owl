@@ -7,7 +7,6 @@ import java.util.Vector;
 
 import javax.swing.JMenu;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
@@ -19,6 +18,7 @@ import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeIndividual;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 
 public class FigIndividual extends OntologyFig {
 

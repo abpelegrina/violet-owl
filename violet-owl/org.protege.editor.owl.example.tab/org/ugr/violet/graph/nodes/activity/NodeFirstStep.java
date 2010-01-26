@@ -1,81 +1,54 @@
-package org.ugr.violet.graph.nodes;
+/**
+ * 
+ */
+package org.ugr.violet.graph.nodes.activity;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.Serializable;
-import java.net.URI;
 import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.semanticweb.owl.model.AddAxiom;
-import org.semanticweb.owl.model.OWLAxiom;
-import org.semanticweb.owl.model.OWLDataFactory;
+import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDataProperty;
+import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
-import org.ugr.violet.layout.LayoutedNode;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.ugr.violet.graph.nodes.NodeClass;
+import org.ugr.violet.graph.nodes.NodeDataProperty;
+import org.ugr.violet.graph.nodes.NodeIndividual;
+import org.ugr.violet.graph.nodes.NodeIntersection;
+import org.ugr.violet.graph.nodes.NodeObjectProperty;
+import org.ugr.violet.graph.nodes.NodeRestriction;
+import org.ugr.violet.graph.nodes.NodeUnion;
+import org.ugr.violet.graph.nodes.OntologyPort;
 import org.ugr.violet.presentation.FigDataProperty;
 import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.activity.FigFirstStep;
 
-public class NodeDataProperty extends OntologyNode implements Serializable, LayoutedNode, MouseListener {
-	/**
-	 * serial version of the class NetNode
-	 */
-	private static final long serialVersionUID = -3380856158583786547L;
+/**
+ * @author anab
+ *
+ */
+public class NodeFirstStep extends NodeActivity {
+	
+	private OWLIndividual step = null;
+	private FigFirstStep figura = null;
 	
 	/**
-	 * OWL class represented by the node
-	 */
-    private OWLDataProperty propiedadDeDatos = null;
-    
-    /**
-     * Figure to draw
-     */
-    private FigDataProperty figura = null;
-    
-    /**
-     * Constructor
-     */
-    public NodeDataProperty (){
-    	super();
-    	
-    	//Creamos la nueva propiedad de datos
-    	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();
-    	
-    	String nombreNueva = JOptionPane.showInputDialog("New data proprerty name, please:");
-    	
-    	if (nombreNueva != null && nombreNueva != ""){
-	        propiedadDeDatos = f.getOWLDataProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
-	        OWLAxiom axiom = f.getOWLDeclarationAxiom(propiedadDeDatos);
-	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
-	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
-	        
-	    	addPort(east = new OntologyPort(this));
-	        addPort(west = new OntologyPort(this));
-	        addPort(north = new OntologyPort(this));
-	        addPort(south = new OntologyPort(this));
-    	}
-    }
-    
-    /**
      * Contructor. Creates a new node
      * @param unaPropiedadDeDatos OWL class represented by the new node
      */
-    public NodeDataProperty (OWLDataProperty unaPropiedadDeDatos){
+    public NodeFirstStep (OWLIndividual paso){
     	super();
-    	propiedadDeDatos = unaPropiedadDeDatos;
+    	step = paso;
     	addPort(east = new OntologyPort(this));
         addPort(west = new OntologyPort(this));
         addPort(north = new OntologyPort(this));
         addPort(south = new OntologyPort(this));
     }
-
+    
     /** Initialize a new SampleNode from the given default node and
      *  application specific model. <p>
      *
@@ -91,17 +64,25 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
     }
     
     /**
+	 * @return the claseOWL
+	 */
+    @Override
+	public OWLIndividual getStep() {
+		return step;
+	}
+    
+    /**
      * @return Id of the node
      */
     public String getId() {
-        return propiedadDeDatos.toString();
+        return step.toString();
     }
     
     /**
      * Gets the figure associated with the node
      * @return la figura
      */
-    public FigDataProperty getFigDataProperty(){
+    public FigFirstStep getFigDataProperty(){
     	return figura;
     }
 
@@ -110,10 +91,10 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
      * @param lay layer where we want to draw the node
      * @return the new figure
      */
-    public FigDataProperty makePresentation(Layer lay) {
+    public FigFirstStep makePresentation(Layer lay) {
     	
-    	if (propiedadDeDatos != null){
-	    	figura = new FigDataProperty(propiedadDeDatos);	    	
+    	if (step != null){
+	    	figura = new FigFirstStep(step);	    	
 	        figura.setOwner(this);
 	    	figura.setBlinkPorts(true);
 	        return figura;
@@ -121,12 +102,6 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
     	else return null;
     }
 
-	/**
-	 * @return the claseOWL
-	 */
-	public OWLDataProperty getOWLDataProperty() {
-		return propiedadDeDatos;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.tigris.gef.graph.presentation.NetNode#postDisconnect(org.tigris.gef.graph.GraphModel, java.lang.Object, java.lang.Object, java.lang.Object)
@@ -145,8 +120,8 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		if (propiedadDeDatos != null)
-			return propiedadDeDatos.toString();
+		if (step != null)
+			return step.toString();
 		else
 			return "";
 	}
@@ -259,9 +234,10 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
 	}
 	
 	public NodeDataProperty asDataProperty(){
-		return this;
+		return null;
 	}
 	public boolean isDataProperty(){
-		return true;
+		return false;
 	}
+
 }

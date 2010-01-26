@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.*;
 import org.tigris.gef.graph.presentation.DefaultGraphModel;
 import org.tigris.gef.graph.presentation.NetNode;
@@ -40,6 +39,7 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OntologyNode;
 import org.ugr.violet.graph.nodes.OntologyPort;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.visitors.BooleanDescriptionDeleteVisitor;
 import org.ugr.violet.visitors.BooleanDescriptionVisitor;
 import org.ugr.violet.visitors.ComplementsOfVisitor;
@@ -57,12 +57,12 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	/**
 	 * Ontología representada por el modelo
 	 */
-	private OWLOntology ontologia = null;
+	protected OWLOntology ontologia = null;
 
 	/**
 	 * Diagrama asociado al modelo
 	 */
-	private OntologyDiagram owner = null;
+	protected OntologyDiagram owner = null;
 
 
 	/************************************ CONSTRUCTORES **************************************/
@@ -652,7 +652,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * Actualiza las propiedades 
 	 * @param ind
 	 */
-	private void updateObjectPropertyAsseritons(OWLIndividual ind) {
+	protected void updateObjectPropertyAsseritons(OWLIndividual ind) {
 		for (Object o: this.getNodes()){
 			NodeIndividual n = ((OntologyNode) o).asNodeIndividual();
 

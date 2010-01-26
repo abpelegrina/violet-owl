@@ -14,9 +14,9 @@ import org.semanticweb.owl.model.OWLOntologyChangeListener;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.util.Localizer;
 import org.tigris.gef.util.ResourceLoader;
-import org.ugr.violet.changefilters.ChangeFilterDiagram;
+import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
 import org.ugr.violet.graph.OntologyGraphModel;
-import org.ugr.violet.graph.presentation.JOntologyGraph;
+import org.ugr.violet.graph.presentation.JOntologyActivityGraph;
 import org.ugr.violet.ui.OntologyPalette;
 
 /**
@@ -27,7 +27,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     private static final long serialVersionUID = -4515710047558710080L;
     
     private static final Logger log = Logger.getLogger(ExampleViewComponent.class);
-    private JOntologyGraph g = null;
+    private JOntologyActivityGraph g = null;
     private OntologyPalette barraDeHerramientas;
     public static OWLModelManager manager = null;
     public static OWLWorkspace workspace = null;
@@ -56,25 +56,25 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     @Override
     protected void initialiseOWLView() throws Exception {
     	
-    	// �OJO!: no cambiar el layout. Siempre a de ser BorderLayout o la carga inicial de las clases no funcionar�
+    	// ¡OJO!: no cambiar el layout. Siempre a de ser BorderLayout o la carga inicial de las clases no funcionar�
         setLayout(new BorderLayout());
         inicializaRecursosGEF();
         barraDeHerramientas = new OntologyPalette();
         add(barraDeHerramientas, BorderLayout.NORTH);
         manager = this.getOWLModelManager();
         workspace = this.getOWLWorkspace();
-        g = new JOntologyGraph(manager.getActiveOntology(), barraDeHerramientas);
+        g = new JOntologyActivityGraph(manager.getActiveOntology(), barraDeHerramientas);
         
         add(g, BorderLayout.CENTER);
         oocl = new OWLOntologyChangeListener(){
 
-			public void ontologiesChanged(List<? extends OWLOntologyChange> arg0) throws OWLException {
+			public void ontologiesChanged(List<? extends OWLOntologyChange> cambio) throws OWLException {
 				
-				System.err.println("Cambios: " + arg0);
+				System.err.println("Cambios: " + cambio);
 				
-				OWLOntologyChangeFilter filter = new ChangeFilterDiagram((OntologyGraphModel) g.getGraphModel());
+				OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) g.getGraphModel());
 				//Process the list of changes
-				filter.processChanges(arg0);
+				filter.processChanges(cambio);
 				
 			}
         };

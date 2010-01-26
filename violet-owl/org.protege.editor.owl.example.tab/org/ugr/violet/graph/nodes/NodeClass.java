@@ -10,7 +10,6 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLAxiom;
 import org.semanticweb.owl.model.OWLClass;
@@ -21,6 +20,7 @@ import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
 import org.ugr.violet.layout.LayoutedNode;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigClass;
 import org.ugr.violet.presentation.OntologyFig;
 

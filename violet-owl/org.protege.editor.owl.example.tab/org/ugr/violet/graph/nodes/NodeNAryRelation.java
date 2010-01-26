@@ -5,10 +5,10 @@ package org.ugr.violet.graph.nodes;
 
 import java.net.URI;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.OWLClass;
 import org.tigris.gef.base.CmdChangeFig;
 import org.tigris.gef.base.Layer;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigNAryRelation;
 import org.ugr.violet.presentation.OntologyFig;
 
