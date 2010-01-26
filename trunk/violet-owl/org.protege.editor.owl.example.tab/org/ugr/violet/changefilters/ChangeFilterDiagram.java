@@ -68,7 +68,7 @@ import org.ugr.violet.visitors.SuperClassesVisitor;
  */
 public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
-	private OntologyGraphModel ogm = null;
+	protected OntologyGraphModel ogm = null;
 
 	/**
 	 * Crea el filtro de cambios para aplicarlos al diagrama

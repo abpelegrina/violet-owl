@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import javax.swing.JMenu;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDataProperty;
 import org.semanticweb.owl.model.OWLEntity;
@@ -18,6 +17,7 @@ import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeClass;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 
 /**
  * 

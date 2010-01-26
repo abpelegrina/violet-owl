@@ -51,5 +51,13 @@ public class FigActivityDiagram extends OntologyFig {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public boolean isFigActivityStep(){
+		return false;
+	}
+	
+	public FigActivityStep asFigActivityStep(){
+		return null;
+	}
 
 }

@@ -5,7 +5,6 @@ package org.ugr.violet.graph.edges;
 
 import java.awt.Color;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.base.Layer;
@@ -15,6 +14,7 @@ import org.tigris.gef.presentation.FigEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
 import org.tigris.gef.presentation.FigText;
 import org.ugr.violet.graph.nodes.NodeNAryRelation;
+import org.protege.owl.examples.tab.ExampleViewComponent;
 
 /**
  * @author anab

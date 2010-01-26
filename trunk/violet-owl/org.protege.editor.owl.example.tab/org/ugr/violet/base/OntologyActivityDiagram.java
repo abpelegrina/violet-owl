@@ -71,5 +71,4 @@ public class OntologyActivityDiagram extends OntologyDiagram {
 		return (OntologyActivityGraphModel) this.getGraphModel();
 		
 	}
-
 }
