@@ -2,7 +2,7 @@
 #labels Phase-Deploy,Language-ES-es
 = Generar el Plug-in desde el código fuente =
 
-Naoé está disponible en un fichero .jar listo para usar. Pero si de todas formas quieres generar el plug-in desde el código fuente sigue los pasos de este manual.
+VIOLET está disponible en un fichero .jar listo para usar. Pero si de todas formas quieres generar el plug-in desde el código fuente sigue los pasos de este manual.
 
 Si no quieres complicarte la vida y lo que deseas es sólo instalar el plug-in, sigue las instrucciones de esta página: [InstallPlugIn].
 
