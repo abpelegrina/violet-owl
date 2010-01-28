@@ -27,7 +27,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     private static final long serialVersionUID = -4515710047558710080L;
     
     private static final Logger log = Logger.getLogger(ExampleViewComponent.class);
-    private JOntologyActivityGraph g = null;
+    public static JOntologyActivityGraph lienzo = null;
     private OntologyPalette barraDeHerramientas;
     public static OWLModelManager manager = null;
     public static OWLWorkspace workspace = null;
@@ -63,16 +63,16 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
         add(barraDeHerramientas, BorderLayout.NORTH);
         manager = this.getOWLModelManager();
         workspace = this.getOWLWorkspace();
-        g = new JOntologyActivityGraph(manager.getActiveOntology(), barraDeHerramientas);
+        lienzo = new JOntologyActivityGraph(manager.getActiveOntology(), barraDeHerramientas);
         
-        add(g, BorderLayout.CENTER);
+        add(lienzo, BorderLayout.CENTER);
         oocl = new OWLOntologyChangeListener(){
 
 			public void ontologiesChanged(List<? extends OWLOntologyChange> cambio) throws OWLException {
 				
 				System.err.println("Cambios: " + cambio);
 				
-				OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) g.getGraphModel());
+				OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) lienzo.getGraphModel());
 				//Process the list of changes
 				filter.processChanges(cambio);
 				

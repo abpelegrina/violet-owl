@@ -6,16 +6,10 @@ package org.ugr.violet.graph.nodes.activity;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.net.URI;
 import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
-import org.semanticweb.owl.model.AddAxiom;
-import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLClassAssertionAxiom;
-import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
@@ -27,38 +21,34 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OntologyPort;
+import org.ugr.violet.presentation.FigIndividual;
 import org.ugr.violet.presentation.OntologyFig;
-import org.ugr.violet.presentation.activity.FigActivityStep;
+import org.ugr.violet.presentation.activity.FigDecision;
+import org.ugr.violet.presentation.activity.FigFork;
 
 /**
  * @author anab
  *
  */
-public class NodeActivityStep extends NodeActivity {
-	
+public class NodeDecision extends NodeActivity {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5882931174797119668L;
-
-
-	public static final OWLClass activityStep = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Activity_Step"));
+	private static final long serialVersionUID = 7219027647508489833L;
 	
 	
-	private OWLIndividual activity = null;
-	private OWLIndividual activity_step = null;
-	private FigActivityStep figura = null;
-
-	
+	private OWLIndividual step = null;
+	private FigDecision figura = null;
 	
 	/**
      * Contructor. Creates a new node
      * @param unaPropiedadDeDatos OWL class represented by the new node
+	 * @return 
      */
-    public NodeActivityStep (OWLIndividual act, OWLIndividual step){
+    public  NodeDecision (OWLIndividual paso){
     	super();
-    	this.activity = act;
-    	this.activity_step = step;
+    	step = paso;
     	addPort(east = new OntologyPort(this));
         addPort(west = new OntologyPort(this));
         addPort(north = new OntologyPort(this));
@@ -78,19 +68,27 @@ public class NodeActivityStep extends NodeActivity {
     public void initialize(Hashtable args) {
         super.initialize(args);
     }
-
+    
+    /**
+	 * @return the claseOWL
+	 */
+    @Override
+	public OWLIndividual getStep() {
+		return step;
+	}
+    
     /**
      * @return Id of the node
      */
     public String getId() {
-        return activity.toString();
+        return step.toString();
     }
     
     /**
      * Gets the figure associated with the node
      * @return la figura
      */
-    public FigActivityStep getFigDataProperty(){
+    public OntologyFig getFigDataProperty(){
     	return figura;
     }
 
@@ -99,24 +97,20 @@ public class NodeActivityStep extends NodeActivity {
      * @param lay layer where we want to draw the node
      * @return the new figure
      */
-    public FigActivityStep makePresentation(Layer lay) {
+    public OntologyFig makePresentation(Layer lay) {
     	
-    	if (activity != null){
-	    	figura = new FigActivityStep(activity, activity_step);	    	
-	        figura.setOwner(this);
+    	if (step != null){
+	    	figura = new FigDecision (step);
+	    	figura.setOwner(this);
 	    	figura.setBlinkPorts(true);
-	        return figura;
+	    	
+	    	System.err.println("CREANDO LA FIGURA!!!!");
+	    	
+	    	return figura;
     	}
     	else return null;
     }
 
-	/**
-	 * @return the claseOWL
-	 */
-    @Override
-	public OWLIndividual getStep() {
-		return activity_step;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.tigris.gef.graph.presentation.NetNode#postDisconnect(org.tigris.gef.graph.GraphModel, java.lang.Object, java.lang.Object, java.lang.Object)
@@ -127,10 +121,6 @@ public class NodeActivityStep extends NodeActivity {
 		// TODO Auto-generated method stub
 		super.postDisconnect(gm, anotherNode, myPort, otherPort);
 	}
-	
-	public OWLEntity getOWLEntity(){
-		return this.activity_step;
-	}
 
 
     /* (non-Javadoc)
@@ -139,8 +129,8 @@ public class NodeActivityStep extends NodeActivity {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		if (activity_step != null)
-			return activity_step.toString();
+		if (step != null)
+			return step.toString();
 		else
 			return "";
 	}

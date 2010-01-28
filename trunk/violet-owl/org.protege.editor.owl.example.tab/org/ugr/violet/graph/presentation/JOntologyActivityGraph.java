@@ -18,6 +18,9 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URI;
 
+import javax.swing.JOptionPane;
+
+import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -36,13 +39,10 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
 import org.ugr.violet.base.OntologyActivityDiagram;
-import org.ugr.violet.base.OntologyDiagram;
 import org.ugr.violet.graph.OntologyActivityGraphModel;
-import org.ugr.violet.graph.OntologyGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.ui.OntologyPalette;
 
 /**
@@ -67,7 +67,25 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 	 */
 	private OntologyActivityGraphModel ogm = null;
 	
-	private OWLOntology activa = null;
+	private OWLOntology activa = null;	
+
+	private OWLIndividual tarea = null;
+	
+	private OWLIndividual secuencia = null;
+	
+	/**
+	 * @return the tarea
+	 */
+	public OWLIndividual getTarea() {
+		return tarea;
+	}
+
+	/**
+	 * @return the secuencia
+	 */
+	public OWLIndividual getSecuencia() {
+		return secuencia;
+	}
 	
 	/**
 	 * constructor
@@ -115,16 +133,95 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 			}			
 		});*/
 		
-		this.createTask("NewTask");
+		String taskName = JOptionPane.showInputDialog("Select the name of the new task"); 
+		
+		if (taskName != null) {
+			this.createNewTask(taskName);
+			this.createDiagramSkeleton(taskName);
+		}
 	}
 	
-	private void createTask(String taskName){
+	
+	/**
+	 * constructor
+	 * @param activa ontolog�a para la que se quiere contruir el modelo
+	 * @param p paleta con los controles
+	 */
+	public JOntologyActivityGraph(OWLOntology ont, OntologyPalette p, OWLIndividual task) {
+		super();
+		this.setBounds(10, 10, 300, 200);
+		
+		tarea = task;
+		
+		activa = ont;
+		// creamos el diagrama asociado a la ontolog�a
+		ogm = new OntologyActivityGraphModel(activa);
+		od = new OntologyActivityDiagram(activa.getURI().toString(), ogm);
+		this.setGraphModel( ogm );
+		
+		// al darle al supr se borrara el componente seleccionado
+		this.bindKey(new DeleteFromModelAction("DeleteFromDiagram"), KeyEvent.VK_DELETE, 0);
+		
+		// Activamos el soporte para el drag'n drop
+		DropTarget dropTarget = new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this, true, null);
+		this.setDropTarget(dropTarget);
+
+		
+		/* Agregamos un listener para seleccionar en los distintos paneles del entorno Protege la entidad OWL 
+		 * seleccionada en el diagrama*/
+		this.addGraphSelectionListener(new GraphSelectionListener(){
+
+			public void selectionChanged(GraphSelectionEvent gse) {
+				
+				for (Object o : gse.getSelections()){
+					OWLEntity entidad = ExampleViewComponent.manager.getOWLEntity(o.toString());
+					ExampleViewComponent.workspace.getOWLSelectionModel().setSelectedEntity(entidad);
+				}
+			}
+		});
+		
+		/*Y a la inversa tb: agregamos un listener para que los cambios en la seleccion en Prot�g� 
+		 * se refleje en el diagrama*/
+		/*ExampleViewComponent.workspace.getOWLSelectionModel().addListener(new OWLSelectionModelListener(){
+
+			public void selectionChanged() throws Exception {
+				OWLEntity entidad = ExampleViewComponent.workspace.getOWLSelectionModel().getSelectedEntity();
+				ogm.setSelection(entidad);
+			}			
+		});*/
+		
+		String taskName = JOptionPane.showInputDialog("Select the name of the new task"); 
+		
+		
+			this.createNewTask(taskName);
+			this.createDiagramSkeleton(tarea.toString());
+	}
+	
+	private void createNewTask(String taskName){
 		// 1. Creamos un nuevo individuo de la clase tarea:
-		OWLIndividual nuevaTarea = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + taskName));
+		tarea = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + taskName));
 		OWLClass ClaseTarea = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Task"));
 		
 		// Creamos la relación de jerarquía
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (nuevaTarea, ClaseTarea);
+		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (tarea, ClaseTarea);
+
+		// agregamos el axioma a la ontología
+		AddAxiom addAx3 = new AddAxiom(activa, d);
+
+		// aplicamos los cambios
+		ExampleViewComponent.manager.applyChange(addAx3);
+	}
+	
+	
+	private void createDiagramSkeleton(String taskName){
+		
+		
+		// 2. Creamos una nueva secuencia y se la asociamos
+		secuencia = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#"+ taskName + "_Sequence"));
+		OWLClass ClaseSecuencia = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Sequence"));
+		
+		// Creamos la relación de jerarquía
+		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (secuencia, ClaseSecuencia);
 
 		// agregamos el axioma a la ontología
 		AddAxiom addAx3 = new AddAxiom(activa, d);
@@ -132,22 +229,9 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 		// aplicamos los cambios
 		ExampleViewComponent.manager.applyChange(addAx3);
 		
-		// 2. Creamos una nueva secuencia y se la asociamos
-		OWLIndividual nuevaSecuencia = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#"+ taskName + "_Sequence"));
-		OWLClass ClaseSecuencia = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Sequence"));
-		
-		// Creamos la relación de jerarquía
-		d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (nuevaSecuencia, ClaseSecuencia);
-
-		// agregamos el axioma a la ontología
-		addAx3 = new AddAxiom(activa, d);
-
-		// aplicamos los cambios
-		ExampleViewComponent.manager.applyChange(addAx3);
-		
 		// Asociamos la secuencia y la tarea
 		OWLObjectProperty descritaEn = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#described_in"));
-		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(nuevaTarea, descritaEn, nuevaSecuencia);
+		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(tarea, descritaEn, secuencia);
 
 		// aplicamos los cambios
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
@@ -169,17 +253,17 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 		OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#part_of"));
 		
 		// inicio
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(inicio, partOf, nuevaSecuencia);
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(inicio, partOf, secuencia);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
 		
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(nuevaSecuencia, hasPart, inicio);
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, inicio);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
 		
 		// fin
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(fin, partOf, nuevaSecuencia);
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(fin, partOf, secuencia);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
 		
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(nuevaSecuencia, hasPart, fin);
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, fin);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
 		
 		// Asociamos los pasos entre si???
