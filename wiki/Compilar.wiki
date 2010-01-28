@@ -1,10 +1,10 @@
-#summary How to run Naoé from the source code
+#summary How to run Violet-OWL from the source code
 #labels Phase-Deploy,Language-ES-es
 = Generar el Plug-in desde el código fuente =
 
-VIOLET está disponible en un fichero .jar listo para usar. Pero si de todas formas quieres generar el plug-in desde el código fuente sigue los pasos de este manual.
+VIOLET-OWL está disponible en un fichero .jar listo para usar. Pero si de todas formas quieres generar el plug-in desde el código fuente sigue los pasos de este manual.
 
-Si no quieres complicarte la vida y lo que deseas es sólo instalar el plug-in, sigue las instrucciones de esta página: [InstallPlugIn].
+Si no quieres complicarte la vida y lo que deseas es sólo instalar el plug-in, sigue las instrucciones de esta página: [InstallPlugin].
 
 == Pasos Previos ==
 Descarga e instala (si no lo tienes ya instalado) el siguiente software:
@@ -19,7 +19,7 @@ Sigue cuidadosamente las instrucciones que figuran en la página de la wiki de P
   # Importamos el proyecto desde el repositorio: para ello, desde Eclipse escogemos File/Import
   # En la ventana que nos aparece escogemos SVN Checkout from SVN, tal y como se indica en la siguiente imagen http://lh5.ggpht.com/_bLiTBqZwnZk/SlTDpbyDyhI/AAAAAAAAAPk/xfqeq6yuhhc/s800/Imagen%202.png
   # En la siguiente ventana escogemos crear un nuevo repositorio y pulsamos Next
-  # Introducimos la URL del repositorio http://naoe.googlecode.com/svn/trunk/ y pulsamos Next
+  # Introducimos la URL del repositorio http://violet-owl.googlecode.com/svn/trunk/ y pulsamos Next
   # Escogemos la carpeta org.protege.editor.owl.example.tab  y pulsamos Finish http://lh5.ggpht.com/_bLiTBqZwnZk/SlTDmaV73UI/AAAAAAAAAPc/kSMbTzNh7u8/s800/Imagen%203.png
 
 == Compilar y Ejecutar el Código ==
