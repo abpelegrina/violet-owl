@@ -4,6 +4,7 @@
 package org.ugr.violet.graph.presentation;
 
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -95,6 +96,7 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 	public JOntologyActivityGraph(OWLOntology ont, OntologyPalette p) {
 		super();
 		this.setBounds(10, 10, 300, 200);
+		this.add(p, BorderLayout.NORTH);
 		
 		activa = ont;
 		// creamos el diagrama asociado a la ontolog�a
