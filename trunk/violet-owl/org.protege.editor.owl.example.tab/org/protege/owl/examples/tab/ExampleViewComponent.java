@@ -27,10 +27,11 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     private static final long serialVersionUID = -4515710047558710080L;
     
     private static final Logger log = Logger.getLogger(ExampleViewComponent.class);
-    public static JOntologyActivityGraph lienzo = null;
-    private OntologyPalette barraDeHerramientas;
+   
+    
     public static OWLModelManager manager = null;
     public static OWLWorkspace workspace = null;
+    public static JTabPlugin lienzo = null;
     OWLOntologyChangeListener oocl;
 
     @Override
@@ -59,20 +60,20 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     	// ¡OJO!: no cambiar el layout. Siempre a de ser BorderLayout o la carga inicial de las clases no funcionar�
         setLayout(new BorderLayout());
         inicializaRecursosGEF();
-        barraDeHerramientas = new OntologyPalette();
-        add(barraDeHerramientas, BorderLayout.NORTH);
+        
         manager = this.getOWLModelManager();
         workspace = this.getOWLWorkspace();
-        lienzo = new JOntologyActivityGraph(manager.getActiveOntology(), barraDeHerramientas);
         
-        add(lienzo, BorderLayout.CENTER);
+        lienzo = new JTabPlugin();
+        
+        add(lienzo);
         oocl = new OWLOntologyChangeListener(){
 
 			public void ontologiesChanged(List<? extends OWLOntologyChange> cambio) throws OWLException {
 				
 				System.err.println("Cambios: " + cambio);
 				
-				OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) lienzo.getGraphModel());
+				OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) lienzo.getCurrentGraphModel());
 				//Process the list of changes
 				filter.processChanges(cambio);
 				
