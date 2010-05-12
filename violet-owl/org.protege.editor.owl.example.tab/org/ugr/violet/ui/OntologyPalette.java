@@ -76,7 +76,7 @@ public class OntologyPalette extends PaletteFig {
     }
 
     /** Define a button to make for the Example application */
-    @SuppressWarnings("deprecation")
+    
 	public void defineButtons() {
     	add(new CmdSetMode(ModeSelect.class, "Select"));
         add(new CmdSetMode(ModeBroom.class, "Broom"));
