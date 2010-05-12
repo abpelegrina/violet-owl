@@ -40,6 +40,7 @@ import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OntologyNode;
 import org.ugr.violet.graph.nodes.OntologyPort;
 import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.ugr.violet.presentation.OntologyFig;
 import org.ugr.violet.visitors.BooleanDescriptionDeleteVisitor;
 import org.ugr.violet.visitors.BooleanDescriptionVisitor;
 import org.ugr.violet.visitors.ComplementsOfVisitor;
@@ -161,7 +162,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param objectPropertyName
 	 * @return
 	 */
-	private OWLObjectProperty getOwlObjectPropertyByName(String objectPropertyName) {
+	protected OWLObjectProperty getOwlObjectPropertyByName(String objectPropertyName) {
 
 		return ExampleViewComponent.manager.getOWLObjectProperty(objectPropertyName);
 	}
@@ -497,7 +498,8 @@ public class OntologyGraphModel extends DefaultGraphModel {
 					nodo = new NodeClass(claseOWL);
 				
 				addNode(nodo);
-				nodo.getOntologyFig().setLocation(location);
+				OntologyFig f = nodo.getOntologyFig();
+				f.setLocation(location);
 
 				// Actualizamos la restricciones, por si existe alguna aplicada a esta clase.
 				// Se hace antes de agregar las restricciones propias para evitar que se aplique sobre las restricciones

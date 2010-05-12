@@ -17,8 +17,12 @@ import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
+import org.semanticweb.owl.model.OWLObjectProperty;
+import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owl.model.OWLOntology;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
+import org.ugr.violet.graph.OntologyActivityGraphModel;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.NodeDataProperty;
 import org.ugr.violet.graph.nodes.NodeIndividual;
@@ -50,7 +54,72 @@ public class NodeActivityStep extends NodeActivity {
 	private FigActivityStep figura = null;
 
 	
+	/**
+	 * Constructor sin parámentros, crea el nodo nuevo y crea tb la actividad, el paso y los enlaces asociados
+	 */
+	public NodeActivityStep(){
+		
+		String nombreActividad = JOptionPane.showInputDialog("Activity Name: "); 
+		
+		activity = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreActividad));
+    	OWLClass claseAccion = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Action"));
+    	
+    	
+    	OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity, claseAccion);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), d));
+		
+		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
+		
+		NodeActivityStep nodeInd;
+		
+		// 1 Buscar el step asociado al la actividad/tarea
+		
+		activity_step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreActividad + "_step"));
+	    OWLClass claseStep = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Action_Step"));
+	    	
+	    	
+	    d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity_step, claseStep);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), d));
 	
+		// asociamos la tarea y el step mediante la propiedad de objetos "performs". Si ya existía la relación no pasa nada
+		OWLObjectProperty performs = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#performs"));
+		OWLObjectPropertyAssertionAxiom ax = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, performs, activity);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, ax));
+		
+		// 2 Buscamos el rol asociado con la tarea (si existe)
+		// TODO buscar el rol asociado con la tarea 
+	
+		
+		// 3 Añadir la actividad como parte de la tarea modelada
+		OWLIndividual tareaPrincipal = ExampleViewComponent.lienzoActual.getTarea();
+		// Asociamos la secuencia a los steps
+		OWLObjectProperty hasPart = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#has_part"));
+		OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#part_of"));
+		
+		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity, partOf, tareaPrincipal);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(tareaPrincipal, hasPart, activity);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		
+		// 4 Agregar los steps como parte de la secuencia del diagrama
+		OWLIndividual secuencia = ExampleViewComponent.lienzoActual.getSecuencia();
+		
+		// step es parte de secuencia
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, partOf, secuencia);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		
+		// secuencia tiene como parte a step
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, activity_step);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		
+		addPort(east = new OntologyPort(this));
+        addPort(west = new OntologyPort(this));
+        addPort(north = new OntologyPort(this));
+        addPort(south = new OntologyPort(this));
+	}
+
+
 	/**
      * Contructor. Creates a new node
      * @param unaPropiedadDeDatos OWL class represented by the new node

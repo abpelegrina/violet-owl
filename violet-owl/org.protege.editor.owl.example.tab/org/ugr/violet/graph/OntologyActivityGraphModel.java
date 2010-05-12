@@ -42,6 +42,24 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 		super(ont);
 	}
 	
+	
+	public void addStepToSequence(OWLIndividual step){
+	
+		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
+		
+		OWLIndividual secuencia = ExampleViewComponent.lienzoActual.getSecuencia();
+		OWLObjectProperty hasPart = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#has_part"));
+		OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#part_of"));
+		
+		// step es parte de secuencia
+		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step, partOf, secuencia);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		
+		// secuencia tiene como parte a step
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, step);
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+	}
+	
 	@Override
 	public boolean addIndividual(String  taskName, Point location){
 		taskName=taskName.trim();
@@ -57,7 +75,6 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 			
 			if (c.toString().equals("Action")  || c.toString().equals("Task")){
 				nodo = this.addActionStep(ind);
-				System.err.println("ES una acción");
 			}
 			else if (c.toString().equals("Fork_Step")){
 				nodo = this.addForkStep(ind);
@@ -71,21 +88,13 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 			else if (c.toString().equals("Merge_Step")){
 				nodo = this.addMergeStep(ind);
 			}
-			else if (true){
-				System.err.println("NO es una acción");
-			}
-			
 			
 			System.err.flush();
 			
 			if (nodo != null) {
-				
-				System.err.println("El nodo se ha creado con exito");
 				this.addNode(nodo);
 				nodo.getOntologyFig().setLocation(location);
 			}
-			else
-				System.err.println("El nodo NO se ha creado con exito");
 			
 			return true;
 		}
@@ -111,6 +120,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 		NodeDecision nodo = new NodeDecision(ind);
 		return nodo;
 	}
+	
 
 	/**
 	 * @param ind
@@ -120,7 +130,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 		return nodo;
 	}
 
-	private OntologyNode addActionStep(OWLIndividual task){
+	public OntologyNode addActionStep(OWLIndividual task){
 		OWLIndividual step = null;
 		OWLIndividual role = null;
 		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
@@ -156,9 +166,9 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 		// 2 Buscamos el rol asociado con la tarea (si existe)
 		// TODO buscar el rol asociado con la tarea 
 		
-		
+		/*
 		// 3 Añadir la actividad como parte de la tarea modelada
-		OWLIndividual tareaPrincipal = ExampleViewComponent.lienzo.getTarea();
+		OWLIndividual tareaPrincipal = ExampleViewComponent.lienzoActual.getTarea();
 		// Asociamos la secuencia a los steps
 		OWLObjectProperty hasPart = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#has_part"));
 		OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#part_of"));
@@ -170,7 +180,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
 		
 		// 4 Agregar los steps como parte de la secuencia del diagrama
-		OWLIndividual secuencia = ExampleViewComponent.lienzo.getSecuencia();
+		OWLIndividual secuencia = ExampleViewComponent.lienzoActual.getSecuencia();
 		
 		// step es parte de secuencia
 		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step, partOf, secuencia);
@@ -178,7 +188,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 		
 		// secuencia tiene como parte a step
 		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, step);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));*/
 		
 		// 5 Cear el nodo y agregarlo al diagrama
 		nodeInd = new NodeActivityStep(task, step);

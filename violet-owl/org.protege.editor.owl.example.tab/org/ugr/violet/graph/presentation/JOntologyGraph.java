@@ -61,26 +61,31 @@ public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTa
 	/**
 	 * Diagrama
 	 */
-	private OntologyActivityDiagram od = null;
+	protected OntologyDiagram od = null;
 	
 	/**
 	 * Modelo
 	 */
-	private OntologyActivityGraphModel ogm = null;
+	protected OntologyGraphModel ogm = null;
+
+	
+	protected OWLOntology activa = null;
 	
 	/**
 	 * constructor
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOntologyGraph(OWLOntology activa, OntologyPalette p) {
+	public JOntologyGraph(OWLOntology ont, OntologyPalette p) {
 		super();
 		this.setBounds(10, 10, 300, 200);
 		this.add(p, BorderLayout.NORTH);
 		
+		activa = ont;
+		
 		// creamos el diagrama asociado a la ontolog�a
-		ogm = new OntologyActivityGraphModel(activa);
-		od = new OntologyActivityDiagram(activa.getURI().toString(), ogm);
+		ogm = generateGraphModel();
+		od = new OntologyDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( od.getOntologyGraphModel() );
 		
 		// al darle al supr se borrara el componente seleccionado
@@ -113,6 +118,27 @@ public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTa
 				ogm.setSelection(entidad);
 			}			
 		});*/
+	}
+	
+	protected OntologyGraphModel generateGraphModel(){
+		return new OntologyGraphModel(activa);
+	}
+	
+	public boolean isViewCanvas(){
+		return false;
+	}
+	
+	
+	public boolean isBaseCanvas(){
+		return true;
+	}
+	
+	public OWLIndividual getSecuencia(){
+		return null;
+	}
+	
+	public OWLIndividual getTarea(){
+		return null;
 	}
 	
 	public void modeChange(ModeChangeEvent mce) {

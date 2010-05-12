@@ -44,6 +44,7 @@ import org.ugr.violet.graph.OntologyActivityGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
+import org.ugr.violet.ui.ActivityDiagramPalette;
 import org.ugr.violet.ui.OntologyPalette;
 
 /**
@@ -51,24 +52,12 @@ import org.ugr.violet.ui.OntologyPalette;
  * @author anab	
  */
 
-public class JOntologyActivityGraph extends JGraph implements ModeChangeListener, DropTargetListener {
+public class JOntologyActivityGraph extends JOntologyGraph implements ModeChangeListener, DropTargetListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5721239684646257988L;
-	
-	/**
-	 * Diagrama
-	 */
-	private OntologyActivityDiagram od = null;
-	
-	/**
-	 * Modelo
-	 */
-	private OntologyActivityGraphModel ogm = null;
-	
-	private OWLOntology activa = null;	
 
 	private OWLIndividual tarea = null;
 	
@@ -77,6 +66,7 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 	/**
 	 * @return the tarea
 	 */
+	@Override
 	public OWLIndividual getTarea() {
 		return tarea;
 	}
@@ -84,8 +74,19 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 	/**
 	 * @return the secuencia
 	 */
+	@Override
 	public OWLIndividual getSecuencia() {
 		return secuencia;
+	}
+	
+	@Override
+	public boolean isViewCanvas(){
+		return true;
+	}
+	
+	@Override
+	public boolean isBaseCanvas(){
+		return false;
 	}
 	
 	/**
@@ -94,53 +95,16 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 	 * @param p paleta con los controles
 	 */
 	public JOntologyActivityGraph(OWLOntology ont, OntologyPalette p) {
-		super();
-		this.setBounds(10, 10, 300, 200);
-		this.add(p, BorderLayout.NORTH);
+		super(ont, p);
 		
-		activa = ont;
 		// creamos el diagrama asociado a la ontolog�a
 		ogm = new OntologyActivityGraphModel(activa);
 		od = new OntologyActivityDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( ogm );
 		
-		// al darle al supr se borrara el componente seleccionado
-		this.bindKey(new DeleteFromModelAction("DeleteFromDiagram"), KeyEvent.VK_DELETE, 0);
-		
-		// Activamos el soporte para el drag'n drop
-		DropTarget dropTarget = new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this, true, null);
-		this.setDropTarget(dropTarget);
-
-		
-		/* Agregamos un listener para seleccionar en los distintos paneles del entorno Protege la entidad OWL 
-		 * seleccionada en el diagrama*/
-		this.addGraphSelectionListener(new GraphSelectionListener(){
-
-			public void selectionChanged(GraphSelectionEvent gse) {
-				
-				for (Object o : gse.getSelections()){
-					OWLEntity entidad = ExampleViewComponent.manager.getOWLEntity(o.toString());
-					ExampleViewComponent.workspace.getOWLSelectionModel().setSelectedEntity(entidad);
-				}
-			}
-		});
-		
-		/*Y a la inversa tb: agregamos un listener para que los cambios en la seleccion en Prot�g� 
-		 * se refleje en el diagrama*/
-		/*ExampleViewComponent.workspace.getOWLSelectionModel().addListener(new OWLSelectionModelListener(){
-
-			public void selectionChanged() throws Exception {
-				OWLEntity entidad = ExampleViewComponent.workspace.getOWLSelectionModel().getSelectedEntity();
-				ogm.setSelection(entidad);
-			}			
-		});*/
-		
-		String taskName = JOptionPane.showInputDialog("Select the name of the new task"); 
-		
-		if (taskName != null) {
-			this.createNewTask(taskName);
-			this.createDiagramSkeleton(taskName);
-		}
+		this.createNewTask("prueba");
+		this.createDiagramSkeleton("prueba");
+		//}
 	}
 	
 	
@@ -150,53 +114,19 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 	 * @param p paleta con los controles
 	 */
 	public JOntologyActivityGraph(OWLOntology ont, OntologyPalette p, OWLIndividual task) {
-		super();
-		this.setBounds(10, 10, 300, 200);
+		super(ont, p);
+		
 		
 		tarea = task;
 		
-		activa = ont;
 		// creamos el diagrama asociado a la ontolog�a
 		ogm = new OntologyActivityGraphModel(activa);
 		od = new OntologyActivityDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( ogm );
 		
-		// al darle al supr se borrara el componente seleccionado
-		this.bindKey(new DeleteFromModelAction("DeleteFromDiagram"), KeyEvent.VK_DELETE, 0);
-		
-		// Activamos el soporte para el drag'n drop
-		DropTarget dropTarget = new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this, true, null);
-		this.setDropTarget(dropTarget);
-
-		
-		/* Agregamos un listener para seleccionar en los distintos paneles del entorno Protege la entidad OWL 
-		 * seleccionada en el diagrama*/
-		this.addGraphSelectionListener(new GraphSelectionListener(){
-
-			public void selectionChanged(GraphSelectionEvent gse) {
-				
-				for (Object o : gse.getSelections()){
-					OWLEntity entidad = ExampleViewComponent.manager.getOWLEntity(o.toString());
-					ExampleViewComponent.workspace.getOWLSelectionModel().setSelectedEntity(entidad);
-				}
-			}
-		});
-		
-		/*Y a la inversa tb: agregamos un listener para que los cambios en la seleccion en Prot�g� 
-		 * se refleje en el diagrama*/
-		/*ExampleViewComponent.workspace.getOWLSelectionModel().addListener(new OWLSelectionModelListener(){
-
-			public void selectionChanged() throws Exception {
-				OWLEntity entidad = ExampleViewComponent.workspace.getOWLSelectionModel().getSelectedEntity();
-				ogm.setSelection(entidad);
-			}			
-		});*/
-		
-		String taskName = JOptionPane.showInputDialog("Select the name of the new task"); 
-		
-		
-			this.createNewTask(taskName);
-			this.createDiagramSkeleton(tarea.toString());
+		// creamos la nueva tarea
+		this.createNewTask("prueba");
+		this.createDiagramSkeleton(tarea.toString());
 	}
 	
 	private void createNewTask(String taskName){
@@ -238,6 +168,8 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 		// aplicamos los cambios
 		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
 		
+		/*
+		
 		// 3. Creamos pasos de inicio y de fin y los conectamos para que veamos lo bonito que queda
 		OWLIndividual inicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + taskName + "_start"));
 		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#First_Step"));
@@ -278,7 +210,7 @@ public class JOntologyActivityGraph extends JGraph implements ModeChangeListener
 		
 		nodo = new NodeLastStep(fin);
 		ogm.addNode(nodo);
-		nodo.getOntologyFig().setLocation(new Point(100, 420));
+		nodo.getOntologyFig().setLocation(new Point(100, 420)); */
 	}
 	
 	public void modeChange(ModeChangeEvent mce) {

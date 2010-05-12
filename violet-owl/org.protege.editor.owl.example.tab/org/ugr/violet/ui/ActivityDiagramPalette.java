@@ -42,9 +42,6 @@ import org.tigris.gef.base.PrintAction;
 import org.tigris.gef.base.SaveSVGAction;
 import org.tigris.gef.graph.presentation.PaletteFig;
 import org.ugr.violet.actions.CmdCreateActivityStep;
-import org.ugr.violet.actions.CmdCreateNodeDataProperty;
-import org.ugr.violet.actions.CmdCreateNodeIndividual;
-import org.ugr.violet.actions.CmdCreateNodeObjectProperty;
 import org.ugr.violet.actions.CmdCreateNodeRelation;
 import org.ugr.violet.actions.ModeCreateComplement;
 import org.ugr.violet.actions.ModeCreateDisjoint;
@@ -55,7 +52,12 @@ import org.ugr.violet.actions.ModeCreateObjectProperty;
 import org.ugr.violet.actions.ModeCreateRange;
 import org.ugr.violet.actions.ModeCreateSub;
 import org.ugr.violet.graph.nodes.NodeClass;
+import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
+import org.ugr.violet.graph.nodes.activity.NodeFork;
+import org.ugr.violet.graph.nodes.activity.NodeJoin;
+import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 
 /** A class to define a custom palette for use in some demos.
  *
@@ -63,7 +65,7 @@ import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
  * @see org.tigris.gef.demo.BasicApplication
  */
 
-public class OntologyPalette extends PaletteFig {
+public class ActivityDiagramPalette extends OntologyPalette {
 
     /**
 	 * 
@@ -71,8 +73,8 @@ public class OntologyPalette extends PaletteFig {
 	private static final long serialVersionUID = -3626620406810549582L;
 
 	/** Construct a new palette of example nodes for the Example application */
-    public OntologyPalette() {
-        super();
+    public ActivityDiagramPalette() {
+
     }
 
     /** Define a button to make for the Example application */
@@ -88,36 +90,32 @@ public class OntologyPalette extends PaletteFig {
         
 		this.addSeparator();
 		
-		add(new CmdCreateNode(NodeClass.class, "ClaseOWL"));
-		add(new CmdCreateNodeIndividual());
-		//add(new CmdCreateNodeDataProperty());
-		//add(new CmdCreateNodeObjectProperty());
 		
+		add(new CmdCreateNode(NodeActivityStep.class, "Activity"));
+		add(new CmdCreateNode(NodeFirstStep.class, "Initial"));
+		add(new CmdCreateNode(NodeLastStep.class, "FinalState"));
+		this.addSeparator();
+		add(new CmdCreateNode(NodeFork.class, "Fork"));
+		add(new CmdCreateNode(NodeJoin.class, "Join"));
+		this.addSeparator();
+		add(new CmdCreateNode(NodeActivityStep.class, "Decision"));
+		this.addSeparator();
+		add(new CmdCreateNode(NodeActivityStep.class, "Signal"));
+		add(new CmdCreateNode(NodeActivityStep.class, "SignalReceiving"));
+		
+		//add(new CmdCreateNode(NodeClass.class, "ClaseOWL"));
+		/*add(new CmdCreateNodeIndividual());
+		add(new CmdCreateNodeDataProperty());
+		add(new CmdCreateNodeObjectProperty());*/
+		this.addSeparator();
 		this.addSeparator();
 		add(new CmdSetMode(ModeCreateFollowedBy.class, "ObjectProperty"));
-		
+		/*
 		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));		
 		add(new CmdSetMode(ModeCreateSub.class, "Sub"));		
 		add(new CmdSetMode(ModeCreateDisjoint.class, "Disjoint"));		
 		add(new CmdSetMode(ModeCreateEquivalent.class, "Equivalence"));
 		add(new CmdSetMode(ModeCreateComplement.class, "Not"));
-		
-		this.addSeparator();		
-		add(new CmdSetMode(ModeCreateRange.class, "Range"));
-		add(new CmdSetMode(ModeCreateDomain.class, "Domain"));
-		
-		this.addSeparator();
-        add(new PrintAction("Print", "Ontología", true));
-      //
-        SaveSVGAction ssa = new SaveSVGAction("SaveScalableVectorGraphics", true);
-        File f = new File("prueba.svg");
-		FileOutputStream fos;
-		try {
-			fos = new FileOutputStream(f);
-			ssa.setStream(fos);
-	        add(ssa);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		*/
     }
 } /* end class SamplePalette */
