@@ -2,16 +2,26 @@ package org.ugr.violet.graph.nodes;
 
 import java.util.Hashtable;
 
+import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.presentation.NetNode;
 import org.ugr.violet.presentation.OntologyFig;
 
-public abstract class OntologyNode extends NetNode {
+public abstract class OntologyNode<T extends OWLEntity> extends NetNode {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5005676849252957456L;
+	
+	
+	T entity = null;
+	
+	
+	public OntologyNode(){
+		
+	}
+	
 	/**
 	 * Ports to connect the node  with others class nodes
 	 */
