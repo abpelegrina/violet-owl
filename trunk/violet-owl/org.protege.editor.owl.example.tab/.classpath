@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="build/|org/tigris/gef/demo/|src/org/|src/Acme/|src/Acme/JPM/Encoders/" kind="src" path=""/>
+	<classpathentry excluding="build/|org/tigris/gef/demo/|src/org/|src/Acme/|src/Acme/JPM/Encoders/|articles/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/owleditor"/>
 	<classpathentry kind="lib" path="/owleditor/plugins/org.protege.common/lib/log4j.jar"/>

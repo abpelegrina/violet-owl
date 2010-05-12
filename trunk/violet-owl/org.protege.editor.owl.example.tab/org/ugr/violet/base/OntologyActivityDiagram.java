@@ -47,7 +47,7 @@ public class OntologyActivityDiagram extends OntologyDiagram {
 	 * @param name nombre del diagrama
 	 * @param graphModel modelo grafico de la ontologia
 	 */
-	public OntologyActivityDiagram(String name, OntologyActivityGraphModel graphModel){
+	public OntologyActivityDiagram(String name, OntologyGraphModel graphModel){
 		super(name, graphModel);
 		graphModel.setOwner(this);
 	}

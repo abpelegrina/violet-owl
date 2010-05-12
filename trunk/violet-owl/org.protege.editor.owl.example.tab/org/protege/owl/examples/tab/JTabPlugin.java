@@ -12,6 +12,7 @@ import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.graph.GraphModel;
 import org.ugr.violet.graph.presentation.JOntologyActivityGraph;
 import org.ugr.violet.graph.presentation.JOntologyGraph;
+import org.ugr.violet.ui.ActivityDiagramPalette;
 import org.ugr.violet.ui.OntologyPalette;
 
 /**
@@ -33,7 +34,7 @@ public class JTabPlugin extends JTabbedPane {
 		super();
 		
 		
-		OntologyPalette barraDeHerramientas = new OntologyPalette();
+		ActivityDiagramPalette barraDeHerramientas = new ActivityDiagramPalette();
         lienzo = new JOntologyActivityGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas);        
 
         OntologyPalette barraDeHerramientas2 = new OntologyPalette();

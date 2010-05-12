@@ -6,15 +6,20 @@ package org.ugr.violet.graph.nodes.activity;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
+import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
+import org.semanticweb.owl.model.OWLClassAssertionAxiom;
 import org.semanticweb.owl.model.OWLDataProperty;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
+import org.ugr.violet.graph.OntologyActivityGraphModel;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.NodeDataProperty;
 import org.ugr.violet.graph.nodes.NodeIndividual;
@@ -33,8 +38,33 @@ import org.ugr.violet.presentation.activity.FigFirstStep;
  */
 public class NodeFirstStep extends NodeActivity {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5114386219659956748L;
 	private OWLIndividual step = null;
 	private FigFirstStep figura = null;
+	private static int cont = 0;
+	/**
+     * Contructor. Creates a new node
+     * @param unaPropiedadDeDatos OWL class represented by the new node
+     */
+    public NodeFirstStep (){
+    	super();
+    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.lienzoActual.getTarea() + "_start_" + cont));
+    	cont++;
+		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#First_Step"));
+		
+		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
+		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
+		
+		((OntologyActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
+		
+    	addPort(east = new OntologyPort(this));
+        addPort(west = new OntologyPort(this));
+        addPort(north = new OntologyPort(this));
+        addPort(south = new OntologyPort(this));
+    }
 	
 	/**
      * Contructor. Creates a new node
