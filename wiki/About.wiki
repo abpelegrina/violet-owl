@@ -1,0 +1,21 @@
+#summary What it is Violet-OWL?
+#labels about,Phase-Support
+
+= What it is Violet-OWL? =
+
+Violet-OWL is a plugin for Protégé 4 (sorry Protegé 3 users :( ) that aims to be an visual, easy and straightforward way to work with ontologies in Protégé. 
+
+= Features =
+Waht offers Violet-OWL?
+  * Visual edition of OWL ontologies.
+  * Full integration with Protégé.
+  * Export diagrams to common formats: (png, svg, etc.)
+
+= Future Outlook =
+   * Views and views definition support
+   * Integration with reasoners (such as Pellet or Fact++)
+   * Support for the new and exciting features of OWL 2
+   * Project management
+   * ...
+
+Suggestions are welcome!!
