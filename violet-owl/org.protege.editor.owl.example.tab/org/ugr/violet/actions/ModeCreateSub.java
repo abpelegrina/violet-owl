@@ -5,7 +5,7 @@ package org.ugr.violet.actions;
 
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.presentation.Fig;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.presentation.OntologyFig;
 
 /**
@@ -24,7 +24,7 @@ public class ModeCreateSub extends ModeCreateAxiom {
 	 * @see org.ugr.ontology.actions.ModeCreateAxiom#accionReleaseMouse()
 	 */
 	@Override
-	public void accionReleaseMouse(OntologyGraphModel ogm) {
+	public void accionReleaseMouse(OWLGraphModel ogm) {
 		
     	if (!destFigNode.toString().equals(sourceFigNode.toString())) {
         	

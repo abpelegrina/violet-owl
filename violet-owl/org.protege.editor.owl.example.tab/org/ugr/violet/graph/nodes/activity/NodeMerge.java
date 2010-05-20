@@ -20,7 +20,7 @@ import org.ugr.violet.graph.nodes.NodeIntersection;
 import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
-import org.ugr.violet.graph.nodes.OntologyPort;
+import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.FigIndividual;
 import org.ugr.violet.presentation.OntologyFig;
 import org.ugr.violet.presentation.activity.FigDecision;
@@ -50,10 +50,10 @@ public class NodeMerge extends NodeActivity {
     public  NodeMerge (OWLIndividual paso){
     	super();
     	step = paso;
-    	addPort(east = new OntologyPort(this));
-        addPort(west = new OntologyPort(this));
-        addPort(north = new OntologyPort(this));
-        addPort(south = new OntologyPort(this));
+    	addPort(east = new OWLPort(this));
+        addPort(west = new OWLPort(this));
+        addPort(north = new OWLPort(this));
+        addPort(south = new OWLPort(this));
     }
     
     /** Initialize a new SampleNode from the given default node and

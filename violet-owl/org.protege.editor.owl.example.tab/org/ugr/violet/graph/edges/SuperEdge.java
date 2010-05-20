@@ -10,7 +10,7 @@ import org.tigris.gef.presentation.FigEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
 import org.tigris.gef.presentation.FigText;
 
-public class SuperEdge extends OntologyEdge {
+public class SuperEdge extends OWLEdge {
 
 	/**
 	 * 

@@ -23,7 +23,7 @@ import org.semanticweb.owl.model.OWLObjectValueRestriction;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
 import org.tigris.gef.graph.presentation.NetPort;
 import org.ugr.violet.base.Restriction;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.*;
 import org.ugr.violet.graph.nodes.*;
 
@@ -33,10 +33,10 @@ import org.ugr.violet.graph.nodes.*;
  *
  */
 public class DataPropertyDomainDeleteVisitor extends OWLDescriptionVisitorAdapter {
-	private OntologyGraphModel ogm = null;
+	private OWLGraphModel ogm = null;
 	private OWLDataProperty propiedad = null;
 
-	public DataPropertyDomainDeleteVisitor(OntologyGraphModel modelo, OWLDataProperty prop){
+	public DataPropertyDomainDeleteVisitor(OWLGraphModel modelo, OWLDataProperty prop){
 		ogm = modelo;
 		propiedad = prop;
 	}
@@ -49,7 +49,7 @@ public class DataPropertyDomainDeleteVisitor extends OWLDescriptionVisitorAdapte
 
 		// buscar el enlace y eliminarlo
 		for (Object o: ogm.getEdges()){
-			RangeEdge re = ((OntologyEdge) o).asRangeEdge();
+			RangeEdge re = ((OWLEdge) o).asRangeEdge();
 			if (re != null && re.checkLink(propiedad) && re.checkLink(desc))
 				aEliminar.add(re);
 		}
@@ -132,7 +132,7 @@ public class DataPropertyDomainDeleteVisitor extends OWLDescriptionVisitorAdapte
 			desc.getOperand().accept(v);
 
 		for (Object o : ogm.getNodes()){
-			NodeComplement nodo = ((OntologyNode) o).asNodeComplement();
+			NodeComplement nodo = ((OWLNode) o).asNodeComplement();
 			if (nodo != null && nodo.getOWLEntity().equals(propiedad) && desc.equals(nodo.getOWLObjectComplementOf()))
 					aEliminar.add(nodo);
 		}
@@ -161,7 +161,7 @@ public class DataPropertyDomainDeleteVisitor extends OWLDescriptionVisitorAdapte
 				d.accept(v);
 
 		for (Object o : ogm.getNodes()){
-			NodeIntersection nodo = ((OntologyNode) o).asNodeIntersection();
+			NodeIntersection nodo = ((OWLNode) o).asNodeIntersection();
 			if (nodo != null && nodo.getOWLEntity().equals(propiedad) && desc.equals(nodo.getOWLObjectIntersectionOf()))
 					aEliminar.add(nodo);
 		}
@@ -190,7 +190,7 @@ public class DataPropertyDomainDeleteVisitor extends OWLDescriptionVisitorAdapte
 				d.accept(v);
 
 		for (Object o : ogm.getNodes()){
-			NodeUnion nodo = ((OntologyNode) o).asNodeUnion();
+			NodeUnion nodo = ((OWLNode) o).asNodeUnion();
 			if (nodo != null && nodo.getOWLEntity().equals(propiedad) && desc.equals(nodo.getOWLObjectUnionOf()))
 					aEliminar.add(nodo);
 		}
@@ -213,10 +213,10 @@ public class DataPropertyDomainDeleteVisitor extends OWLDescriptionVisitorAdapte
 	public void visit(OWLObjectOneOf oneOf) {
 		super.visit(oneOf);
 		
-		OntologyNode aEliminar = null;
+		OWLNode aEliminar = null;
 		
 		for (Object o : ogm.getNodes()){
-			NodeOneOf nodo = ((OntologyNode) o).asNodeOneOf();
+			NodeOneOf nodo = ((OWLNode) o).asNodeOneOf();
 			if (nodo != null){
 				if (nodo.getOWLEntity().equals(propiedad) && oneOf.equals(nodo.getOWLObjectComplementOf()))
 					aEliminar = nodo; 

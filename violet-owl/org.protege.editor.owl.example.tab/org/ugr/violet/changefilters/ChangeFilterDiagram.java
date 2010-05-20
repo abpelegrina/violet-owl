@@ -47,11 +47,11 @@ import org.semanticweb.owl.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owl.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owl.model.SWRLRule;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.DisjointEdge;
 import org.ugr.violet.graph.edges.EquivalentEdge;
 import org.ugr.violet.graph.edges.InverseOfEdge;
-import org.ugr.violet.graph.edges.OntologyEdge;
+import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.edges.RangeEdge;
 import org.ugr.violet.graph.edges.RestrictionEdge;
 import org.ugr.violet.graph.nodes.NodeClass;
@@ -68,13 +68,13 @@ import org.ugr.violet.visitors.SuperClassesVisitor;
  */
 public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
-	protected OntologyGraphModel ogm = null;
+	protected OWLGraphModel ogm = null;
 
 	/**
 	 * Crea el filtro de cambios para aplicarlos al diagrama
 	 * @param o
 	 */
-	public ChangeFilterDiagram(OntologyGraphModel o){
+	public ChangeFilterDiagram(OWLGraphModel o){
 		super();
 		ogm = o;
 	}
@@ -95,7 +95,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				DisjointEdge e = ((OntologyEdge) o).asDisjointEdge();
+				DisjointEdge e = ((OWLEdge) o).asDisjointEdge();
 
 				if (e != null && e.checkLink(c1) && e.checkLink(c2)){
 					aBorrar = e;
@@ -129,7 +129,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				DisjointEdge e = ((OntologyEdge) o).asDisjointEdge();
+				DisjointEdge e = ((OWLEdge) o).asDisjointEdge();
 
 				if (e != null && e.checkLink(p1) && e.checkLink(p2)){
 					aBorrar = e;
@@ -162,7 +162,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				EquivalentEdge e = ((OntologyEdge) o).asEquivalentEdge();
+				EquivalentEdge e = ((OWLEdge) o).asEquivalentEdge();
 
 				if (e != null && e.checkLink(c1) && e.checkLink(c2)){
 					aBorrar = e;
@@ -191,7 +191,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				EquivalentEdge e = ((OntologyEdge) o).asEquivalentEdge();
+				EquivalentEdge e = ((OWLEdge) o).asEquivalentEdge();
 
 				if (e != null && e.checkLink(p1) && e.checkLink(p2)){
 					aBorrar = e;
@@ -279,7 +279,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				DisjointEdge e = ((OntologyEdge) o).asDisjointEdge();
+				DisjointEdge e = ((OWLEdge) o).asDisjointEdge();
 
 				if (e != null && e.checkLink(c1) && e.checkLink(c2)){
 					aBorrar = e;
@@ -314,7 +314,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				DisjointEdge e = ((OntologyEdge) o).asDisjointEdge();
+				DisjointEdge e = ((OWLEdge) o).asDisjointEdge();
 
 				if (e != null && e.checkLink(p1) && e.checkLink(p2)){
 					aBorrar = e;
@@ -370,7 +370,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				EquivalentEdge e = ((OntologyEdge) o).asEquivalentEdge();
+				EquivalentEdge e = ((OWLEdge) o).asEquivalentEdge();
 
 				if (e != null && e.checkLink(c1) && e.checkLink(c2)){
 					aBorrar = e;
@@ -434,7 +434,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				InverseOfEdge e = ((OntologyEdge) o).asInverseOfEdge();
+				InverseOfEdge e = ((OWLEdge) o).asInverseOfEdge();
 
 				if (e != null && e.checkLink(p1) && e.checkLink(p2)){
 					aBorrar = e;
@@ -495,7 +495,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				RestrictionEdge e = ((OntologyEdge) o).asRestrictionEdge();
+				RestrictionEdge e = ((OWLEdge) o).asRestrictionEdge();
 
 				if (e != null && e.isSujeto(sujeto) && e.isObjeto(objeto)){
 					aBorrar = e;
@@ -537,7 +537,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 				// borrar el enlace entre las clases disjuntas
 				for (Object o : ogm.getEdges()){
-					RangeEdge e = ((OntologyEdge) o).asRangeEdge();
+					RangeEdge e = ((OWLEdge) o).asRangeEdge();
 
 					if (e != null && e.checkLink(dominio.asOWLClass()) && e.checkLink(propiedad)){
 						aBorrar = e;
@@ -589,7 +589,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 				// borrar el enlace entre las clases disjuntas
 				for (Object o : ogm.getEdges()){
-					RangeEdge e = ((OntologyEdge) o).asRangeEdge();
+					RangeEdge e = ((OWLEdge) o).asRangeEdge();
 
 					if (e != null && e.checkLink(rango.asOWLClass()) && e.checkLink(propiedad)){
 						aBorrar = e;
@@ -663,7 +663,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				EquivalentEdge e = ((OntologyEdge) o).asEquivalentEdge();
+				EquivalentEdge e = ((OWLEdge) o).asEquivalentEdge();
 
 				if (e != null && e.checkLink(c1) && e.checkLink(c2)){
 					aBorrar = e;
@@ -718,9 +718,14 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 	// implementado
 	@Override
 	public void visit(OWLDeclarationAxiom axiom) {
+		
+		
+		
 
 		// si se ha eliminado alguna entidad hay que asegurarse que no quede "ni rastro" de ella en el diagrama
 		if (this.isRemove()){
+			
+			System.err.println("Borrando una clase");
 
 			// recuperamos la entidad
 			OWLEntity entidad = axiom.getEntity();

@@ -23,7 +23,7 @@ import org.ugr.violet.presentation.OntologyFig;
  * @author anab
  *
  */
-public class NodeObjectProperty extends OntologyNode {
+public class NodeObjectProperty extends OWLNode {
 
 	/**
 	 * 

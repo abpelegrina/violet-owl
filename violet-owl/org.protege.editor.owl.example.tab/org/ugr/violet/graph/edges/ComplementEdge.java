@@ -19,7 +19,7 @@ import org.tigris.gef.presentation.FigText;
  * @author anab
  *
  */
-public class ComplementEdge extends OntologyEdge {
+public class ComplementEdge extends OWLEdge {
 
 	/**
 	 * 

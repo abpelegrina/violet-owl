@@ -17,8 +17,8 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigPoly;
 import org.tigris.gef.undo.UndoManager;
-import org.ugr.violet.graph.OntologyActivityGraphModel;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.ActivityGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.activity.FollowedByEdge;
 import org.ugr.violet.presentation.FigClass;
 import org.ugr.violet.presentation.OntologyFig;
@@ -127,11 +127,11 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
             f = editor.hit(x - 16, y - 16, 32, 32);
         }
         GraphModel graphModel = editor.getGraphModel();
-        if (!(graphModel instanceof OntologyActivityGraphModel)) {
+        if (!(graphModel instanceof ActivityGraphModel)) {
             f = null;
         }
 
-        OntologyGraphModel ogm = (OntologyGraphModel) graphModel;
+        OWLGraphModel ogm = (OWLGraphModel) graphModel;
 
         if (FigActivityDiagram.class.isInstance(f)) {
         	destFigNode = (FigActivityDiagram) f;

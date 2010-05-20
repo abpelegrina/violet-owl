@@ -17,7 +17,7 @@ import org.ugr.violet.presentation.OntologyFig;
  * @author anab
  *
  */
-public class NodeComplement extends OntologyNode {
+public class NodeComplement extends OWLNode {
 
 	/**
 	 * 
@@ -32,10 +32,10 @@ public class NodeComplement extends OntologyNode {
 		super();
 		entidad = c;
 		union = un;
-		addPort(east = new OntologyPort(this));
-        addPort(west = new OntologyPort(this));
-        addPort(north = new OntologyPort(this));
-        addPort(south = new OntologyPort(this));
+		addPort(east = new OWLPort(this));
+        addPort(west = new OWLPort(this));
+        addPort(north = new OWLPort(this));
+        addPort(south = new OWLPort(this));
 	}
 	
 	/**

@@ -12,7 +12,7 @@ import org.ugr.violet.graph.edges.DisjointEdge;
 import org.ugr.violet.graph.edges.EquivalentEdge;
 import org.ugr.violet.graph.edges.IntersectionEdge;
 import org.ugr.violet.graph.edges.InverseOfEdge;
-import org.ugr.violet.graph.edges.OntologyEdge;
+import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.edges.RangeEdge;
 import org.ugr.violet.graph.edges.RestrictionEdge;
 import org.ugr.violet.graph.edges.SuperEdge;
@@ -22,7 +22,7 @@ import org.ugr.violet.graph.edges.UnionEdge;
  * @author anab
  *
  */
-public class FollowedByEdge extends OntologyEdge {
+public class FollowedByEdge extends OWLEdge {
 	/**
 	 * 
 	 */

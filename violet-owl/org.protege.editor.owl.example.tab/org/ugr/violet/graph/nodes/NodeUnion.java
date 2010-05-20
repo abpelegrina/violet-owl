@@ -18,7 +18,7 @@ import org.ugr.violet.presentation.OntologyFig;
  * @author anab
  *
  */
-public class NodeUnion extends OntologyNode {
+public class NodeUnion extends OWLNode {
 
 	
 	/**

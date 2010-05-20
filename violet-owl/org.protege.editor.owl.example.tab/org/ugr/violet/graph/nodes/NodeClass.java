@@ -24,7 +24,7 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigClass;
 import org.ugr.violet.presentation.OntologyFig;
 
-public class NodeClass extends OntologyNode implements Serializable, LayoutedNode, MouseListener {
+public class NodeClass extends OWLNode implements Serializable, LayoutedNode, MouseListener {
 	/**
 	 * serial version of the class NetNode
 	 */

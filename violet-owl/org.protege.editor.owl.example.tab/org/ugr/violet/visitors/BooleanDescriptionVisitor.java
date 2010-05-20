@@ -10,13 +10,13 @@ import org.semanticweb.owl.model.OWLObjectComplementOf;
 import org.semanticweb.owl.model.OWLObjectIntersectionOf;
 import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.ComplementEdge;
 import org.ugr.violet.graph.edges.IntersectionEdge;
 import org.ugr.violet.graph.edges.UnionEdge;
 import org.ugr.violet.graph.nodes.NodeIntersection;
 import org.ugr.violet.graph.nodes.NodeUnion;
-import org.ugr.violet.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.nodes.OWLNode;
 
 /**
  * 
@@ -24,9 +24,9 @@ import org.ugr.violet.graph.nodes.OntologyNode;
  */
 public class BooleanDescriptionVisitor extends OWLDescriptionVisitorAdapter {
 
-	private OntologyGraphModel ogm = null;
-	private OntologyNode nodoRaiz = null;
-	private OntologyNode nodoActual = null;
+	private OWLGraphModel ogm = null;
+	private OWLNode nodoRaiz = null;
+	private OWLNode nodoActual = null;
 
 	private int verticalLevel = 2;
 	private int horizontalLevel = 0;
@@ -36,11 +36,11 @@ public class BooleanDescriptionVisitor extends OWLDescriptionVisitorAdapter {
 
 	private OWLDescription actual = null;
 
-	public OntologyNode getRootNode(){
+	public OWLNode getRootNode(){
 		return nodoRaiz;
 	}
 
-	public BooleanDescriptionVisitor(OntologyGraphModel m, OntologyNode nodoRaiz){
+	public BooleanDescriptionVisitor(OWLGraphModel m, OWLNode nodoRaiz){
 		ogm = m;
 		nodoActual = nodoRaiz;
 		x = nodoRaiz.getOntologyFig().getLocation().x - 60;
@@ -67,7 +67,7 @@ public class BooleanDescriptionVisitor extends OWLDescriptionVisitorAdapter {
 		// no es una clase anonima => agregamos al clase directamente
 		else {
 			// conectamos las clases con 
-			OntologyNode nodo = ogm.findOntologyNode(desc.getOperand());
+			OWLNode nodo = ogm.findOntologyNode(desc.getOperand());
 
 			if (nodo == null && 
 					ogm.addClass(desc.getOperand().toString(), new Point(x+horizontalLevel*horizontalGap,y+verticalLevel*verticalGap)))
@@ -107,14 +107,14 @@ public class BooleanDescriptionVisitor extends OWLDescriptionVisitorAdapter {
 				actual = desc;
 				nodoActual = nodoInterseccion;
 				d.accept(this);
-				OntologyNode nodo = ogm.findOntologyNode(d);
+				OWLNode nodo = ogm.findOntologyNode(d);
 
 				IntersectionEdge arista = new IntersectionEdge(d, desc);
 				ogm.addConnection(nodoInterseccion, nodo, arista);
 			}
 			else {
 				// conectamos las clases con 
-				OntologyNode nodo = ogm.findOntologyNode(d);
+				OWLNode nodo = ogm.findOntologyNode(d);
 
 				if (nodo == null && 
 						ogm.addClass(d.toString(), new Point(x+horizontalLevel*horizontalGap,y+verticalLevel*verticalGap)))
@@ -154,13 +154,13 @@ public class BooleanDescriptionVisitor extends OWLDescriptionVisitorAdapter {
 				actual = desc;
 				nodoActual = nodoUnion;
 				d.accept(this);
-				OntologyNode nodo = ogm.findOntologyNode(d);
+				OWLNode nodo = ogm.findOntologyNode(d);
 				UnionEdge arista = new UnionEdge(d, desc);
 				ogm.addConnection(nodoUnion, nodo, arista);
 			}
 			else {
 				// conectamos las clases con 
-				OntologyNode nodo = ogm.findOntologyNode(d);
+				OWLNode nodo = ogm.findOntologyNode(d);
 				if (nodo == null && 
 						ogm.addClass(d.toString(), new Point(x+horizontalLevel*horizontalGap,y+verticalLevel*verticalGap)))
 					nodo = ogm.findOntologyNode(d);	

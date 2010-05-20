@@ -12,7 +12,7 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigPoly;
 import org.tigris.gef.undo.UndoManager;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.presentation.FigClass;
 import org.ugr.violet.presentation.OntologyFig;
 
@@ -113,11 +113,11 @@ public class ModeCreateComplement extends ModeCreatePolyEdge {
             f = editor.hit(x - 16, y - 16, 32, 32);
         }
         GraphModel graphModel = editor.getGraphModel();
-        if (!(graphModel instanceof OntologyGraphModel)) {
+        if (!(graphModel instanceof OWLGraphModel)) {
             f = null;
         }
 
-        OntologyGraphModel ogm = (OntologyGraphModel) graphModel;
+        OWLGraphModel ogm = (OWLGraphModel) graphModel;
 
         if (OntologyFig.class.isInstance(f)) {
         	destFigNode = (FigClass) f;

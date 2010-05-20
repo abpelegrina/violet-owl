@@ -7,7 +7,7 @@ import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.presentation.NetNode;
 import org.ugr.violet.presentation.OntologyFig;
 
-public abstract class OntologyNode<T extends OWLEntity> extends NetNode {
+public abstract class OWLNode<T extends OWLEntity> extends NetNode {
 
 	/**
 	 * 
@@ -18,14 +18,14 @@ public abstract class OntologyNode<T extends OWLEntity> extends NetNode {
 	T entity = null;
 	
 	
-	public OntologyNode(){
+	public OWLNode(){
 		
 	}
 	
 	/**
 	 * Ports to connect the node  with others class nodes
 	 */
-	public OntologyPort north, east, west, south;
+	public OWLPort north, east, west, south;
 	
 	@Override
 	public void initialize(Hashtable args) {

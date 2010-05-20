@@ -20,7 +20,7 @@ import org.tigris.gef.presentation.FigText;
  * @author anab
  *
  */
-public class OneOfEdge extends OntologyEdge {
+public class OneOfEdge extends OWLEdge {
 	
 
 	/**

@@ -12,7 +12,7 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigPoly;
 import org.tigris.gef.undo.UndoManager;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.presentation.OntologyFig;
 
 /**
@@ -31,7 +31,7 @@ public abstract class ModeCreateAxiom extends ModeCreatePolyEdge {
 	
 	abstract public boolean checkCondicionOrigen(Fig f);
 	abstract public boolean checkCondicionDestino(Fig f);
-	abstract public void accionReleaseMouse(OntologyGraphModel modelo);
+	abstract public void accionReleaseMouse(OWLGraphModel modelo);
 	
 	
 	@Override
@@ -114,11 +114,11 @@ public abstract class ModeCreateAxiom extends ModeCreatePolyEdge {
             f = editor.hit(x - 16, y - 16, 32, 32);
         }
         GraphModel graphModel = editor.getGraphModel();
-        if (!(graphModel instanceof OntologyGraphModel)) {
+        if (!(graphModel instanceof OWLGraphModel)) {
             f = null;
         }
 
-        OntologyGraphModel ogm = (OntologyGraphModel) graphModel;
+        OWLGraphModel ogm = (OWLGraphModel) graphModel;
 
         if (checkCondicionDestino(f)) {
         	destFigNode = (OntologyFig) f;

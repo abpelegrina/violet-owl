@@ -5,7 +5,7 @@ import org.tigris.gef.presentation.FigEdgePoly;
 import org.ugr.violet.layout.LayoutedEdge;
 
 
-public abstract class OntologyEdge extends NetEdge implements LayoutedEdge{
+public abstract class OWLEdge extends NetEdge implements LayoutedEdge{
 
 	/**
 	 * 

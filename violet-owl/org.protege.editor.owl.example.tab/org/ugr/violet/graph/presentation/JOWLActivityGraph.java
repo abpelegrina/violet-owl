@@ -39,8 +39,8 @@ import org.tigris.gef.graph.GraphEdgeRenderer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
-import org.ugr.violet.base.OntologyActivityDiagram;
-import org.ugr.violet.graph.OntologyActivityGraphModel;
+import org.ugr.violet.base.ActivityDiagram;
+import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
@@ -52,7 +52,7 @@ import org.ugr.violet.ui.OntologyPalette;
  * @author anab	
  */
 
-public class JOntologyActivityGraph extends JOntologyGraph implements ModeChangeListener, DropTargetListener {
+public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, DropTargetListener {
 
 	/**
 	 * 
@@ -94,12 +94,12 @@ public class JOntologyActivityGraph extends JOntologyGraph implements ModeChange
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOntologyActivityGraph(OWLOntology ont, OntologyPalette p) {
+	public JOWLActivityGraph(OWLOntology ont, OntologyPalette p) {
 		super(ont, p);
 		
 		// creamos el diagrama asociado a la ontolog�a
-		ogm = new OntologyActivityGraphModel(activa);
-		od = new OntologyActivityDiagram(activa.getURI().toString(), ogm);
+		ogm = new ActivityGraphModel(activa);
+		od = new ActivityDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( ogm );
 		
 		this.createNewTask("prueba");
@@ -113,15 +113,15 @@ public class JOntologyActivityGraph extends JOntologyGraph implements ModeChange
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOntologyActivityGraph(OWLOntology ont, OntologyPalette p, OWLIndividual task) {
+	public JOWLActivityGraph(OWLOntology ont, OntologyPalette p, OWLIndividual task) {
 		super(ont, p);
 		
 		
 		tarea = task;
 		
 		// creamos el diagrama asociado a la ontolog�a
-		ogm = new OntologyActivityGraphModel(activa);
-		od = new OntologyActivityDiagram(activa.getURI().toString(), ogm);
+		ogm = new ActivityGraphModel(activa);
+		od = new ActivityDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( ogm );
 		
 		// creamos la nueva tarea

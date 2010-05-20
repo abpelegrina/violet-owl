@@ -21,7 +21,7 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigDataProperty;
 import org.ugr.violet.presentation.OntologyFig;
 
-public class NodeDataProperty extends OntologyNode implements Serializable, LayoutedNode, MouseListener {
+public class NodeDataProperty extends OWLNode implements Serializable, LayoutedNode, MouseListener {
 	/**
 	 * serial version of the class NetNode
 	 */
@@ -56,10 +56,10 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
 	        
 	        ExampleViewComponent.manager.applyChange(addAxiom);
 	        
-	    	addPort(east = new OntologyPort(this));
-	        addPort(west = new OntologyPort(this));
-	        addPort(north = new OntologyPort(this));
-	        addPort(south = new OntologyPort(this));
+	    	addPort(east = new OWLPort(this));
+	        addPort(west = new OWLPort(this));
+	        addPort(north = new OWLPort(this));
+	        addPort(south = new OWLPort(this));
     	}
     }
     
@@ -70,10 +70,10 @@ public class NodeDataProperty extends OntologyNode implements Serializable, Layo
     public NodeDataProperty (OWLDataProperty unaPropiedadDeDatos){
     	super();
     	propiedadDeDatos = unaPropiedadDeDatos;
-    	addPort(east = new OntologyPort(this));
-        addPort(west = new OntologyPort(this));
-        addPort(north = new OntologyPort(this));
-        addPort(south = new OntologyPort(this));
+    	addPort(east = new OWLPort(this));
+        addPort(west = new OWLPort(this));
+        addPort(north = new OWLPort(this));
+        addPort(south = new OWLPort(this));
     }
 
     /** Initialize a new SampleNode from the given default node and
