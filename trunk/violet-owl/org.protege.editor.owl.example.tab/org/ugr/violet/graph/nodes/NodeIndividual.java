@@ -20,7 +20,7 @@ import org.ugr.violet.presentation.FigIndividual;
 import org.ugr.violet.presentation.OntologyFig;
 
 
-public class NodeIndividual extends OntologyNode implements Serializable, LayoutedNode {
+public class NodeIndividual extends OWLNode implements Serializable, LayoutedNode {
 	/**
 	 * serial version of the class NetNode
 	 */

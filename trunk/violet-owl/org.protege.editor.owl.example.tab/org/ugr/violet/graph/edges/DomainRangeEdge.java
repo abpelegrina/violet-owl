@@ -20,7 +20,7 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
  * @author anab
  *
  */
-public class DomainRangeEdge extends OntologyEdge {
+public class DomainRangeEdge extends OWLEdge {
 	
 
 	/**

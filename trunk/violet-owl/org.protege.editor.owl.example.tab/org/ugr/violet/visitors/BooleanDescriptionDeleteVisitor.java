@@ -6,14 +6,14 @@ import org.semanticweb.owl.model.OWLObjectIntersectionOf;
 import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
 import org.tigris.gef.graph.presentation.NetPort;
-import org.ugr.violet.graph.OntologyGraphModel;
-import org.ugr.violet.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.OWLGraphModel;
+import org.ugr.violet.graph.nodes.OWLNode;
 
 public class BooleanDescriptionDeleteVisitor extends
 OWLDescriptionVisitorAdapter {
 
-	private OntologyGraphModel ogm = null;
-	public BooleanDescriptionDeleteVisitor(OntologyGraphModel m){
+	private OWLGraphModel ogm = null;
+	public BooleanDescriptionDeleteVisitor(OWLGraphModel m){
 		ogm = m;
 	}
 
@@ -37,7 +37,7 @@ OWLDescriptionVisitorAdapter {
 
 
 		// creamos el nodo interseccion
-		OntologyNode nodoInterseccion = ogm.findOntologyNode(desc);
+		OWLNode nodoInterseccion = ogm.findOntologyNode(desc);
 
 		for (OWLDescription d : desc.getOperands())			
 			if (d.isAnonymous())
@@ -62,7 +62,7 @@ OWLDescriptionVisitorAdapter {
 		System.err.println("\nVisitando axioma " + desc);
 
 		// creamos el nodo interseccion
-		OntologyNode nodoUnion = ogm.findOntologyNode(desc);
+		OWLNode nodoUnion = ogm.findOntologyNode(desc);
 
 		for (OWLDescription d : desc.getOperands())			
 			if (d.isAnonymous())

@@ -9,14 +9,14 @@ import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLOntology;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.view.ViewManager;
 
 /**
  * @author anab
  *
  */
-public class OntologyViewGraphModel extends OntologyGraphModel {
+public class OWLViewGraphModel extends OWLGraphModel {
 	
 	protected ViewManager manager;
 	
@@ -29,7 +29,7 @@ public class OntologyViewGraphModel extends OntologyGraphModel {
 	/**
 	 * @param ont
 	 */
-	public OntologyViewGraphModel(OWLOntology ont) {
+	public OWLViewGraphModel(OWLOntology ont) {
 		super(ont);
 		manager = new ViewManager("<<file_name>>");
 		
@@ -50,7 +50,7 @@ public class OntologyViewGraphModel extends OntologyGraphModel {
 			// buscamos en la ontología la clase por el nombre
 			OWLClass claseOWL = getOwlClassByName(className);
 			
-			if(claseOWL != null && manager.addOWLClass(claseOWL))
+			if(claseOWL != null /*&& manager.addOWLClass(claseOWL)*/)
 				return super.addClass(className, location);
 			else
 				return false;
@@ -80,10 +80,10 @@ public class OntologyViewGraphModel extends OntologyGraphModel {
 		OWLIndividual ind = this.getOwlIndividualByName(individualName);
 
 		if (ind != null) {
-			if (manager.addOWLIndividual(ind))
+			//if (manager.addOWLIndividual(ind))
 				return super.addIndividual(individualName, location);
-			else 
-				return false;
+			//else 
+				//return false;
 		}
 		else
 			return false;
@@ -99,10 +99,10 @@ public class OntologyViewGraphModel extends OntologyGraphModel {
 		OWLObjectProperty propiedad = this.getOwlObjectPropertyByName(objectPropertyName);
 
 		if (propiedad != null) {
-			if(manager.addOWLObjectProperty(propiedad))
+			//if(manager.addOWLObjectProperty(propiedad))
 				return super.addObjectProperty(objectPropertyName, location);
-			else
-				return false;
+			//else
+				//return false;
 		}
 		else 
 			return false;

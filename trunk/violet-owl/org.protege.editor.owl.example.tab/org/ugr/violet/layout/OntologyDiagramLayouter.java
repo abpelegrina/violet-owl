@@ -2,15 +2,15 @@ package org.ugr.violet.layout;
 
 import java.awt.Dimension;
 
-import org.ugr.violet.base.OntologyDiagram;
-import org.ugr.violet.graph.nodes.OntologyNode;
+import org.ugr.violet.base.OWLDiagram;
+import org.ugr.violet.graph.nodes.OWLNode;
 
 public class OntologyDiagramLayouter implements Layouter {
 	
-	private OntologyDiagram ontologia;
+	private OWLDiagram ontologia;
 	
 	
-	public OntologyDiagramLayouter(OntologyDiagram ontologia) {
+	public OntologyDiagramLayouter(OWLDiagram ontologia) {
 		super();
 		this.ontologia = ontologia;
 	}
@@ -45,12 +45,12 @@ public class OntologyDiagramLayouter implements Layouter {
 		int x=0, y=0;
 		int xOffset = 150, yOffset = 110;
 		final int xLimit=1200;
-		OntologyNode n = null;
+		OWLNode n = null;
 		
 		for (Object o: ontologia.getOntologyGraphModel().getNodes()){
 		
 		// situamos la posicion de la figura OJO! no hacerlo hasta despues de agregar el nodo al modelo
-			n = (OntologyNode) o;
+			n = (OWLNode) o;
 			n.getOntologyFig().setLocation(x, y);
 			
 			// "layouter" primitivo 

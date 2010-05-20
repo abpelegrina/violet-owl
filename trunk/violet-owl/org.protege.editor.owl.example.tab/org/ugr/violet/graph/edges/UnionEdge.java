@@ -18,7 +18,7 @@ import org.tigris.gef.presentation.FigText;
  * @author anab
  *
  */
-public class UnionEdge extends OntologyEdge {
+public class UnionEdge extends OWLEdge {
 	
 
 	/**

@@ -36,10 +36,10 @@ import org.tigris.gef.graph.GraphEdgeRenderer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
-import org.ugr.violet.base.OntologyActivityDiagram;
-import org.ugr.violet.base.OntologyDiagram;
-import org.ugr.violet.graph.OntologyActivityGraphModel;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.base.ActivityDiagram;
+import org.ugr.violet.base.OWLDiagram;
+import org.ugr.violet.graph.ActivityGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
@@ -51,7 +51,7 @@ import org.ugr.violet.ui.OntologyPalette;
  * @author anab	
  */
 
-public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTargetListener {
+public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetListener {
 
 	/**
 	 * 
@@ -61,12 +61,12 @@ public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTa
 	/**
 	 * Diagrama
 	 */
-	protected OntologyDiagram od = null;
+	protected OWLDiagram od = null;
 	
 	/**
 	 * Modelo
 	 */
-	protected OntologyGraphModel ogm = null;
+	protected OWLGraphModel ogm = null;
 
 	
 	protected OWLOntology activa = null;
@@ -76,7 +76,7 @@ public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTa
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOntologyGraph(OWLOntology ont, OntologyPalette p) {
+	public JOWLGraph(OWLOntology ont, OntologyPalette p) {
 		super();
 		this.setBounds(10, 10, 300, 200);
 		this.add(p, BorderLayout.NORTH);
@@ -85,7 +85,7 @@ public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTa
 		
 		// creamos el diagrama asociado a la ontolog�a
 		ogm = generateGraphModel();
-		od = new OntologyDiagram(activa.getURI().toString(), ogm);
+		od = new OWLDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( od.getOntologyGraphModel() );
 		
 		// al darle al supr se borrara el componente seleccionado
@@ -120,8 +120,8 @@ public class JOntologyGraph extends JGraph implements ModeChangeListener, DropTa
 		});*/
 	}
 	
-	protected OntologyGraphModel generateGraphModel(){
-		return new OntologyGraphModel(activa);
+	protected OWLGraphModel generateGraphModel(){
+		return new OWLGraphModel(activa);
 	}
 	
 	public boolean isViewCanvas(){

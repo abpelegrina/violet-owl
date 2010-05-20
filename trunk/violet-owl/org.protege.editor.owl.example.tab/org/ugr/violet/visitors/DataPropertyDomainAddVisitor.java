@@ -30,7 +30,7 @@ import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.semanticweb.owl.model.OWLObjectValueRestriction;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
 import org.ugr.violet.base.Restriction;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.*;
 import org.ugr.violet.graph.nodes.*;
 
@@ -41,11 +41,11 @@ import org.ugr.violet.graph.nodes.*;
  */
 public class DataPropertyDomainAddVisitor extends OWLDescriptionVisitorAdapter {
 
-	private OntologyGraphModel ogm = null;
+	private OWLGraphModel ogm = null;
 	private OWLDataProperty propiedad = null;
 	private NodeDataProperty nodoProp = null;
 
-	public DataPropertyDomainAddVisitor(OntologyGraphModel modelo, OWLDataProperty prop){
+	public DataPropertyDomainAddVisitor(OWLGraphModel modelo, OWLDataProperty prop){
 		ogm = modelo;
 		propiedad = prop;
 		nodoProp = ogm.getNodeDataProperty(prop);

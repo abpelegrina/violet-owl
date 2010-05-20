@@ -130,6 +130,7 @@ public class FigClass extends OntologyFig {
 		className.setFilled(false);
 		className.setText(claseOWL.toString());
 		className.setFillColor(colorRelleno);
+		
 
 		if (v.size() > 0) {
 			box.setSize(maxWidth+20, box.getHeight());
@@ -141,6 +142,9 @@ public class FigClass extends OntologyFig {
 		}
 
 		super.colocaPuertos();
+		
+		className.setEditable(true);
+		
 		this.addFig(className);
 		box.setFillColor(colorRelleno);
 		

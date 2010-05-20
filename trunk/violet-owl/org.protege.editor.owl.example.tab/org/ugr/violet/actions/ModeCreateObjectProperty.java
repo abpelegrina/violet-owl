@@ -14,7 +14,7 @@ import org.semanticweb.owl.model.OWLDataFactory;
 import org.semanticweb.owl.model.OWLDeclarationAxiom;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.presentation.Fig;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.DomainRangeEdge;
 import org.ugr.violet.graph.nodes.NodeNAryRelation;
 import org.ugr.violet.presentation.FigClass;
@@ -36,7 +36,7 @@ public class ModeCreateObjectProperty extends ModeCreateAxiom {
 	 * @see org.ugr.violet.actions.ModeCreateAxiom#accionReleaseMouse(org.ugr.violet.graph.OntologyGraphModel)
 	 */
 	@Override
-	public void accionReleaseMouse(OntologyGraphModel ogm) {
+	public void accionReleaseMouse(OWLGraphModel ogm) {
 		
 		if (FigNAryRelation.class.isInstance(sourceFigNode) && FigNAryRelation.class.isInstance(destFigNode)){
 		

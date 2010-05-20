@@ -10,7 +10,7 @@ import org.tigris.gef.graph.presentation.NetPort;
  * @author anab
  *
  */
-public class PortUnion extends OntologyPort {
+public class PortUnion extends OWLPort {
 	/**
 	 * 
 	 */

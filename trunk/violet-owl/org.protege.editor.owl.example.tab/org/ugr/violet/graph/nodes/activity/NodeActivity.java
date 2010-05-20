@@ -10,14 +10,14 @@ import org.ugr.violet.graph.nodes.NodeIntersection;
 import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
-import org.ugr.violet.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.nodes.OWLNode;
 import org.ugr.violet.presentation.OntologyFig;
 
 /**
  * @author anab
  *
  */
-public abstract class NodeActivity extends OntologyNode {
+public abstract class NodeActivity extends OWLNode {
 
 	
 	protected NodeActivity(){

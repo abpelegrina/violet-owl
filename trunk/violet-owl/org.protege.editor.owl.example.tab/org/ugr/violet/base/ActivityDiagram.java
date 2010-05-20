@@ -1,31 +1,31 @@
+/**
+ * 
+ */
 package org.ugr.violet.base;
 
 import org.semanticweb.owl.model.OWLOntology;
-import org.tigris.gef.base.Diagram;
 import org.tigris.gef.base.LayerPerspective;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.ActivityGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 
 /**
- * Diagrama asociado a una ontologia
  * @author anab
  *
  */
-public class OntologyDiagram extends Diagram {
+public class ActivityDiagram extends OWLDiagram {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8421235263247453872L;
+	private static final long serialVersionUID = -8936782713339037801L;
 
-	
-	
 	/**
 	 * Crea un nuevo diagrama para una ontologia
 	 * @param ont Ontologia OWL a partir de la cual construir el diagrama
 	 */
-	public OntologyDiagram(OWLOntology ont){
-		super();
-		OntologyGraphModel model = new OntologyGraphModel(ont);
+	public ActivityDiagram(OWLOntology ont){
+		super(ont);
+		OWLGraphModel model = new OWLGraphModel(ont);
 		this.setGraphModel(model);
 		model.setOwner(this);
 	}
@@ -35,9 +35,9 @@ public class OntologyDiagram extends Diagram {
 	 * @param name nombre del diagrama
 	 * @param ont Ontologia OWL a partir de la cual construir el diagrama
 	 */
-	public OntologyDiagram(String name, OWLOntology ont){
-		super(name);
-		OntologyGraphModel model = new OntologyGraphModel(ont);
+	public ActivityDiagram(String name, OWLOntology ont){
+		super(name, ont);
+		OWLGraphModel model = new ActivityGraphModel(ont);
 		this.setGraphModel(model);
 		model.setOwner(this);
 	}
@@ -47,7 +47,7 @@ public class OntologyDiagram extends Diagram {
 	 * @param name nombre del diagrama
 	 * @param graphModel modelo grafico de la ontologia
 	 */
-	public OntologyDiagram(String name, OntologyGraphModel graphModel){
+	public ActivityDiagram(String name, OWLGraphModel graphModel){
 		super(name, graphModel);
 		graphModel.setOwner(this);
 	}
@@ -58,7 +58,7 @@ public class OntologyDiagram extends Diagram {
 	 * @param graphModel modelo grafico de la ontologia
 	 * @param layer layer del diagrama
 	 */
-	public OntologyDiagram(String name, OntologyGraphModel graphModel, LayerPerspective layer){
+	public ActivityDiagram(String name, ActivityGraphModel graphModel, LayerPerspective layer){
 		super(name, graphModel, layer);
 		graphModel.setOwner(this);
 	}
@@ -67,8 +67,8 @@ public class OntologyDiagram extends Diagram {
 	 * Devuelve el modelo del grafo asociado representado en el diagrama
 	 * @return el modelo
 	 */
-	public OntologyGraphModel getOntologyGraphModel(){
-		return (OntologyGraphModel) this.getGraphModel();
+	public ActivityGraphModel getOntologyActivityGraphModel(){
+		return (ActivityGraphModel) this.getGraphModel();
 		
 	}
 }

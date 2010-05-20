@@ -9,7 +9,7 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.presentation.NetEdge;
 import org.tigris.gef.graph.presentation.NetPort;
 
-public class PortClass extends OntologyPort{
+public class PortClass extends OWLPort{
 
 	/**
 	 * 

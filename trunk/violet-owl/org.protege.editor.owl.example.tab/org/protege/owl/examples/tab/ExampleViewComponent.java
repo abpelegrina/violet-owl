@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
@@ -20,14 +19,12 @@ import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.util.Localizer;
 import org.tigris.gef.util.ResourceLoader;
 import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
-import org.ugr.violet.changefilters.ChangeFilterDiagram;
-import org.ugr.violet.graph.OntologyGraphModel;
-import org.ugr.violet.graph.presentation.JOntologyActivityGraph;
-import org.ugr.violet.graph.presentation.JOntologyGraph;
+import org.ugr.violet.graph.OWLGraphModel;
+import org.ugr.violet.graph.presentation.JOWLActivityGraph;
+import org.ugr.violet.graph.presentation.JOWLGraph;
 import org.ugr.violet.ui.ActivityDiagramPalette;
 import org.ugr.violet.ui.OntologyPalette;
-import org.ugr.violet.view.ViewManager;
-import org.ugr.violet.view.graph.presentation.JOntologyViewGraph;
+import org.ugr.violet.view.graph.presentation.JOWLViewGraph;
 
 /**
  * 
@@ -41,16 +38,16 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     
     public static OWLModelManager manager = null;
     public static OWLWorkspace workspace = null;
-    private static List<JOntologyGraph> lienzos = null;
-    public static JOntologyGraph lienzoActual = null;
+    private static List<JOWLGraph> lienzos = null;
+    public static JOWLGraph lienzoActual = null;
     OWLOntologyChangeListener oocl;
-    ChangeListener cl = null;
+    //ChangeListener cl = null;
     JTabbedPane tabs;
 
     @Override
     protected void disposeOWLView() {
     	manager.removeOntologyChangeListener(oocl);
-    	tabs.removeChangeListener(cl);
+    	//tabs.removeChangeListener(cl);
     }
     
     private void inicializaRecursosGEF(){
@@ -80,85 +77,39 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
         
         tabs = new JTabbedPane();
         
-        lienzos = new ArrayList<JOntologyGraph>();
+        lienzos = new ArrayList<JOWLGraph>();
         
         ActivityDiagramPalette barraDeHerramientas = new ActivityDiagramPalette();
-        JOntologyActivityGraph lienzoActividad = new JOntologyActivityGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas);
+        JOWLActivityGraph lienzoActividad = new JOWLActivityGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas);
         OntologyPalette barraDeHerramientas2 = new OntologyPalette();
-        JOntologyGraph lienzoBasico = new JOntologyViewGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas2);
+        JOWLGraph lienzoBasico = new JOWLViewGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas2);
         
         lienzos.add(lienzoBasico);
         lienzos.add(lienzoActividad);
         
         tabs.addTab("Basic Diagram", lienzoBasico);
         tabs.addTab("Activity Diagram", lienzoActividad);
-               
-        
-        cl = new ChangeListener(){
-			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
-				JTabbedPane t = (JTabbedPane) e.getSource();
-				int index = t.getSelectedIndex();
-				
-				if (index != -1){
-					lienzoActual = (JOntologyGraph) t.getComponent(index);
-					manager.removeOntologyChangeListener(oocl);
-					
-					if (lienzoActual.isBaseCanvas()){
-						oocl = new OWLOntologyChangeListener(){
-
-							public void ontologiesChanged(List<? extends OWLOntologyChange> cambio) throws OWLException {
-								
-								System.err.println("Cambios: " + cambio);
-									
-								OWLOntologyChangeFilter filter = new ChangeFilterDiagram((OntologyGraphModel) lienzoActual.getGraphModel());
-								//Process the list of changes
-								filter.processChanges(cambio);
-							}
-				        };
-					}
-					else if (lienzoActual.isViewCanvas()){
-						oocl = new OWLOntologyChangeListener(){
-
-							public void ontologiesChanged(List<? extends OWLOntologyChange> cambio) throws OWLException {
-								
-								System.err.println("Cambios: " + cambio);
-								
-								OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) lienzoActual.getGraphModel());
-								//Process the list of changes
-								filter.processChanges(cambio);
-								
-							}
-				        };
-					}
-					
-					manager.addOntologyChangeListener(oocl);
-				}				
-			}
-        };
-        
-        tabs.addChangeListener(cl);
-        
         add(tabs);
         
         tabs.setSelectedIndex(1);
         lienzoActual = lienzoActividad;
+  
         
         oocl = new OWLOntologyChangeListener(){
 
 			public void ontologiesChanged(List<? extends OWLOntologyChange> cambio) throws OWLException {
 				System.err.println("Cambios: " + cambio);
-				OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OntologyGraphModel) lienzoActual.getGraphModel());
-				//Process the list of changes
-				filter.processChanges(cambio);
+				
+				for (int i=0; i<lienzos.size(); ++i)
+				{				
+					OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OWLGraphModel) lienzos.get(i).getGraphModel());
+					//Process the list of changes
+					filter.processChanges(cambio);
+				}
 			}
-        };
-        
-        manager.addOntologyChangeListener(oocl);
+        };      
         
         log.info("Example View Component initialized");        
-        //ViewManager vm = new ViewManager("");
-        
     }    
 
 }

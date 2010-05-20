@@ -14,7 +14,7 @@ import org.semanticweb.owl.model.*;
 import org.tigris.gef.graph.presentation.DefaultGraphModel;
 import org.tigris.gef.graph.presentation.NetNode;
 import org.tigris.gef.graph.presentation.NetPort;
-import org.ugr.violet.base.OntologyDiagram;
+import org.ugr.violet.base.OWLDiagram;
 import org.ugr.violet.base.Restriction;
 import org.ugr.violet.graph.edges.ComplementEdge;
 import org.ugr.violet.graph.edges.DisjointEdge;
@@ -22,7 +22,7 @@ import org.ugr.violet.graph.edges.EquivalentEdge;
 import org.ugr.violet.graph.edges.IntersectionEdge;
 import org.ugr.violet.graph.edges.InverseOfEdge;
 import org.ugr.violet.graph.edges.OneOfEdge;
-import org.ugr.violet.graph.edges.OntologyEdge;
+import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.edges.RangeEdge;
 import org.ugr.violet.graph.edges.RestrictionEdge;
 import org.ugr.violet.graph.edges.SuperEdge;
@@ -37,8 +37,8 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeOneOf;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
-import org.ugr.violet.graph.nodes.OntologyNode;
-import org.ugr.violet.graph.nodes.OntologyPort;
+import org.ugr.violet.graph.nodes.OWLNode;
+import org.ugr.violet.graph.nodes.OWLPort;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.OntologyFig;
 import org.ugr.violet.visitors.BooleanDescriptionDeleteVisitor;
@@ -51,7 +51,7 @@ import org.ugr.violet.visitors.SuperClassesVisitor;
  * Clase que representa el modelo del grafo asociado a la ontolog�a
  * @author Ana B. Pelegrina
  */
-public class OntologyGraphModel extends DefaultGraphModel {
+public class OWLGraphModel extends DefaultGraphModel {
 
 	private static final long serialVersionUID = -6702060722699798339L;
 
@@ -63,7 +63,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	/**
 	 * Diagrama asociado al modelo
 	 */
-	protected OntologyDiagram owner = null;
+	protected OWLDiagram owner = null;
 
 
 	/************************************ CONSTRUCTORES **************************************/
@@ -71,7 +71,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * Constructor
 	 * @param ont ontología asociada al diagrama
 	 */
-	public OntologyGraphModel(OWLOntology ont) {
+	public OWLGraphModel(OWLOntology ont) {
 		ontologia = ont;
 	}
 
@@ -80,14 +80,14 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	/**
 	 * @return the owner
 	 */
-	public OntologyDiagram getOwner() {
+	public OWLDiagram getOwner() {
 		return owner;
 	}
 
 	/**
 	 * @param owner the owner to set
 	 */
-	public void setOwner(OntologyDiagram owner) {
+	public void setOwner(OWLDiagram owner) {
 		this.owner = owner;
 	}
 
@@ -96,13 +96,13 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param nombre nombre del nodo
 	 * @return el nodo
 	 */
-	public OntologyNode getNode(String nombre){
+	public OWLNode getNode(String nombre){
 
-		OntologyNode nodo = null, aux = null;
+		OWLNode nodo = null, aux = null;
 		System.err.println(nombre);
 
 		for (Object n : getNodes()){
-			aux = (OntologyNode) n;
+			aux = (OWLNode) n;
 			
 			System.err.println(n.toString());
 			
@@ -182,11 +182,11 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param entidad entidad OWL a buscar
 	 * @return el nodo asociado a al entidad
 	 */
-	public OntologyNode findEntityNode(OWLEntity entidad){
-		OntologyNode nodo = null, aux = null;
+	public OWLNode findEntityNode(OWLEntity entidad){
+		OWLNode nodo = null, aux = null;
 
 		for (Object n : getNodes()){
-			aux = (OntologyNode) n;
+			aux = (OWLNode) n;
 			if (aux.getId().equals(entidad.toString()))
 				nodo = aux;
 		}
@@ -204,7 +204,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 		NodeRestriction n = null;
 
 		for (Object o : getNodes()){
-			NodeRestriction aux = ((OntologyNode) o).asNodeRestriction();
+			NodeRestriction aux = ((OWLNode) o).asNodeRestriction();
 
 			if (aux != null && aux.getOWLEntity().equals(entidad) && aux.getProperty().equals(p)){
 				n = aux;
@@ -223,7 +223,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 		List<NodeRestriction> nodos = new ArrayList<NodeRestriction>();
 
 		for (Object o : getNodes()){
-			NodeRestriction n =((OntologyNode) o).asNodeRestriction();
+			NodeRestriction n =((OWLNode) o).asNodeRestriction();
 
 			if (n != null && n.getProperty().toString().equals(prop.toString()))
 				nodos.add(n);
@@ -241,7 +241,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 		NodeObjectProperty nodo = null;
 
 		for (Object o : this.getNodes()){
-			NodeObjectProperty aux = ((OntologyNode) o).asNodeObjectProperty();
+			NodeObjectProperty aux = ((OWLNode) o).asNodeObjectProperty();
 
 			if (aux != null && aux.getPropiedad().equals(p)){
 				nodo = aux;
@@ -260,7 +260,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 		NodeDataProperty nodo = null;
 
 		for (Object o : this.getNodes()){
-			NodeDataProperty aux = ((OntologyNode) o).asDataProperty();
+			NodeDataProperty aux = ((OWLNode) o).asDataProperty();
 
 			if (aux != null && aux.getOWLDataProperty().equals(p)){
 				nodo = aux;
@@ -275,19 +275,19 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param d
 	 * @return
 	 */
-	public OntologyNode findOntologyNode(OWLDescription d){
-		OntologyNode nodo = null;
+	public OWLNode findOntologyNode(OWLDescription d){
+		OWLNode nodo = null;
 
 		for (Object o : this.getNodes()){
 			if (o.toString().equals(d.toString()))
-				nodo = (OntologyNode)o;
+				nodo = (OWLNode)o;
 		}
 		return nodo;
 	}
 
 	public NodeObjectProperty findNodeObjectProperty(OWLObjectProperty propiedad){
 		for (Object o : getNodes()){
-			NodeObjectProperty nodo = ((OntologyNode) o).asNodeObjectProperty();
+			NodeObjectProperty nodo = ((OWLNode) o).asNodeObjectProperty();
 			
 			if (nodo != null && nodo.getPropiedad().equals(propiedad))
 				return nodo;
@@ -306,7 +306,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 		NodeComplement n = null;
 
 		for (Object o : getNodes()){
-			NodeComplement aux = ((OntologyNode) o).asNodeComplement();
+			NodeComplement aux = ((OWLNode) o).asNodeComplement();
 
 			if (aux != null && aux.getOWLObjectComplementOf().equals(complemento) && aux.getOWLEntity().equals(entidad)){
 				n = aux;
@@ -359,7 +359,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 					n.setHighlight(true);
 			}
 			else {
-				OntologyNode nodo = this.findEntityNode(entidad);
+				OWLNode nodo = this.findEntityNode(entidad);
 
 				if (nodo != null){
 					nodo.setHighlight(true);
@@ -618,7 +618,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		//1) Recorremos todos los nodos del modelo
 		for (Object o: this.getNodes()){
-			OntologyNode n = (OntologyNode) o;
+			OWLNode n = (OWLNode) o;
 
 			// si se trata de un nodo restriccion
 			if (n.isNodeRestriction()){
@@ -656,7 +656,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 */
 	protected void updateObjectPropertyAsseritons(OWLIndividual ind) {
 		for (Object o: this.getNodes()){
-			NodeIndividual n = ((OntologyNode) o).asNodeIndividual();
+			NodeIndividual n = ((OWLNode) o).asNodeIndividual();
 
 			// si se trata de un nodo restriccion
 			if (n != null){
@@ -849,7 +849,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	private void updateRangesAndDomains(OWLClass claseOWL) {
 		// recorremos los nodos propiedad de objeto
 		for (Object o : this.getNodes()){
-			NodeObjectProperty n = ((OntologyNode) o).asNodeObjectProperty(); 
+			NodeObjectProperty n = ((OWLNode) o).asNodeObjectProperty(); 
 
 			if ( n!= null){
 				// comprobamos si esta en el rango
@@ -877,7 +877,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	public void updateUnions(OWLClass clase) {
 
 		for (Object o : getNodes()){		
-			NodeUnion nodoUnion = ((OntologyNode) o).asNodeUnion();
+			NodeUnion nodoUnion = ((OWLNode) o).asNodeUnion();
 
 			if (nodoUnion != null && nodoUnion.getOWLObjectUnionOf().getOperands().contains(clase)){
 				if (!nodoUnion.getOntologyFig().isVisible()){
@@ -928,7 +928,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 				
 				System.err.println("Recorriendo los operandos");
 				
-				OntologyNode c;
+				OWLNode c;
 				// la clase es anonima
 				if (d.isAnonymous()) {
 					
@@ -974,7 +974,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		for (Object o : getNodes()){		
 			// buscamos el nodo
-			NodeIntersection nodoInterseccion = ((OntologyNode) o).asNodeIntersection();
+			NodeIntersection nodoInterseccion = ((OWLNode) o).asNodeIntersection();
 
 			if (nodoInterseccion != null) {
 				// buscamos la clase en la signatura y agregamos el enlace si es necesario
@@ -1029,7 +1029,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 			
 			// recorremos todos los operandos
 			for (OWLDescription d : interseccion.getOperands()){
-				OntologyNode c;
+				OWLNode c;
 				// la clase es anonima
 				if (d.isAnonymous()) {
 					
@@ -1072,7 +1072,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 			if (n != null) {
 				for (OWLObjectComplementOf complemento : complements){
-					OntologyNode c;
+					OWLNode c;
 
 					if (complemento.getOperand().isAnonymous()) {
 						BooleanDescriptionVisitor v = new BooleanDescriptionVisitor(this, n);				
@@ -1080,7 +1080,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 						c = v.getRootNode();
 					}
 					else
-						c = (OntologyNode) this.getNode(complemento.getOperand().asOWLClass().toString());
+						c = (OWLNode) this.getNode(complemento.getOperand().asOWLClass().toString());
 
 					if (c != null){
 						ComplementEdge arista = new ComplementEdge(complemento.getOperand(), complemento);
@@ -1100,7 +1100,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		for (Object o : getNodes()){		
 			// buscamos el nodo
-			NodeClass nodoClase = ((OntologyNode) o).asNodeClass();
+			NodeClass nodoClase = ((OWLNode) o).asNodeClass();
 
 			if (nodoClase != null) {
 				// recuperamos las clases complemento de la clase
@@ -1176,7 +1176,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		for (Object o : getNodes()){		
 			// buscamos el nodo
-			NodeOneOf nodoOneOf = ((OntologyNode) o).asNodeOneOf();
+			NodeOneOf nodoOneOf = ((OWLNode) o).asNodeOneOf();
 
 			if (nodoOneOf != null) {
 				// buscamos la clase en la signatura y agregamos el enlace si es necesario
@@ -1204,7 +1204,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	public void updateAssertionClass(OWLIndividual individual) {
 		// buscar los nodos clase y agregarles una clase padre
 		for (Object o : this.getNodes()){
-			NodeIndividual ind = ((OntologyNode) o).asNodeIndividual();
+			NodeIndividual ind = ((OWLNode) o).asNodeIndividual();
 
 			if (ind != null){
 				ind.updateFigure();				
@@ -1226,7 +1226,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 				encontrado = false;
 				// recorremos todos los nodos restriccion
 				for (Object o : this.getNodes()){
-					NodeRestriction nRes = ((OntologyNode) o).asNodeRestriction();			
+					NodeRestriction nRes = ((OWLNode) o).asNodeRestriction();			
 
 					if (nRes != null){
 
@@ -1278,7 +1278,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 */
 	public void deleteClass(OWLClass clase){
 		//1- buscar la clase
-		OntologyNode nodo = this.getNode(clase.toString());
+		OWLNode nodo = this.getNode(clase.toString());
 		this.removeNode(nodo);
 	}
 
@@ -1287,7 +1287,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param i individuo a eliminar
 	 */
 	public void deleteIndividual(OWLIndividual i){
-		OntologyNode nodo = this.getNode(i.toString());
+		OWLNode nodo = this.getNode(i.toString());
 		this.removeNode(nodo);
 	}
 
@@ -1296,7 +1296,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param d la propiedad de objetos
 	 */
 	public void deleteDataProperty(OWLDataProperty d){
-		OntologyNode nodo = this.getNode(d.toString());
+		OWLNode nodo = this.getNode(d.toString());
 		this.removeNode(nodo);
 	}
 
@@ -1312,7 +1312,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		// 1 - buscar todos los nodos restricci�n que hagan referencia a esa propiedad y borrarlos
 		for (Object o : getNodes()){
-			NodeRestriction nr = ((OntologyNode) o).asNodeRestriction();
+			NodeRestriction nr = ((OWLNode) o).asNodeRestriction();
 			if (nr != null  && nr.getProperty().toString().equals(d.toString())){
 				nodosAEliminar.add(nr);
 				aristasAEliminar.addAll(nr.north.getEdges());
@@ -1329,7 +1329,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		// 2 - buscar todos los edge que hagan referencia a la propiedad y borrarlos
 		for (Object o: this.getEdges()){
-			RestrictionEdge re = ((OntologyEdge) o).asRestrictionEdge();
+			RestrictionEdge re = ((OWLEdge) o).asRestrictionEdge();
 			if (re != null && re.getId().equals(d.toString()))
 				aristasAEliminar.add(re);
 		}
@@ -1349,7 +1349,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 		List<Object> nodosAEliminar = new ArrayList<Object>();
 
 		for (Object o: this.getEdges()){
-			SuperEdge se = ((OntologyEdge) o).asSuperEdge();
+			SuperEdge se = ((OWLEdge) o).asSuperEdge();
 
 			if (se != null && se.getSub().toString().equals(sub.toString()) && se.getSup().toString().equals(sup.toString()))
 				nodosAEliminar.add(se);
@@ -1377,7 +1377,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 						d.accept(v);
 
 				for (Object o : getNodes()){
-					NodeUnion nodo = ((OntologyNode) o).asNodeUnion();
+					NodeUnion nodo = ((OWLNode) o).asNodeUnion();
 					if (nodo != null){
 						if (nodo.getOWLDescription().equals(clase) && union.equals(nodo.getOWLObjectUnionOf()))
 							aEliminar.add(nodo);
@@ -1417,7 +1417,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 						d.accept(v);
 
 				for (Object o : getNodes()){
-					NodeIntersection nodo = ((OntologyNode) o).asNodeIntersection();
+					NodeIntersection nodo = ((OWLNode) o).asNodeIntersection();
 					if (nodo != null){
 						// TODO resolver error al eliminar
 						
@@ -1464,7 +1464,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 					//System.err.println("Comparando con la arista " + o);
 
-					ComplementEdge ce = ((OntologyEdge) o).asComplementEdge();
+					ComplementEdge ce = ((OWLEdge) o).asComplementEdge();
 
 					if (ce != null){
 
@@ -1511,7 +1511,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 					// recorremos todos los nodos restriccion
 					for (Object o : this.getNodes()){
-						NodeRestriction nRes = ((OntologyNode) o).asNodeRestriction();			
+						NodeRestriction nRes = ((OWLNode) o).asNodeRestriction();			
 
 						if (nRes != null){
 
@@ -1544,7 +1544,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 			for (OWLObjectOneOf union : unions){
 				for (Object o : getNodes()){
-					NodeOneOf nodo = ((OntologyNode) o).asNodeOneOf();
+					NodeOneOf nodo = ((OWLNode) o).asNodeOneOf();
 					if (nodo != null){
 						if (nodo.getOWLClass().equals(clase) && union.equals(nodo.getOWLObjectComplementOf()))
 							aEliminar.add(nodo);
@@ -1596,7 +1596,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param nodoDestino
 	 * @param eg
 	 */
-	public void addConection(OntologyNode nodoOrigen, OntologyNode nodoDestino, OntologyEdge eg){
+	public void addConection(OWLNode nodoOrigen, OWLNode nodoDestino, OWLEdge eg){
 		int xOrigen, yOrigen, xDestino, yDestino;
 		int altoOrigen, anchoOrigen;
 		
@@ -1607,8 +1607,8 @@ public class OntologyGraphModel extends DefaultGraphModel {
 			
 			System.err.println("Los nodos no son nulos ");
 
-			OntologyPort puertoDestino = nodoDestino.west;
-			OntologyPort puertoOrigen = nodoOrigen.east;
+			OWLPort puertoDestino = nodoDestino.west;
+			OWLPort puertoOrigen = nodoOrigen.east;
 
 			//a) recuperamos las coordenadas de los nodos y sus dimensiones
 			xDestino = nodoDestino.getOntologyFig().getLocation().x;
@@ -1710,13 +1710,13 @@ public class OntologyGraphModel extends DefaultGraphModel {
 	 * @param entidadDestino nodo destino
 	 * @param eg arista con la que se quiere unir los nodos
 	 */
-	public void addConnection(Object entidadOrigen, Object entidadDestino, OntologyEdge eg) {		
+	public void addConnection(Object entidadOrigen, Object entidadDestino, OWLEdge eg) {		
 		if (entidadOrigen == null || entidadDestino == null || eg == null) return;
 		
 		System.err.println("Los objetos no son nulos!!!!!!!!!!!!");
 
 		// 1) recuperamos los nodos asociados a las clases c1 y c2
-		OntologyNode nodoDestino, nodoOrigen;
+		OWLNode nodoDestino, nodoOrigen;
 		nodoOrigen = getNode(entidadOrigen.toString());
 		nodoDestino = getNode(entidadDestino.toString());
 
@@ -1746,7 +1746,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 		// si acabamos de eliminar un nodo clase tenemos que eliminar todos los nodos restriccion
 		// asociados		
-		NodeClass nc = ((OntologyNode) node).asNodeClass();
+		NodeClass nc = ((OWLNode) node).asNodeClass();
 		if (nc != null) {
 
 			// lista con los nodos a eliminar. No se eliminan los nodos directamente para evitar
@@ -1755,7 +1755,7 @@ public class OntologyGraphModel extends DefaultGraphModel {
 
 			// recorremos los nodo y nos quedamos con los nodos restriccion asociados a la clase a eliminar
 			for (Object o : getNodes()){
-				NodeRestriction nr = ((OntologyNode) o).asNodeRestriction();
+				NodeRestriction nr = ((OWLNode) o).asNodeRestriction();
 
 				// si el nodo es una restricci�n
 				if (nr != null){

@@ -15,7 +15,7 @@ import org.tigris.gef.presentation.FigEdgePoly;
  * @author anab
  *
  */
-public class EquivalentEdge extends OntologyEdge {
+public class EquivalentEdge extends OWLEdge {
 
 	
 	/**

@@ -19,7 +19,7 @@ import org.ugr.violet.layout.LayoutedNode;
 import org.ugr.violet.presentation.FigRestriction;
 import org.ugr.violet.presentation.OntologyFig;
 
-public class NodeRestriction extends OntologyNode implements Serializable, LayoutedNode {
+public class NodeRestriction extends OWLNode implements Serializable, LayoutedNode {
 
 	/**
 	 * serial version of the class NetNode

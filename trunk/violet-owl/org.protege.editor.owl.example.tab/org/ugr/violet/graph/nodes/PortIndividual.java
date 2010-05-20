@@ -3,7 +3,7 @@ package org.ugr.violet.graph.nodes;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.presentation.NetPort;
 
-public class PortIndividual extends OntologyPort{
+public class PortIndividual extends OWLPort{
 
 	/**
 	 * 

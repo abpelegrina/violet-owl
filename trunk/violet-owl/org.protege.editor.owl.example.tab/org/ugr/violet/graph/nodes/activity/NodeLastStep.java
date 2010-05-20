@@ -18,7 +18,7 @@ import org.semanticweb.owl.model.OWLClassAssertionAxiom;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
-import org.ugr.violet.graph.OntologyActivityGraphModel;
+import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.NodeDataProperty;
 import org.ugr.violet.graph.nodes.NodeIndividual;
@@ -26,7 +26,7 @@ import org.ugr.violet.graph.nodes.NodeIntersection;
 import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
-import org.ugr.violet.graph.nodes.OntologyPort;
+import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.OntologyFig;
 import org.ugr.violet.presentation.activity.FigFirstStep;
 import org.ugr.violet.presentation.activity.FigLastStep;
@@ -57,12 +57,12 @@ public class NodeLastStep extends NodeActivity {
 		
 		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
 		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
-		((OntologyActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
+		((ActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
 		
-    	addPort(east = new OntologyPort(this));
-        addPort(west = new OntologyPort(this));
-        addPort(north = new OntologyPort(this));
-        addPort(south = new OntologyPort(this));
+    	addPort(east = new OWLPort(this));
+        addPort(west = new OWLPort(this));
+        addPort(north = new OWLPort(this));
+        addPort(south = new OWLPort(this));
     }
 	
 	/**
@@ -72,10 +72,10 @@ public class NodeLastStep extends NodeActivity {
     public NodeLastStep (OWLIndividual paso){
     	super();
     	step = paso;
-    	addPort(east = new OntologyPort(this));
-        addPort(west = new OntologyPort(this));
-        addPort(north = new OntologyPort(this));
-        addPort(south = new OntologyPort(this));
+    	addPort(east = new OWLPort(this));
+        addPort(west = new OWLPort(this));
+        addPort(north = new OWLPort(this));
+        addPort(south = new OWLPort(this));
     }
     
     /** Initialize a new SampleNode from the given default node and

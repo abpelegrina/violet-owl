@@ -10,7 +10,7 @@ import org.tigris.gef.graph.presentation.NetPort;
  * @author anab
  *
  */
-public class PortObjectProperty extends OntologyPort {
+public class PortObjectProperty extends OWLPort {
 
 	/**
 	 * @param parent

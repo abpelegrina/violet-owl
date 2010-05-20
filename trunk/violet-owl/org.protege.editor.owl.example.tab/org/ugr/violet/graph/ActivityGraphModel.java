@@ -18,7 +18,7 @@ import org.semanticweb.owl.model.OWLOntology;
 import org.tigris.gef.graph.presentation.NetNode;
 import org.ugr.violet.graph.edges.RestrictionEdge;
 import org.ugr.violet.graph.nodes.NodeIndividual;
-import org.ugr.violet.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.nodes.OWLNode;
 import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
 import org.ugr.violet.graph.nodes.activity.NodeDecision;
 import org.ugr.violet.graph.nodes.activity.NodeFork;
@@ -28,7 +28,7 @@ import org.ugr.violet.graph.nodes.activity.NodeMerge;
  * @author anab
  * 
  */
-public class OntologyActivityGraphModel extends OntologyGraphModel {
+public class ActivityGraphModel extends OWLGraphModel {
 
 	/**
 	 * 
@@ -38,7 +38,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 	/**
 	 * @param ont
 	 */
-	public OntologyActivityGraphModel(OWLOntology ont) {
+	public ActivityGraphModel(OWLOntology ont) {
 		super(ont);
 	}
 	
@@ -64,7 +64,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 	public boolean addIndividual(String  taskName, Point location){
 		taskName=taskName.trim();
 		OWLIndividual ind = this.getOwlIndividualByName(taskName);
-		OntologyNode nodo = null;
+		OWLNode nodo = null;
 		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
 		
 		if (ind != null) {
@@ -107,7 +107,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 	 * @param ind
 	 * @return
 	 */
-	private OntologyNode addMergeStep(OWLIndividual ind) {
+	private OWLNode addMergeStep(OWLIndividual ind) {
 		NodeMerge nodo = new NodeMerge(ind);
 		return nodo;
 	}
@@ -116,7 +116,7 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 	 * @param ind
 	 * @return
 	 */
-	private OntologyNode addDecisionStep(OWLIndividual ind) {
+	private OWLNode addDecisionStep(OWLIndividual ind) {
 		NodeDecision nodo = new NodeDecision(ind);
 		return nodo;
 	}
@@ -125,12 +125,12 @@ public class OntologyActivityGraphModel extends OntologyGraphModel {
 	/**
 	 * @param ind
 	 */
-	private OntologyNode addForkStep(OWLIndividual ind) {
+	private OWLNode addForkStep(OWLIndividual ind) {
 		NodeFork nodo = new NodeFork(ind);
 		return nodo;
 	}
 
-	public OntologyNode addActionStep(OWLIndividual task){
+	public OWLNode addActionStep(OWLIndividual task){
 		OWLIndividual step = null;
 		OWLIndividual role = null;
 		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();

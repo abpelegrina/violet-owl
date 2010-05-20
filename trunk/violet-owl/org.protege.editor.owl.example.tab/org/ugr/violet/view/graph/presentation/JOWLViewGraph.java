@@ -4,10 +4,10 @@
 package org.ugr.violet.view.graph.presentation;
 
 import org.semanticweb.owl.model.OWLOntology;
-import org.ugr.violet.graph.OntologyGraphModel;
-import org.ugr.violet.graph.presentation.JOntologyGraph;
+import org.ugr.violet.graph.OWLGraphModel;
+import org.ugr.violet.graph.presentation.JOWLGraph;
 import org.ugr.violet.ui.OntologyPalette;
-import org.ugr.violet.view.graph.OntologyViewGraphModel;
+import org.ugr.violet.view.graph.OWLViewGraphModel;
 
 import sun.tools.tree.ThisExpression;
 
@@ -15,13 +15,13 @@ import sun.tools.tree.ThisExpression;
  * @author anab
  *
  */
-public class JOntologyViewGraph extends JOntologyGraph{
+public class JOWLViewGraph extends JOWLGraph{
 
 	/**
 	 * @param ont
 	 * @param p
 	 */
-	public JOntologyViewGraph(OWLOntology ont, OntologyPalette p) {
+	public JOWLViewGraph(OWLOntology ont, OntologyPalette p) {
 		super(ont, p);
 	}
 
@@ -29,9 +29,9 @@ public class JOntologyViewGraph extends JOntologyGraph{
 	 * @see org.ugr.violet.graph.presentation.JOntologyGraph#generateGraphModel()
 	 */
 	@Override
-	protected OntologyGraphModel generateGraphModel() {
+	protected OWLGraphModel generateGraphModel() {
 		// TODO Auto-generated method stub
-		return new OntologyViewGraphModel(activa);
+		return new OWLViewGraphModel(activa);
 	}
 
 	/**

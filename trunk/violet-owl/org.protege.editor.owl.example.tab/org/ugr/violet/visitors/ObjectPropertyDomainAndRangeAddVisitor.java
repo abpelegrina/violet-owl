@@ -6,7 +6,7 @@ package org.ugr.violet.visitors;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
-import org.ugr.violet.graph.OntologyGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.RangeEdge;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.NodeObjectProperty;
@@ -17,12 +17,12 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
  */
 public class ObjectPropertyDomainAndRangeAddVisitor extends OWLDescriptionVisitorAdapter {
 
-	private OntologyGraphModel ogm = null;
+	private OWLGraphModel ogm = null;
 	private OWLObjectProperty propiedad = null;
 	private NodeObjectProperty nodoProp = null;
 	boolean flagRange;
 
-	public ObjectPropertyDomainAndRangeAddVisitor(OntologyGraphModel modelo, OWLObjectProperty prop, boolean range){
+	public ObjectPropertyDomainAndRangeAddVisitor(OWLGraphModel modelo, OWLObjectProperty prop, boolean range){
 		ogm = modelo;
 		propiedad = prop;
 		flagRange = range;

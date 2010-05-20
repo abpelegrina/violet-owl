@@ -8,14 +8,14 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.presentation.NetEdge;
 import org.tigris.gef.graph.presentation.NetPort;
 
-public class OntologyPort extends NetPort  implements Serializable{
+public class OWLPort extends NetPort  implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1920510914142825037L;
 
-	public OntologyPort(Object parent) {
+	public OWLPort(Object parent) {
 		super(parent);
 	}
 	

@@ -48,7 +48,7 @@ import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigNode;
 import org.tigris.gef.undo.Memento;
 import org.tigris.gef.undo.UndoManager;
-import org.ugr.violet.graph.nodes.OntologyNode;
+import org.ugr.violet.graph.nodes.OWLNode;
 
 /**
  * Mode to place new a FigNode on a node in a diagram. Normally invoked via
@@ -215,9 +215,9 @@ public class ModePlace extends FigModifyingModeImpl {
                     + "," + _pers.getY());*/
             UndoManager.getInstance().startChain();
             
-           if (OntologyNode.class.isInstance(_node)){
+           if (OWLNode.class.isInstance(_node)){
             	mgm.addNode(_node);
-            	OntologyNode nodo = (OntologyNode) _node;
+            	OWLNode nodo = (OWLNode) _node;
             	nodo.getOntologyFig().setLocation(me.getX(), me.getY());
             	System.err.println("Es instancia de esto!!!!!");
            }

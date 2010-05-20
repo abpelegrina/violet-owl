@@ -2,8 +2,8 @@ package org.ugr.violet.changefilters;
 
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
-import org.ugr.violet.graph.OntologyGraphModel;
-import org.ugr.violet.graph.edges.OntologyEdge;
+import org.ugr.violet.graph.OWLGraphModel;
+import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.edges.RestrictionEdge;
 import org.ugr.violet.graph.edges.activity.FollowedByEdge;
 
@@ -16,7 +16,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 	/**
 	 * @param o
 	 */
-	public ChangeFilterActivityDiagram(OntologyGraphModel o) {
+	public ChangeFilterActivityDiagram(OWLGraphModel o) {
 		super(o);
 		
 		
@@ -43,7 +43,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 
 			// borrar el enlace entre las clases disjuntas
 			for (Object o : ogm.getEdges()){
-				RestrictionEdge e = ((OntologyEdge) o).asRestrictionEdge();
+				RestrictionEdge e = ((OWLEdge) o).asRestrictionEdge();
 
 				if (e != null && e.isSujeto(sujeto) && e.isObjeto(objeto)){
 					aBorrar = e;
