@@ -19,11 +19,13 @@ import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.util.Localizer;
 import org.tigris.gef.util.ResourceLoader;
 import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
+import org.ugr.violet.changefilters.ChangeFilterDiagram;
 import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.presentation.JOWLActivityGraph;
 import org.ugr.violet.graph.presentation.JOWLGraph;
+import org.ugr.violet.persistance.VioletPersistance;
 import org.ugr.violet.ui.ActivityDiagramPalette;
-import org.ugr.violet.ui.OntologyPalette;
+import org.ugr.violet.ui.OWLPalette;
 import org.ugr.violet.view.graph.presentation.JOWLViewGraph;
 
 /**
@@ -38,7 +40,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     
     public static OWLModelManager manager = null;
     public static OWLWorkspace workspace = null;
-    private static List<JOWLGraph> lienzos = null;
+    public static List<JOWLGraph> lienzos = null;
     public static JOWLGraph lienzoActual = null;
     OWLOntologyChangeListener oocl;
     //ChangeListener cl = null;
@@ -47,7 +49,9 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     @Override
     protected void disposeOWLView() {
     	manager.removeOntologyChangeListener(oocl);
-    	//tabs.removeChangeListener(cl);
+    	
+    	
+    	
     }
     
     private void inicializaRecursosGEF(){
@@ -68,7 +72,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     @Override
     protected void initialiseOWLView() throws Exception {
     	
-    	// DON'T CHANGE THE LAYOUT. GET DOESN'T WORK WITH OTHER LAYOUTS
+    	// DON'T CHANGE THE LAYOUT. GEF DOESN'T WORK WITH OTHER LAYOUTS
         setLayout(new BorderLayout());
         inicializaRecursosGEF();
         
@@ -81,7 +85,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
         
         ActivityDiagramPalette barraDeHerramientas = new ActivityDiagramPalette();
         JOWLActivityGraph lienzoActividad = new JOWLActivityGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas);
-        OntologyPalette barraDeHerramientas2 = new OntologyPalette();
+        OWLPalette barraDeHerramientas2 = new OWLPalette();
         JOWLGraph lienzoBasico = new JOWLViewGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas2);
         
         lienzos.add(lienzoBasico);
@@ -102,12 +106,14 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
 				
 				for (int i=0; i<lienzos.size(); ++i)
 				{				
-					OWLOntologyChangeFilter filter = new ChangeFilterActivityDiagram((OWLGraphModel) lienzos.get(i).getGraphModel());
+					OWLOntologyChangeFilter filter = lienzos.get(i).getChangeListener();
 					//Process the list of changes
 					filter.processChanges(cambio);
 				}
 			}
         };      
+        
+        manager.addOntologyChangeListener(oocl);
         
         log.info("Example View Component initialized");        
     }    

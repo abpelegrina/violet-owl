@@ -6,7 +6,7 @@
          id="ExampleViewComponent"
          point="org.protege.editor.core.application.ViewComponent">
       <label
-            value="Editor Grafico de Ontologías">
+            value="Violet-OWL">
       </label>
       <class
             value="org.protege.owl.examples.tab.ExampleViewComponent">
@@ -19,7 +19,7 @@
          id="ExampleWorkspaceTab"
          point="org.protege.editor.core.application.WorkspaceTab">
       <label
-            value="Editor Gráfico de Ontologías">
+            value="VIOLET-OWL">
       </label>
       <class
             value="org.protege.owl.examples.tab.ExampleWorkspaceTab">

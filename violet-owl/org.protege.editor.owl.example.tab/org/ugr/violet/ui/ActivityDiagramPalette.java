@@ -36,6 +36,7 @@ import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.CmdAlign;
 import org.tigris.gef.base.CmdCreateNode;
 import org.tigris.gef.base.CmdSetMode;
+import org.tigris.gef.base.CreateNodeAction;
 import org.tigris.gef.base.ModeBroom;
 import org.tigris.gef.base.ModeSelect;
 import org.tigris.gef.base.PrintAction;
@@ -54,6 +55,8 @@ import org.ugr.violet.actions.ModeCreateSub;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeDecision;
+import org.ugr.violet.graph.nodes.activity.NodeDecisionStep;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeFork;
 import org.ugr.violet.graph.nodes.activity.NodeJoin;
@@ -65,7 +68,7 @@ import org.ugr.violet.graph.nodes.activity.NodeLastStep;
  * @see org.tigris.gef.demo.BasicApplication
  */
 
-public class ActivityDiagramPalette extends OntologyPalette {
+public class ActivityDiagramPalette extends OWLPalette {
 
     /**
 	 * 
@@ -82,6 +85,9 @@ public class ActivityDiagramPalette extends OntologyPalette {
 	public void defineButtons() {
     	add(new CmdSetMode(ModeSelect.class, "Select"));
         add(new CmdSetMode(ModeBroom.class, "Broom"));
+        
+        this.addSeparator();
+		add(new CmdSetMode(ModeCreateFollowedBy.class, "FollowedBy"));
        
         this.addSeparator();
         add(new CmdAlign(AlignAction.ALIGN_TOPS));
@@ -90,7 +96,6 @@ public class ActivityDiagramPalette extends OntologyPalette {
         
 		this.addSeparator();
 		
-		
 		add(new CmdCreateNode(NodeActivityStep.class, "Activity"));
 		add(new CmdCreateNode(NodeFirstStep.class, "Initial"));
 		add(new CmdCreateNode(NodeLastStep.class, "FinalState"));
@@ -98,18 +103,19 @@ public class ActivityDiagramPalette extends OntologyPalette {
 		add(new CmdCreateNode(NodeFork.class, "Fork"));
 		add(new CmdCreateNode(NodeJoin.class, "Join"));
 		this.addSeparator();
-		add(new CmdCreateNode(NodeActivityStep.class, "Decision"));
-		this.addSeparator();
+		add(new CmdCreateNode(NodeDecision.class, "Decision"));
+		
+		
+		/*this.addSeparator();
 		add(new CmdCreateNode(NodeActivityStep.class, "Signal"));
-		add(new CmdCreateNode(NodeActivityStep.class, "SignalReceiving"));
+		add(new CmdCreateNode(NodeActivityStep.class, "SignalReceiving"));*/
 		
 		//add(new CmdCreateNode(NodeClass.class, "ClaseOWL"));
 		/*add(new CmdCreateNodeIndividual());
 		add(new CmdCreateNodeDataProperty());
 		add(new CmdCreateNodeObjectProperty());*/
-		this.addSeparator();
-		this.addSeparator();
-		add(new CmdSetMode(ModeCreateFollowedBy.class, "ObjectProperty"));
+
+		
 		/*
 		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));		
 		add(new CmdSetMode(ModeCreateSub.class, "Sub"));		

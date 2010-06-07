@@ -18,6 +18,7 @@ import org.ugr.violet.base.OWLDiagram;
 import org.ugr.violet.base.Restriction;
 import org.ugr.violet.graph.edges.ComplementEdge;
 import org.ugr.violet.graph.edges.DisjointEdge;
+import org.ugr.violet.graph.edges.DomainRangeEdge;
 import org.ugr.violet.graph.edges.EquivalentEdge;
 import org.ugr.violet.graph.edges.IntersectionEdge;
 import org.ugr.violet.graph.edges.InverseOfEdge;
@@ -103,6 +104,29 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 		for (Object n : getNodes()){
 			aux = (OWLNode) n;
+			
+			System.err.println(n.toString());
+			
+			if (aux.toString().equals(nombre))
+				nodo = aux;
+		}
+
+		return nodo;
+	}
+	
+	
+	/**
+	 * Busca el nodo identificado con nombre
+	 * @param nombre nombre del nodo
+	 * @return el nodo
+	 */
+	public OWLEdge getEdge(String nombre){
+
+		OWLEdge nodo = null, aux = null;
+		System.err.println(nombre);
+
+		for (Object n : getEdges()){
+			aux = (OWLEdge) n;
 			
 			System.err.println(n.toString());
 			
@@ -446,7 +470,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param dataPropertyName
 	 * @param nodeLocation
 	 */
-	public void addDataProperty(String dataPropertyName, Point nodeLocation) {
+	public boolean addDataProperty(String dataPropertyName, Point nodeLocation) {
 		// TODO Auto-generated method stub
 		dataPropertyName=dataPropertyName.trim();
 		OWLDataProperty propiedad = this.getOwlDataPropertyByName(dataPropertyName);
@@ -460,7 +484,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 			for (OWLDescription e : propiedad.getDomains(ontologia))
 				e.accept(v);
+			return true;
 		}	
+		else
+			return false;
 	}
 
 	/**
@@ -523,6 +550,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 				this.updateIntersection(claseOWL);
 
 				this.updateComplements(claseOWL);
+				
+				this.updateRelations(claseOWL);
+				
+				
 
 				res = true;
 			}
@@ -533,12 +564,14 @@ public class OWLGraphModel extends DefaultGraphModel {
 		return res;
 	}
 
+	
+
 	/**
 	 * Agrega al modelo las restricciones asociadas a un nuevo nodo representando a una clase OWL
 	 * @param nodo nodo recién agregado
 	 */
 	private void addRestrictions(NodeClass nodo){
-		// creamos el visitante de restricciones
+		// creamos el aante de restricciones
 		SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(Collections.singleton(ontologia));
 		OWLClass claseOWL = nodo.getOWLClass(); // recuperamos la clase del nodo
 
@@ -551,7 +584,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 			if (!superCls.isAnonymous() && isThisClassPresent(superCls.asOWLClass().toString()))
 				addInheritanceLink( claseOWL, superCls.asOWLClass());
 		}
-		/*
+		
 		// recuperamos la tabla hash con todas las restricciones asociadas a la clase; utilizando como clave la propiedad 
 		// de objeto sobre la que se aplica la restricci�n. Esto es por cada restricci�n tendremos un vector de pares <clase, tipo_restriccion>
 		// Ver clases Restriccion y RestrictionVisitor en este mismo paquete
@@ -567,6 +600,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		// para cada propieadad de objeto sobre la que existen restricciones para la nueva clase
 		for(OWLObjectProperty key : a.keySet()){
 
+			/*
 			// agregamos un nodo que engloga a todas las restricciones asociadas a la propiedad
 			NodeRestriction r = new NodeRestriction(claseOWL, key, a.get(key));
 			addNode(r);
@@ -575,12 +609,16 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 			// agregamos el enlace con la clase a la que se aplican las restricciones
 			this.addInheritanceLink(claseOWL, key);
-
+			 */
+			
 			// para cada clase incluida en la definición de las restricciones asociadas a la propiedad...
 			for (Restriction rr:a.get(key)){
 
 				// nos aseguramos que no se haya incluido ya le link
 				if (!relacionadas.contains(rr.getClase())){
+					
+					System.err.println("Restricción con:" + rr.getClase());
+					
 					// ... incluimos un enlace entre este y la nueva clase
 					addRestrictionLink(claseOWL, rr.getClase(), key);
 					relacionadas.add(rr.getClase());
@@ -588,8 +626,8 @@ public class OWLGraphModel extends DefaultGraphModel {
 			}
 			relacionadas.clear();
 		}
-		*/
-
+		
+		
 		// Agregamos las uniones
 		this.updateUnions(nodo.getOWLClass(), restrictionVisitor.getUnions());
 		// Agregamos las intersecciones
@@ -600,7 +638,6 @@ public class OWLGraphModel extends DefaultGraphModel {
 		// Agregamos las enumeraciones
 		this.updateOnesOf(nodo.getOWLClass(), restrictionVisitor.getOnesOf());
 
-
 		// borramos el contenido del visitante
 		restrictionVisitor.reset();
 		
@@ -608,6 +645,81 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 
 	/***************************************** Updates ******************************************/
+	
+	/**
+	 * When adding a new class to the diagram, this method updates the object properties associated with this class, if it is
+	 * necessary (i.e., both the classes domain and range are present in the diagram)
+	 * @param oclass the class we are adding to the diagram
+	 */
+	private void updateRelations(OWLClass oclass) {
+		
+		System.err.println("Entrando en actualizacion de relaciones");
+		
+		
+		// We fetch the domian and range axiom of the ontology
+		Set<OWLObjectPropertyDomainAxiom> domain;
+		Set<OWLObjectPropertyRangeAxiom> range;
+		
+		Set<OWLObjectProperty> propertiesDomain = new HashSet<OWLObjectProperty>();
+		Set<OWLObjectProperty> propertiesRange = new HashSet<OWLObjectProperty>();
+		
+		for (OWLOntology ont : ExampleViewComponent.manager.getOntologies()){
+		
+			domain = ont.getAxioms(AxiomType.OBJECT_PROPERTY_DOMAIN);
+			range = ont.getAxioms(AxiomType.OBJECT_PROPERTY_RANGE);
+			
+			// Domain
+			for(OWLObjectPropertyDomainAxiom op : domain)
+				// Does oclass belongs to the domain of this axiom
+				if (!op.getDomain().isAnonymous() && op.getDomain().asOWLClass().compareTo(oclass) == 0){
+					propertiesDomain.add(op.getProperty().asOWLObjectProperty());
+					System.err.println("Hemos encontrado el axioma: " + op);
+				}
+			
+			// Range
+			for(OWLObjectPropertyRangeAxiom op : range)
+				// Does oclass belongs to the domain of this axiom
+				if (!op.getRange().isAnonymous() && op.getRange().asOWLClass().compareTo(oclass) == 0) {
+					propertiesRange.add(op.getProperty().asOWLObjectProperty());
+					System.err.println("Hemos encntrado el axioma: " + op);
+				}
+		
+		}
+		// oclass is in the domaion or the range, we need to add a new edge to the diagram
+		for (OWLObjectProperty o : propertiesDomain)
+			this.updateDomain(o, oclass);
+		
+		for (OWLObjectProperty o : propertiesRange)
+			this.updateRange(o, oclass);
+		
+	}
+	
+	private void updateDomain(OWLObjectProperty prop, OWLClass domainClass){
+		// Recuperar todos los rangos de la propiedad y construir enganches con la clase del dominio
+		
+		DomainRangeEdge edge;
+		
+		for (OWLOntology ont : ExampleViewComponent.manager.getOntologies())			
+			for (OWLObjectPropertyRangeAxiom ax : ont.getObjectPropertyRangeAxioms(prop))
+				if (!ax.getRange().isAnonymous()) {
+					 edge =  new DomainRangeEdge(domainClass,ax.getRange().asOWLClass(),prop);
+					 this.addConnection(domainClass, ax.getRange().asOWLClass(), edge);
+				}
+			
+		
+	}
+	
+	private void updateRange(OWLObjectProperty prop, OWLClass rangeClass){
+		// Recuperar todos los dominios de la propiedad y contruir enganches con la clase del rango
+		DomainRangeEdge edge;
+		
+		for (OWLOntology ont : ExampleViewComponent.manager.getOntologies())			
+			for (OWLObjectPropertyDomainAxiom ax : ont.getObjectPropertyDomainAxioms(prop))
+				if (!ax.getDomain().isAnonymous()) {
+					 edge =  new DomainRangeEdge(ax.getDomain().asOWLClass(),rangeClass,prop);
+					 this.addConnection(ax.getDomain().asOWLClass(), rangeClass, edge);
+				}
+	}
 
 	/**
 	 * Actualiza los enlaces entre clases con restricciones cuando se inserta una nueva clase en el diagrama
@@ -1719,8 +1831,15 @@ public class OWLGraphModel extends DefaultGraphModel {
 		OWLNode nodoDestino, nodoOrigen;
 		nodoOrigen = getNode(entidadOrigen.toString());
 		nodoDestino = getNode(entidadDestino.toString());
-
-		this.addConection(nodoOrigen, nodoDestino, eg);
+		
+		if (nodoOrigen != null && nodoDestino != null)
+			this.addConection(nodoOrigen, nodoDestino, eg);
+		else {
+			System.err.println("No se ha encontrado el nodo para el origen o el destino");
+			System.err.println("Origen: " + entidadOrigen);
+			System.err.println("Origen: " + entidadDestino);
+			
+		}
 	}
 
 

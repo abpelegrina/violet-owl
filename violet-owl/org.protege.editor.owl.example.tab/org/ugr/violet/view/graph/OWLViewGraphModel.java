@@ -63,10 +63,10 @@ public class OWLViewGraphModel extends OWLGraphModel {
 	 * @see org.ugr.violet.graph.OntologyGraphModel#addDataProperty(java.lang.String, java.awt.Point)
 	 */
 	@Override
-	public void addDataProperty(String dataPropertyName, Point nodeLocation) {
+	public boolean addDataProperty(String dataPropertyName, Point nodeLocation) {
 		// TODO Auto-generated method stub
 		//if ()
-			super.addDataProperty(dataPropertyName, nodeLocation);
+			return super.addDataProperty(dataPropertyName, nodeLocation);
 		
 	}
 

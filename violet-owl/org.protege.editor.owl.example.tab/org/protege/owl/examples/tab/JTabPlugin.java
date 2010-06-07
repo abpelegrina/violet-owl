@@ -13,7 +13,7 @@ import org.tigris.gef.graph.GraphModel;
 import org.ugr.violet.graph.presentation.JOWLActivityGraph;
 import org.ugr.violet.graph.presentation.JOWLGraph;
 import org.ugr.violet.ui.ActivityDiagramPalette;
-import org.ugr.violet.ui.OntologyPalette;
+import org.ugr.violet.ui.OWLPalette;
 
 /**
  * @author anab
@@ -37,7 +37,7 @@ public class JTabPlugin extends JTabbedPane {
 		ActivityDiagramPalette barraDeHerramientas = new ActivityDiagramPalette();
         lienzo = new JOWLActivityGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas);        
 
-        OntologyPalette barraDeHerramientas2 = new OntologyPalette();
+        OWLPalette barraDeHerramientas2 = new OWLPalette();
         JOWLGraph l2 = new JOWLGraph(ExampleViewComponent.manager.getActiveOntology(), barraDeHerramientas2);
         
         this.addTab("Basic View", l2);

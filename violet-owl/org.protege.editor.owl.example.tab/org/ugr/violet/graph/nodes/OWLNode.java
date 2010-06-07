@@ -7,15 +7,12 @@ import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.presentation.NetNode;
 import org.ugr.violet.presentation.OntologyFig;
 
-public abstract class OWLNode<T extends OWLEntity> extends NetNode {
+public abstract class OWLNode extends NetNode {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5005676849252957456L;
-	
-	
-	T entity = null;
 	
 	
 	public OWLNode(){

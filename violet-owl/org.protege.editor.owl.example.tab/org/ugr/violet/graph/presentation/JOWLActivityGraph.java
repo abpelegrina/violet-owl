@@ -30,6 +30,7 @@ import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owl.model.OWLOntology;
+import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.base.DeleteFromModelAction;
 import org.tigris.gef.event.GraphSelectionEvent;
 import org.tigris.gef.event.GraphSelectionListener;
@@ -40,12 +41,15 @@ import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
 import org.ugr.violet.base.ActivityDiagram;
+import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
+import org.ugr.violet.changefilters.ChangeFilterDiagram;
 import org.ugr.violet.graph.ActivityGraphModel;
+import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 import org.ugr.violet.ui.ActivityDiagramPalette;
-import org.ugr.violet.ui.OntologyPalette;
+import org.ugr.violet.ui.OWLPalette;
 
 /**
  * Clase que representa el lienzo sobre el que se dibuja la representaci�n visual de la ontolog�a
@@ -94,7 +98,7 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOWLActivityGraph(OWLOntology ont, OntologyPalette p) {
+	public JOWLActivityGraph(OWLOntology ont, OWLPalette p) {
 		super(ont, p);
 		
 		// creamos el diagrama asociado a la ontolog�a
@@ -113,7 +117,7 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOWLActivityGraph(OWLOntology ont, OntologyPalette p, OWLIndividual task) {
+	public JOWLActivityGraph(OWLOntology ont, OWLPalette p, OWLIndividual task) {
 		super(ont, p);
 		
 		
@@ -277,5 +281,13 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	}
 
 	public void dropActionChanged(DropTargetDragEvent dtde) {
+	}
+	
+	@Override
+	public OWLOntologyChangeFilter getChangeListener(){
+		if (changeListener == null)
+			changeListener = new ChangeFilterActivityDiagram((OWLGraphModel) getGraphModel());
+		
+		return changeListener;
 	}
 }

@@ -35,10 +35,13 @@ import java.io.FileOutputStream;
 import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.CmdAlign;
 import org.tigris.gef.base.CmdCreateNode;
+import org.tigris.gef.base.CmdOpen;
+import org.tigris.gef.base.CmdSave;
 import org.tigris.gef.base.CmdSetMode;
 import org.tigris.gef.base.ModeBroom;
 import org.tigris.gef.base.ModeSelect;
 import org.tigris.gef.base.PrintAction;
+import org.tigris.gef.base.SaveAction;
 import org.tigris.gef.base.SaveSVGAction;
 import org.tigris.gef.graph.presentation.PaletteFig;
 import org.ugr.violet.actions.CmdCreateActivityStep;
@@ -54,6 +57,7 @@ import org.ugr.violet.actions.ModeCreateFollowedBy;
 import org.ugr.violet.actions.ModeCreateObjectProperty;
 import org.ugr.violet.actions.ModeCreateRange;
 import org.ugr.violet.actions.ModeCreateSub;
+import org.ugr.violet.actions.OWLSaveAction;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
 
@@ -63,7 +67,7 @@ import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
  * @see org.tigris.gef.demo.BasicApplication
  */
 
-public class OntologyPalette extends PaletteFig {
+public class OWLPalette extends PaletteFig {
 
     /**
 	 * 
@@ -71,7 +75,7 @@ public class OntologyPalette extends PaletteFig {
 	private static final long serialVersionUID = -3626620406810549582L;
 
 	/** Construct a new palette of example nodes for the Example application */
-    public OntologyPalette() {
+    public OWLPalette() {
         super();
     }
 
@@ -80,6 +84,12 @@ public class OntologyPalette extends PaletteFig {
 	public void defineButtons() {
     	add(new CmdSetMode(ModeSelect.class, "Select"));
         add(new CmdSetMode(ModeBroom.class, "Broom"));
+        
+        this.addSeparator();
+        
+        //add(new CmdOpen("Open") );
+        add(new OWLSaveAction());
+        
        
         this.addSeparator();
         add(new CmdAlign(AlignAction.ALIGN_TOPS));
@@ -94,7 +104,7 @@ public class OntologyPalette extends PaletteFig {
 		//add(new CmdCreateNodeObjectProperty());
 		
 		this.addSeparator();
-		add(new CmdSetMode(ModeCreateFollowedBy.class, "ObjectProperty"));
+		//add(new CmdSetMode(ModeCreateFollowedBy.class, "ObjectProperty"));
 		
 		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));		
 		add(new CmdSetMode(ModeCreateSub.class, "Sub"));		
