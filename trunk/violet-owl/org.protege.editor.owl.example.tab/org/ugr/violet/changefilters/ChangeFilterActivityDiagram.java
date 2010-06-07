@@ -1,7 +1,18 @@
 package org.ugr.violet.changefilters;
 
+import java.net.URI;
+
+import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.semanticweb.owl.model.AddAxiom;
+import org.semanticweb.owl.model.OWLClass;
+import org.semanticweb.owl.model.OWLClassAssertionAxiom;
+import org.semanticweb.owl.model.OWLDataFactory;
+import org.semanticweb.owl.model.OWLDeclarationAxiom;
 import org.semanticweb.owl.model.OWLIndividual;
+import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owl.model.OWLOntology;
+import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.edges.RestrictionEdge;
@@ -13,6 +24,8 @@ import org.ugr.violet.graph.edges.activity.FollowedByEdge;
  */
 public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 
+	private static OWLClass Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Followed_by_Relation"));
+	
 	/**
 	 * @param o
 	 */
@@ -21,44 +34,76 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 		
 		
 	}
+	
+	@Override
+	public void visit(OWLClassAssertionAxiom axiom){
+		if (axiom.getClassesInSignature().contains(Followed_by_Relation)){
+			if (this.isRemove()){
+				FollowedByEdge aBorrar = null;
+
+				// borrar el enlace entre las clases disjuntas
+				for (Object o : ogm.getEdges()){
+					FollowedByEdge e = ((FollowedByEdge) o);
+
+					if (e.toString().equals(axiom.getIndividual().toString())){
+						aBorrar = e;
+					}
+				}
+
+				if (aBorrar != null)
+					ogm.removeEdge(aBorrar);
+			}
+			else if(this.isAdd()) {
+				((ActivityGraphModel)ogm).addFlow(axiom.getIndividual());
+			}
+		}
+	}
 
 	// implementado
 	@Override
 	public void visit(OWLObjectPropertyAssertionAxiom axiom) {
+		
+		OWLDataFactory factory = ExampleViewComponent.manager
+		.getOWLDataFactory();
+		OWLOntology ont = ExampleViewComponent.manager.getActiveOntology();
 
 		OWLIndividual objeto = axiom.getObject();
 		OWLIndividual sujeto = axiom.getSubject();
+		OWLObjectProperty property = axiom.getProperty().asOWLObjectProperty();
 		
 		String propertyName = axiom.getProperty().getNamedProperty().toString();
 		
-		// comprobamos que sea una propieada de objeto válida para este tipo de diagrama
-		/*if ( !propertyName.equals("receive") && !propertyName.equals("send") && !propertyName.equals("is_in_state") && !propertyName.equals("followed_by") ) {
-			System.err.println("ERROR: ese tipo de propiedad no está permitido: " + propertyName);
-			return;
-		}*/
+		// evaluates property
+		OWLObjectProperty evaluates = factory.getOWLObjectProperty(URI
+				.create(ont.getURI() + "#evaluates"));
+		OWLDeclarationAxiom axiom1 = factory.getOWLDeclarationAxiom(evaluates);
+
+		AddAxiom addAxiom = new AddAxiom(ont, axiom1);
+		ExampleViewComponent.manager.applyChange(addAxiom);
 		
 		
 		if (this.isRemove()){
-			RestrictionEdge aBorrar = null;
+			if (property.compareTo(evaluates) == 0){
 
-			// borrar el enlace entre las clases disjuntas
-			for (Object o : ogm.getEdges()){
-				RestrictionEdge e = ((OWLEdge) o).asRestrictionEdge();
-
-				if (e != null && e.isSujeto(sujeto) && e.isObjeto(objeto)){
-					aBorrar = e;
+				OWLEdge edge = ogm.getEdge(sujeto.toString());
+				
+				if (edge != null) {
+					FollowedByEdge fbe = (FollowedByEdge) edge;
+					fbe.update(null);
 				}
 			}
-
-			if (aBorrar != null)
-				ogm.removeEdge(aBorrar);
 		}
 		else if (this.isAdd()){
-			FollowedByEdge edge = new FollowedByEdge(objeto.asOWLIndividual(), sujeto
-					.asOWLIndividual());
-			
-			if (ogm != null)
-				ogm.addConnection(sujeto, objeto, edge);
+			if (property.compareTo(evaluates) == 0){
+				
+				OWLEdge edge = ogm.getEdge(sujeto.toString());
+				
+				if (edge != null) {
+					FollowedByEdge fbe = (FollowedByEdge) edge;
+					fbe.update(sujeto);
+				}
+				
+			}
 		}
 	}
 

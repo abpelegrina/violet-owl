@@ -9,7 +9,10 @@ import java.net.URI;
 
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
+import org.semanticweb.owl.model.OWLClass;
+import org.semanticweb.owl.model.OWLClassAssertionAxiom;
 import org.semanticweb.owl.model.OWLEntity;
+import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
 import org.tigris.gef.base.ModeCreatePolyEdge;
@@ -36,6 +39,10 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
 
 	private FigActivityDiagram sourceFigNode = null;
 	private FigActivityDiagram destFigNode = null;
+	
+	static private OWLObjectProperty followed_by = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#followed_by"));
+	static private OWLObjectProperty following_step = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#following_step"));
+	
 	
 	/**
 	 * 
@@ -131,7 +138,7 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
             f = null;
         }
 
-        OWLGraphModel ogm = (OWLGraphModel) graphModel;
+       
 
         if (FigActivityDiagram.class.isInstance(f)) {
         	destFigNode = (FigActivityDiagram) f;
@@ -142,17 +149,35 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
         		
         		if(e1.isOWLIndividual() && e2.isOWLIndividual()){
         			
-        			// creamos el axioma que relaciona los dos pasos o steps dentro del diagrama
-        			OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#followed_by"));
+        			// 1. We create the individual that reifies the flow relation
+        			OWLClass flowClass = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Followed_by_Relation"));
+        			OWLIndividual flow = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + e2.toString() + "_followed_by"));
         			
-        			// creamos el axioma para la nueva afirmación sobre una propiedad de objetos
-        			OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(e2.asOWLIndividual(), partOf, e1.asOWLIndividual());
+        			// type assertion for flow
+        			OWLClassAssertionAxiom axm = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom(flow, flowClass);
+        			AddAxiom ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axm);
+        			ExampleViewComponent.manager.applyChange(ax);
+        			
+        			// 2. We create the two relations between the steps: followed_by and following_step
+        			
+        			// followed_by
+        			OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(e2.asOWLIndividual(), followed_by, flow);
         			
         			// creamos el cambio y lo almacenamos en la ontología
-        			AddAxiom ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e);
+        			ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e);
         			ExampleViewComponent.manager.applyChange(ax);
-        		
-        			//ogm.addEdge(edge);
+        			
+        			// following_step
+        			e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(flow, following_step, e1.asOWLIndividual());
+        			
+        			// creamos el cambio y lo almacenamos en la ontología
+        			ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e);
+        			ExampleViewComponent.manager.applyChange(ax);
+        			
+        			FollowedByEdge edge = new FollowedByEdge(e2.asOWLIndividual(), e1.asOWLIndividual(), flow, null);
+        			
+        			if (graphModel != null)
+        				((ActivityGraphModel)graphModel).addConnection(e2.asOWLIndividual(), e1.asOWLIndividual(), edge);
         		}
         		else
         			System.err.println("Alguno no es individuo");

@@ -327,5 +327,13 @@ public class NodeActivityStep extends NodeActivity {
 	public boolean isDataProperty(){
 		return false;
 	}
+	
+	public boolean isNodeActivityStep(){
+		return true;
+	}
+	
+	public NodeActivityStep asNodeActivityStep(){
+		return this;
+	}
 
 }

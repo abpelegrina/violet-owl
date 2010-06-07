@@ -27,6 +27,7 @@ import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owl.model.OWLOntology;
+import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.base.DeleteFromModelAction;
 import org.tigris.gef.event.GraphSelectionEvent;
 import org.tigris.gef.event.GraphSelectionListener;
@@ -38,13 +39,14 @@ import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
 import org.ugr.violet.base.ActivityDiagram;
 import org.ugr.violet.base.OWLDiagram;
+import org.ugr.violet.changefilters.ChangeFilterDiagram;
 import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivity;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 import org.protege.owl.examples.tab.ExampleViewComponent;
-import org.ugr.violet.ui.OntologyPalette;
+import org.ugr.violet.ui.OWLPalette;
 
 /**
  * Clase que representa el lienzo sobre el que se dibuja la representaci�n visual de la ontolog�a
@@ -71,12 +73,14 @@ public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetL
 	
 	protected OWLOntology activa = null;
 	
+	protected OWLOntologyChangeFilter changeListener = null;
+	
 	/**
 	 * constructor
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOWLGraph(OWLOntology ont, OntologyPalette p) {
+	public JOWLGraph(OWLOntology ont, OWLPalette p) {
 		super();
 		this.setBounds(10, 10, 300, 200);
 		this.add(p, BorderLayout.NORTH);
@@ -206,4 +210,21 @@ public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetL
 
 	public void dropActionChanged(DropTargetDragEvent dtde) {
 	}
+	
+	
+	
+	public OWLOntologyChangeFilter getChangeListener(){
+		
+		if (changeListener == null)
+			changeListener = new ChangeFilterDiagram((OWLGraphModel) getGraphModel());
+		
+		return changeListener;
+	}
+	
+	public OWLGraphModel getOWLGraphModel(){
+		return ogm;	
+	}
+	
+	
+	
 }

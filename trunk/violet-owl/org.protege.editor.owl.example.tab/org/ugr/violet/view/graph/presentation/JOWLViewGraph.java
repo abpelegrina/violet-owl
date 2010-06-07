@@ -6,7 +6,7 @@ package org.ugr.violet.view.graph.presentation;
 import org.semanticweb.owl.model.OWLOntology;
 import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.presentation.JOWLGraph;
-import org.ugr.violet.ui.OntologyPalette;
+import org.ugr.violet.ui.OWLPalette;
 import org.ugr.violet.view.graph.OWLViewGraphModel;
 
 import sun.tools.tree.ThisExpression;
@@ -21,7 +21,7 @@ public class JOWLViewGraph extends JOWLGraph{
 	 * @param ont
 	 * @param p
 	 */
-	public JOWLViewGraph(OWLOntology ont, OntologyPalette p) {
+	public JOWLViewGraph(OWLOntology ont, OWLPalette p) {
 		super(ont, p);
 	}
 

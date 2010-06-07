@@ -3,11 +3,19 @@
  */
 package org.ugr.violet.graph.edges.activity;
 
+import java.awt.Color;
+import java.awt.Point;
+
+import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.semanticweb.owl.model.OWLDataProperty;
 import org.semanticweb.owl.model.OWLIndividual;
+import org.semanticweb.owl.model.OWLOntology;
 import org.tigris.gef.base.Layer;
+import org.tigris.gef.base.PathConvPercent;
 import org.tigris.gef.presentation.ArrowHeadGreater;
 import org.tigris.gef.presentation.FigEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
+import org.tigris.gef.presentation.FigText;
 import org.ugr.violet.graph.edges.DisjointEdge;
 import org.ugr.violet.graph.edges.EquivalentEdge;
 import org.ugr.violet.graph.edges.IntersectionEdge;
@@ -28,15 +36,31 @@ public class FollowedByEdge extends OWLEdge {
 	 */
 	private static final long serialVersionUID = 5811090848351084320L;
 	private FigEdgePoly enlace = new FigEdgePoly();
+	protected FigText mid = new FigText(10, 30, 90, 20);
 	private String label = "";
 	
 	private OWLIndividual domain = null;
 	private OWLIndividual range = null;
+	private OWLIndividual relation = null;
+	private OWLIndividual guard = null;
+	private String guard_label;
 	
-	public FollowedByEdge(OWLIndividual p, OWLIndividual pp){
+	public FollowedByEdge(OWLIndividual p, OWLIndividual pp, OWLIndividual r,  OWLIndividual g){
 		super();
 		domain = p;
 		range = pp;
+		relation = r;
+		guard = g;
+		
+		// fetch the expression of the guard
+		if (guard != null){
+			OWLDataProperty dp = ExampleViewComponent.manager.getOWLDataProperty("has_expression");
+			
+			for (OWLOntology ont : ExampleViewComponent.manager.getOntologies()) {
+				if (guard.getDataPropertyValues(ont).containsKey(dp))
+					guard_label =  guard.getDataPropertyValues(ont).get(dp).toString();
+			}
+		}
 	}
 	
 	
@@ -48,10 +72,41 @@ public class FollowedByEdge extends OWLEdge {
 	    ArrowHeadGreater flechaDestino = new ArrowHeadGreater();
 	    flechaDestino.setWidth(5);
 	    
+	    if (guard != null) {
+		    mid.setText(label);
+		    mid.setTextColor(Color.black);
+		    mid.setTextFilled(false);
+		    mid.setFilled(false);
+		    mid.setText("[ " + guard.toString() + " ]");
+		    mid.setLineWidth(0);
+		    enlace.addPathItem(mid, new PathConvPercent(enlace, 50, 10));
+	    }
+	    
 	    enlace.setDestArrowHead(flechaDestino);
 	    enlace.setBetweenNearestPoints(true);
 	    enlace.setLayer(lay);
+	    
+	    
+	    
 		return enlace;
+	}
+	
+	public void update(OWLIndividual g) {
+		this.guard = g;
+		enlace.removePathItem(mid);
+		
+		if (guard != null){
+			mid.setText(label);
+		    mid.setTextColor(Color.black);
+		    mid.setTextFilled(false);
+		    mid.setFilled(false);
+		    mid.setText("[ " + guard.toString() + " ]");
+		    mid.setLineWidth(0);
+		    enlace.addPathItem(mid, new PathConvPercent(enlace, 50, 10));
+		}
+		
+	
+		enlace.redraw();
 	}
 	
 	/**
@@ -66,7 +121,7 @@ public class FollowedByEdge extends OWLEdge {
 	 */
 	@Override
 	public String toString() {
-		return domain.toString()+" followed_by "+ range.toString();
+		return relation.toString();
 	}
 
 	/**

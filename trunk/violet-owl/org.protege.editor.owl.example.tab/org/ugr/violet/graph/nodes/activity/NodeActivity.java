@@ -160,6 +160,14 @@ public abstract class NodeActivity extends OWLNode {
 		return null;
 	}
 	
+	public boolean isNodeActivityStep(){
+		return false;
+	}
+	
+	public NodeActivityStep asNodeActivityStep(){
+		return null;
+	}
+	
 	
 
 }
