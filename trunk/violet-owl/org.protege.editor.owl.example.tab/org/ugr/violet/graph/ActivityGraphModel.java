@@ -5,24 +5,32 @@ package org.ugr.violet.graph;
 
 import java.awt.Point;
 import java.net.URI;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
+import org.semanticweb.owl.model.OWLConstant;
 import org.semanticweb.owl.model.OWLDataFactory;
-import org.semanticweb.owl.model.OWLDeclarationAxiom;
+import org.semanticweb.owl.model.OWLDataProperty;
+import org.semanticweb.owl.model.OWLDataPropertyExpression;
+import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owl.model.OWLObjectPropertyExpression;
 import org.semanticweb.owl.model.OWLOntology;
 import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.edges.activity.FollowedByEdge;
 import org.ugr.violet.graph.nodes.OWLNode;
-import org.ugr.violet.graph.nodes.activity.NodeActivity;
-import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeActivityDiagram;
+import org.ugr.violet.graph.nodes.activity.NodeAction;
 import org.ugr.violet.graph.nodes.activity.NodeDecision;
+import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeFork;
+import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 import org.ugr.violet.graph.nodes.activity.NodeMerge;
 
 /**
@@ -30,47 +38,118 @@ import org.ugr.violet.graph.nodes.activity.NodeMerge;
  * 
  */
 public class ActivityGraphModel extends OWLGraphModel {
-	
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5937652960022403075L;
 
+	public static String URIAmenities = "http://dl.dropbox.com/u/1475213/amenities.owl";
+
+	private OWLClass action;
+	private OWLClass activity;
+	private OWLClass informationObject;
+	private OWLClass event;
+	private OWLClass role;
+
+	private OWLIndividual task = null;
+	private OWLIndividual sequence = null;
+
+	/**
+	 * @return the task
+	 */
+	public OWLIndividual getTask() {
+		return task;
+	}
+
+	/**
+	 * @return the sequence
+	 */
+	public OWLIndividual getSequence() {
+		return sequence;
+	}
+
+	// ************************* Constructor ***************************
 	/**
 	 * @param ont
 	 */
-	public ActivityGraphModel(OWLOntology ont) {
-		super(ont);
+	public ActivityGraphModel(OWLIndividual Task) {
+		super();
+
+		// TODO import AMENITIES if it isn't imported
+
+		OWLDataFactory fact = manager.getOWLDataFactory();
+
+		action = fact.getOWLClass(URI.create(URIAmenities + "#Action"));
+		activity = fact.getOWLClass(URI.create(URIAmenities + "#Activity"));
+		informationObject = fact.getOWLClass(URI.create(URIAmenities + "#Information_Object"));
+		event = fact.getOWLClass(URI.create(URIAmenities + "#Event"));
+		role = fact.getOWLClass(URI.create(URIAmenities + "#Role"));
+
+		if (task != null)
+			task = Task;
+		else
+			createNewTask("Prueba_task");
 	}
+
+	// ****************************************************************
+
+	private void createNewTask(String taskName) {
+		
+		OWLDataFactory fact = manager.getOWLDataFactory();
+		
+		// 1. Creamos un nuevo individuo de la clase tarea:
+		task = fact.getOWLIndividual(URI.create(activeOntology().getURI() + "#" + taskName));
+		OWLClass ClaseTarea = fact.getOWLClass(URI.create(URIAmenities + "#Task"));
+
+		// Creamos la relación de jerarquía
+		OWLClassAssertionAxiom d = fact.getOWLClassAssertionAxiom(task, ClaseTarea);
+
+		// agregamos el axioma a la ontología
+		AddAxiom addAx3 = new AddAxiom(activeOntology(), d);
+
+		// aplicamos los cambios
+		manager.applyChange(addAx3);
+
+		// 2. Creamos una nueva secuencia y se la asociamos
+		sequence = fact.getOWLIndividual(URI.create(activeOntology().getURI() + "#" + taskName + "_Sequence"));
+		OWLClass ClaseSecuencia = fact.getOWLClass(URI.create(URIAmenities + "#Sequence"));
+
+		// Creamos la relación de jerarquía
+		d = fact.getOWLClassAssertionAxiom(sequence, ClaseSecuencia);
+
+		// agregamos el axioma a la ontología
+		addAx3 = new AddAxiom(activeOntology(), d);
+
+		// aplicamos los cambios
+		manager.applyChange(addAx3);
+
+		// Asociamos la secuencia y la tarea
+		OWLObjectProperty descritaEn = fact.getOWLObjectProperty(URI.create(URIAmenities + "#described_in"));
+		OWLObjectPropertyAssertionAxiom e = fact.getOWLObjectPropertyAssertionAxiom(task, descritaEn, sequence);
+
+		// aplicamos los cambios
+		manager.applyChange(new AddAxiom(activeOntology(), e));
+
+	}
+
+	// ************************ AD nodes *******************************
 
 	public void addStepToSequence(OWLIndividual step) {
 
-		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
+		OWLOntology activa = activeOntology();
+		OWLDataFactory fact = manager.getOWLDataFactory();
 
-		OWLIndividual secuencia = ExampleViewComponent.lienzoActual
-				.getSecuencia();
-		OWLObjectProperty hasPart = ExampleViewComponent.manager
-				.getOWLDataFactory().getOWLObjectProperty(
-						URI.create(ExampleViewComponent.manager
-								.getActiveOntology().getURI()
-								+ "#has_part"));
-		OWLObjectProperty partOf = ExampleViewComponent.manager
-				.getOWLDataFactory().getOWLObjectProperty(
-						URI.create(ExampleViewComponent.manager
-								.getActiveOntology().getURI()
-								+ "#part_of"));
+		OWLObjectProperty hasPart = fact.getOWLObjectProperty(	URI.create(ActivityGraphModel.URIAmenities + "#has_part"));
+		OWLObjectProperty partOf = fact.getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#part_of"));
 
 		// step es parte de secuencia
-		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager
-				.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step,
-						partOf, secuencia);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		OWLObjectPropertyAssertionAxiom e = manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step, partOf, sequence);
+		manager.applyChange(new AddAxiom(activa, e));
 
 		// secuencia tiene como parte a step
-		e = ExampleViewComponent.manager.getOWLDataFactory()
-				.getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, step);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
+		e = manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(sequence, hasPart, step);
+		manager.applyChange(new AddAxiom(activa, e));
 	}
 
 	@Override
@@ -78,31 +157,33 @@ public class ActivityGraphModel extends OWLGraphModel {
 		indName = indName.trim();
 		OWLIndividual ind = this.getOwlIndividualByName(indName);
 		OWLNode nodo = null;
-		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
+		OWLOntology activa = manager.getActiveOntology();
 
 		if (ind != null) {
 
 			// clasificar tipo de individuo
 
 			boolean isFlow = false;
+			OWLClass type = null;
 
-			OWLClass c = (OWLClass) ind.getTypes(activa).toArray()[0];
+			for (OWLDescription c : ind.getTypes(activa)) {
 
-			if (c.toString().equals("Action") || c.toString().equals("Task")
-					|| c.toString().equals("Activity")) {
-				nodo = this.addActionStep(ind);
-				
-			} else if (c.toString().equals("Fork_Step")) {
-				nodo = this.addForkStep(ind);
-			} else if (c.toString().equals("Join_Step")) {
-				nodo = this.addForkStep(ind);
-			} else if (c.toString().equals("Decision_Step")) {
-				nodo = this.addDecisionStep(ind);
-			} else if (c.toString().equals("Merge_Step")) {
-				nodo = this.addMergeStep(ind);
-			} else if (c.toString().equals("Followed_by_Relation")) {
-				this.addFlow(ind);
-				isFlow = true;
+				System.err.println("Type : " + c);
+
+				if (!c.isAnonymous()) {
+					type = c.asOWLClass();
+
+					if (type.compareTo(action) == 0) {
+						nodo = this.addActionStep(ind);
+					} else if (type.compareTo(activity) == 0) {
+						nodo = this.addActionStep(ind);
+					} else if (type.compareTo(event) == 0) {
+						nodo = this.addEventStep(ind);
+					} else if (type.compareTo(informationObject) == 0) {
+						nodo = this.addInformationObjectStep(ind);
+					} else
+						System.err.println("No matching type found!!!");
+				}
 			}
 
 			System.err.flush();
@@ -110,7 +191,7 @@ public class ActivityGraphModel extends OWLGraphModel {
 			if (nodo != null && !isFlow) {
 				this.addNode(nodo);
 				nodo.getOntologyFig().setLocation(location);
-				updateStep(((NodeActivity)nodo).getStep());
+				updateStep(((NodeActivityDiagram) nodo).getStep(), location);
 			}
 
 			return true;
@@ -122,118 +203,34 @@ public class ActivityGraphModel extends OWLGraphModel {
 	 * @param ind
 	 * @return
 	 */
-	public OWLEdge addFlow(OWLIndividual ind) {
+	private OWLNode addInformationObjectStep(OWLIndividual ind) {
+		// TODO Auto-generated method stub
 
-		OWLEdge edge = null;
-		OWLNode nodoOrigen, nodoDestino;
-		OWLIndividual source = null, target = null, guard=null, aux;
+		// 1. Create the information object node
 
-		// find the source and the targe of the relation (a.k.a. found the
-		// relations with followed_by and following_step)
+		// 2. Fetch all the possible relations between the information object
+		// and steps
 
-		// 1. Create the object properties followed_by and following_step
-		// followed_by object property
-		OWLDataFactory factory = ExampleViewComponent.manager
-				.getOWLDataFactory();
-		OWLOntology ont = ExampleViewComponent.manager.getActiveOntology();
-
-		OWLObjectProperty followed_by = factory.getOWLObjectProperty(URI
-				.create(ont.getURI() + "#followed_by"));
-		OWLDeclarationAxiom axiom = factory.getOWLDeclarationAxiom(followed_by);
-
-		AddAxiom addAxiom = new AddAxiom(ont, axiom);
-		ExampleViewComponent.manager.applyChange(addAxiom);
-
-		// following_step object property
-		OWLObjectProperty following_step = factory.getOWLObjectProperty(URI
-				.create(ont.getURI() + "#following_step"));
-		axiom = factory.getOWLDeclarationAxiom(following_step);
-
-		addAxiom = new AddAxiom(ont, axiom);
-		ExampleViewComponent.manager.applyChange(addAxiom);
-		
-		// evaluates property
-		OWLObjectProperty evaluates = factory.getOWLObjectProperty(URI
-				.create(ont.getURI() + "#evaluates"));
-		axiom = factory.getOWLDeclarationAxiom(evaluates);
-
-		addAxiom = new AddAxiom(ont, axiom);
-		ExampleViewComponent.manager.applyChange(addAxiom);
-
-		// 2. visit all of the Object Property Assertion axioms and select only
-		// the ones that involve ind and the flow properties
-		for (Object o : this.getNodes()) {
-			NodeActivity nodo = (NodeActivity) o;
-
-			System.out.println();
-
-			if (nodo.isNodeActivityStep()) {
-
-				System.err.println("nodo: " + nodo);
-
-				aux = nodo.asNodeActivityStep().getStep();
-
-				// comprobamos si existe un property assertion que lo relacione
-				// que el individual
-				for (OWLObjectPropertyAssertionAxiom ass : ont
-						.getObjectPropertyAssertionAxioms(aux)) {
-
-					// it is following_step property?
-					if (ass.getProperty().compareTo(followed_by) == 0
-							&& ass.getObject().compareTo(ind) == 0) {
-						source = aux;
-						System.err.println("encontrado origen: " + source);
-					}
-				}
-			}
-		}
-
-		for (OWLObjectPropertyAssertionAxiom ass : ont
-				.getObjectPropertyAssertionAxioms(ind)) {
-
-			System.err.println("axioma: " + ass);
-
-			// it is following_step property?
-			if (ass.getProperty().compareTo(following_step) == 0) {
-				target = ass.getObject();
-				System.err.println("encontrado destino: " + target);
-			}
-			
-			
-			// it is evaluates property?
-			if (ass.getProperty().compareTo(evaluates) == 0) {
-				guard = ass.getObject();
-				System.err.println("encontrado guarda: " + guard);
-			}
-			
-			
-		}
-
-		// If we found both the followed_by and the following_step we create the
-		// edge and add it to the diagram. Otherwise none happens.
-		if (source != null && target != null) {
-
-			// create the edge
-			edge = new FollowedByEdge(source, target, ind, guard);
-						
-			// this method takes care about the presence (or absence) of the
-			// nodes corresponding to the steps in the current diagram
-			// and acts consecuently
-			this.addConnection(source, target, edge);
-		} else
-			System.err.println("No se porque no entra: " + source + " "
-					+ target);
-
-		// we return the edge, just because.
-		return edge;
+		return null;
 	}
 
 	/**
 	 * @param ind
 	 * @return
 	 */
-	private OWLNode addMergeStep(OWLIndividual ind) {
+	private OWLNode addEventStep(OWLIndividual ind) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @param ind
+	 * @return
+	 */
+	private OWLNode addMergeStep(OWLIndividual ind, Point location) {
 		NodeMerge nodo = new NodeMerge(ind);
+		this.addNode(nodo);
+		nodo.getOntologyFig().setLocation(location.x + 30, location.y+60);
 		return nodo;
 	}
 
@@ -241,123 +238,100 @@ public class ActivityGraphModel extends OWLGraphModel {
 	 * @param ind
 	 * @return
 	 */
-	private OWLNode addDecisionStep(OWLIndividual ind) {
+	private OWLNode addDecisionStep(OWLIndividual ind, Point location) {
 		NodeDecision nodo = new NodeDecision(ind);
+		this.addNode(nodo);
+		nodo.getOntologyFig().setLocation(location.x + 30, location.y+60);
 		return nodo;
 	}
 
 	/**
 	 * @param ind
 	 */
-	private OWLNode addForkStep(OWLIndividual ind) {
+	private OWLNode addForkStep(OWLIndividual ind, Point location) {
 		NodeFork nodo = new NodeFork(ind);
+		this.addNode(nodo);
+		nodo.getOntologyFig().setLocation(location.x + 30, location.y+60);
 		return nodo;
 	}
 
-	public OWLNode addActionStep(OWLIndividual task) {
+	/**
+	 * @param action
+	 * @return
+	 */
+	public OWLNode addActionStep(OWLIndividual action) {
 		OWLIndividual step = null;
-		OWLIndividual role = null;
+		OWLIndividual executor = null;
 
-		OWLOntology activa = ExampleViewComponent.manager.getActiveOntology();
+		OWLOntology activa = activeOntology();
+		OWLDataFactory fact = manager.getOWLDataFactory();
 
-		NodeActivityStep nodeInd;
+		NodeAction nodeInd;
 
 		// 1 Buscar el step asociado al la actividad/tarea
-		OWLObjectProperty performs = ExampleViewComponent.manager
-				.getOWLDataFactory().getOWLObjectProperty(
-						URI.create(ExampleViewComponent.manager
-								.getActiveOntology().getURI()
-								+ "#performs"));
-		for (OWLObjectPropertyAssertionAxiom ax : ontologia
-				.getObjectPropertyAssertionAxioms(task)) {
-			OWLIndividual objeto = ax.getObject();
-			OWLIndividual sujeto = ax.getSubject();
-			OWLObjectProperty propiedad = ax.getProperty()
-					.asOWLObjectProperty();
+		OWLObjectProperty performs = fact.getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#performs"));
 
-			if (propiedad.toString().equals(performs.toString())
-					&& sujeto.toString().equals(task.toString())) {
-				step = objeto;
+		for (OWLOntology ont : ontologies())
+			for (OWLObjectPropertyAssertionAxiom ax : ont
+					.getObjectPropertyAssertionAxioms(action)) {
+				OWLIndividual objeto = ax.getObject();
+				OWLIndividual sujeto = ax.getSubject();
+				OWLObjectProperty propiedad = ax.getProperty()
+						.asOWLObjectProperty();
+
+				if (propiedad.toString().equals(performs.toString())
+						&& sujeto.toString().equals(action.toString())) {
+					step = objeto;
+				}
 			}
-		}
 
 		// Si no existe el step asociado lo creamos y lo asociamos con la tarea
 		if (step == null) {
-			step = ExampleViewComponent.manager.getOWLDataFactory()
-					.getOWLIndividual(
-							URI.create(ExampleViewComponent.manager
-									.getActiveOntology().getURI()
-									+ "#" + task + "_step"));
-			OWLClass claseStep = ExampleViewComponent.manager
-					.getOWLDataFactory().getOWLClass(
-							URI.create(ExampleViewComponent.manager
-									.getActiveOntology().getURI()
-									+ "#Action_Step"));
+			step = fact.getOWLIndividual(URI.create(manager.getActiveOntology().getURI() + "#" + action + "_step"));
+			OWLClass claseStep = fact.getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Action_Step"));
 
-			OWLClassAssertionAxiom d = ExampleViewComponent.manager
-					.getOWLDataFactory().getOWLClassAssertionAxiom(step,
-							claseStep);
-			ExampleViewComponent.manager.applyChange(new AddAxiom(
-					ExampleViewComponent.manager.getActiveOntology(), d));
+			OWLClassAssertionAxiom d = fact.getOWLClassAssertionAxiom(step, claseStep);
+			manager.applyChange(new AddAxiom(manager.getActiveOntology(), d));
+
 		}
 
-		// asociamos la tarea y el step mediante la propiedad de objetos
-		// "performs". Si ya existía la relación no pasa nada
-		OWLObjectPropertyAssertionAxiom ax = ExampleViewComponent.manager
-				.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step,
-						performs, task);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, ax));
-
 		// 2 Buscamos el rol asociado con la tarea (si existe)
-		// TODO buscar el rol asociado con la tarea
+		OWLObjectProperty does = fact.getOWLObjectProperty(URI.create(URIAmenities + "#do"));
 
-		/*
-		 * // 3 Añadir la actividad como parte de la tarea modelada
-		 * OWLIndividual tareaPrincipal =
-		 * ExampleViewComponent.lienzoActual.getTarea(); // Asociamos la
-		 * secuencia a los steps OWLObjectProperty hasPart =
-		 * ExampleViewComponent
-		 * .manager.getOWLDataFactory().getOWLObjectProperty(
-		 * URI.create(ExampleViewComponent.manager.getActiveOntology().getURI()
-		 * + "#has_part")); OWLObjectProperty partOf =
-		 * ExampleViewComponent.manager
-		 * .getOWLDataFactory().getOWLObjectProperty(
-		 * URI.create(ExampleViewComponent.manager.getActiveOntology().getURI()
-		 * + "#part_of"));
-		 * 
-		 * OWLObjectPropertyAssertionAxiom e =
-		 * ExampleViewComponent.manager.getOWLDataFactory
-		 * ().getOWLObjectPropertyAssertionAxiom(task, partOf, tareaPrincipal);
-		 * ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		 * 
-		 * e =ExampleViewComponent.manager.getOWLDataFactory().
-		 * getOWLObjectPropertyAssertionAxiom(tareaPrincipal, hasPart, task);
-		 * ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		 * 
-		 * // 4 Agregar los steps como parte de la secuencia del diagrama
-		 * OWLIndividual secuencia =
-		 * ExampleViewComponent.lienzoActual.getSecuencia();
-		 * 
-		 * // step es parte de secuencia e =
-		 * ExampleViewComponent.manager.getOWLDataFactory
-		 * ().getOWLObjectPropertyAssertionAxiom(step, partOf, secuencia);
-		 * ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		 * 
-		 * // secuencia tiene como parte a step e =
-		 * ExampleViewComponent.manager.
-		 * getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia,
-		 * hasPart, step); ExampleViewComponent.manager.applyChange(new
-		 * AddAxiom(activa, e));
-		 */
+		System.err.println("Instancias de role = " 	+ role.getIndividuals(manager.getActiveOntology()).size());
 
-		// 5 Cear el nodo y agregarlo al diagrama
-		nodeInd = new NodeActivityStep(task, step);
-		
-		
+		// for all the instances of Role
+		for (OWLIndividual ind : role.getIndividuals(manager
+				.getActiveOntology()))
 
-		return nodeInd;
+			// for all the ontologies
+			for (OWLOntology ont : ontologies()) {
 
-		// recorremos todas las aserciones de propiedades de objetos asociadas
+				// fetch the object propery values for ind
+				Map<OWLObjectPropertyExpression, Set<OWLIndividual>> x = ind
+						.getObjectPropertyValues(ont);
+
+				// for all the object property values
+				for (OWLObjectPropertyExpression exp : x.keySet()) {
+
+					// if the property is do
+					if (exp.asOWLObjectProperty().compareTo(does) == 0)
+
+						// for al the values
+						for (OWLIndividual i : x.get(exp))
+
+							// if the value is the action ...
+							if (i.compareTo(action) == 0)
+								executor = ind; // ind is the excutor of action!
+				}
+			}
+
+		// 3 Añadir la actividad como parte de la tarea modelada
+		OWLObjectProperty hasPart = fact.getOWLObjectProperty(URI.create(manager.getActiveOntology().getURI() + "#has_part"));
+		OWLObjectPropertyAssertionAxiom e = fact.getOWLObjectPropertyAssertionAxiom(sequence, hasPart, step);
+		manager.applyChange(new AddAxiom(activa, e));
+
+		// 4 recorremos todas las aserciones de propiedades de objetos asociadas
 		// al nuevo individuo
 		// TODO recuperar solo las aserciones válidas para este diagrama =>
 		// relaciones entre
@@ -372,37 +346,159 @@ public class ActivityGraphModel extends OWLGraphModel {
 		 * 
 		 * this.addConnection(sujeto, objeto, r); }
 		 */
+		
+		
+		// 5 Cear el nodo y agregarlo al diagrama
+		nodeInd = new NodeAction(action, step, executor);
+
+		return nodeInd;
 	}
 
 	/**
 	 * 
 	 */
-	protected void updateStep(OWLIndividual source) {
+	protected void updateStep(OWLIndividual source, Point location) {
+
+		if (source == null)
+			return;
+
+		OWLDataFactory fact = manager.getOWLDataFactory();
 		
-		if (source == null) return;
-
-		OWLDataFactory factory = ExampleViewComponent.manager
-				.getOWLDataFactory();
-		OWLOntology ont = ExampleViewComponent.manager.getActiveOntology();
-
-		OWLObjectProperty followed_by = factory.getOWLObjectProperty(URI
-				.create(ont.getURI() + "#followed_by"));
-		OWLDeclarationAxiom axiom = factory.getOWLDeclarationAxiom(followed_by);
-		AddAxiom addAxiom = new AddAxiom(ont, axiom);
-		ExampleViewComponent.manager.applyChange(addAxiom);
-
-		// comprobamos si existe un property assertion que lo relacione que el
-		// individual
-		for (OWLObjectPropertyAssertionAxiom ass : ont.getObjectPropertyAssertionAxioms(source)) {
+		OWLObjectProperty followed_by = fact.getOWLObjectProperty(URI.create(URIAmenities + "#followed_by"));
+		
+		System.err.println("searching for followed_by relations...");
+		for (OWLOntology ont : ontologies()) {
 			
-			System.err.println("Recorriendo el axioma: " + ass);
 			
-			// it is followed_by property?
-			if (ass.getProperty().compareTo(followed_by) == 0)
-				this.addFlow(ass.getObject());
+
+			// fetch the object propery values for the action
+			Map<OWLObjectPropertyExpression, Set<OWLIndividual>> x = source.getObjectPropertyValues(ont);
+
+			// for all the object property values
+			for (OWLObjectPropertyExpression exp : x.keySet()) {
+				
+				System.err.println("object property " +  exp);
+				
+				// if the property is followed_by
+				if (exp.asOWLObjectProperty().compareTo(followed_by) == 0)
+					// for al the values
+					for (OWLIndividual followed_by_relation : x.get(exp))
+						this.addFlow(source, followed_by_relation, location);
+			}
 		}
+
 	}
 
+	// ************************** AD Edges *****************************
+	/**
+	 * @param followed_by_relation
+	 * @return
+	 */
+	public OWLEdge addFlow(OWLIndividual sourceStep, OWLIndividual followed_by_relation, Point location) {
+	
+		System.err.println("Adding flow to the step");
+		
+		OWLDataFactory fact = manager.getOWLDataFactory();
+		
+		// 1. Recuperar la relación following step.
+		OWLObjectProperty following_step = fact.getOWLObjectProperty(URI
+				.create(URIAmenities + "#following_step"));
+		
+		// 2. Recuperar la guarda de la relación
+		OWLObjectProperty evaluates = fact.getOWLObjectProperty(URI.create(URIAmenities + "#evaluates"));
+		OWLDataProperty has_expression = fact.getOWLDataProperty(URI.create(URIAmenities + "#has_expression"));
+		OWLIndividual guard = null;
+		String guardLabel = "";
+		
+		for(OWLIndividual guarda : this.getValuesForObjectPropertyInAllOntologies(followed_by_relation, evaluates)){
+			
+			guard = guarda;
+			for (OWLConstant c : this.getValuesForDataPropertyInAllOntologies(guard, has_expression)){
+				
+				System.err.println("Encontrada expresion para guarda: " + c);
+				guardLabel = c.toString();
+				break;
+			}
+			break;
+		}
+	
+		
+		OWLClass ios = fact.getOWLClass(URI.create(URIAmenities + "#Information_Object_Step"));
+		OWLClass decisionStep = fact.getOWLClass(URI.create(URIAmenities + "#Decision_Step"));
+		OWLClass mergeStep = fact.getOWLClass(URI.create(URIAmenities + "#Merge_Step"));
+		OWLClass firstStep = fact.getOWLClass(URI.create(URIAmenities + "#First_Step"));
+		OWLClass finalStep = fact.getOWLClass(URI.create(URIAmenities + "#Final_Step"));
+		OWLClass forkStep = fact.getOWLClass(URI.create(URIAmenities + "#Fork_Step"));
+		OWLClass joinStep= fact.getOWLClass(URI.create(URIAmenities + "#Join_Step"));
+		
+		OWLClass type;
+		
+		for (OWLIndividual targetStep : this.getValuesForObjectPropertyInAllOntologies(followed_by_relation, following_step)){
+			
+			if (this.getNode(targetStep.toString()) == null) {
+				for (OWLDescription d : targetStep.getTypes(ontologies()))
+					if (!d.isAnonymous()) {
+						type = d.asOWLClass();
+						
+						if (type.compareTo(ios) == 0){
+							
+						}
+						else if (type.compareTo(decisionStep) == 0){
+							this.addDecisionStep(targetStep, location);
+						}
+						else if (type.compareTo(mergeStep) == 0){
+							this.addMergeStep(targetStep, location);
+						}
+						else if (type.compareTo(firstStep) == 0){
+							this.addFirstStep(targetStep, location);
+						}
+						else if (type.compareTo(finalStep) == 0){
+							this.addFinalStep(targetStep, location);
+						}
+						else if (type.compareTo(forkStep) == 0){
+							this.addForkStep(targetStep, location);
+						}
+						else if (type.compareTo(joinStep) == 0){
+							this.addForkStep(targetStep, location);
+						}
+					}
+				
+			}
+			
+			OWLEdge edge = new FollowedByEdge(sourceStep, targetStep, followed_by_relation, guardLabel);
+			this.addConnection(sourceStep, targetStep, edge);
+		}
+		
+		
+		
+		
+		return null;
+
+	}
+
+	/**
+	 * @param related
+	 */
+	private void addFinalStep(OWLIndividual related, Point location) {
+		NodeLastStep n = new NodeLastStep(related);
+		this.addNode(n);
+		n.getOntologyFig().setLocation(location.x+20, location.y+60);
+		
+	}
+	
+	/**
+	 * @param related
+	 */
+	private void addFirstStep(OWLIndividual related, Point location) {
+		NodeFirstStep n = new NodeFirstStep(related);
+		this.addNode(n);
+		n.getOntologyFig().setLocation(location.x+20, location.y+60);
+	}
+
+
+	// ************* In ADs only individuals are allowed!!! ***************
+
+	
 	public boolean addClass(String className, Point location) {
 		return false;
 	}
@@ -416,4 +512,61 @@ public class ActivityGraphModel extends OWLGraphModel {
 		return false;
 	}
 
+	// ******************************* AUX *********************************
+	
+	private Set<OWLIndividual> getValuesForObjectPropertyInAllOntologies(OWLIndividual ind, OWLObjectProperty p){
+		
+		Set<OWLIndividual> related = new HashSet<OWLIndividual>();
+		
+		for (OWLOntology ont : ontologies()) {
+
+			// fetch the object propery values for the action
+			Map<OWLObjectPropertyExpression, Set<OWLIndividual>> x = ind.getObjectPropertyValues(ont);
+
+			// for all the object property values
+			for (OWLObjectPropertyExpression exp : x.keySet())
+				// if the property is followed_by
+				if (exp.asOWLObjectProperty().compareTo(p) == 0)
+					// for al the values
+					related.addAll(x.get(exp));
+		}
+		
+		return related;
+	}
+	
+	private Set<OWLConstant> getValuesForDataPropertyInAllOntologies(OWLIndividual ind, OWLDataProperty p){
+		
+		Set<OWLConstant> related = new HashSet<OWLConstant>();
+		
+		for (OWLOntology ont : ontologies()) {
+			
+
+			// fetch the object propery values for the action
+			Map<OWLDataPropertyExpression, Set<OWLConstant>> x =  ind.getDataPropertyValues(ont);
+
+			// for all the object property values
+			for (OWLDataPropertyExpression exp : x.keySet())
+				// if the property is followed_by
+				if (exp.asOWLDataProperty().compareTo(p) == 0)
+					// for al the values
+					related.addAll(x.get(exp));
+		}
+		
+		return related;
+	}
+	
+	private boolean checkType(OWLIndividual ind, OWLClass type){
+		
+		boolean typeFound = false;
+		
+		for (OWLDescription c : ind.getTypes(ontologies()))
+			if (!c.isAnonymous()) {
+				type = c.asOWLClass();
+
+				if (type.compareTo(ind) == 0) 
+					typeFound = true;
+			}
+		
+		return typeFound;
+	}
 }

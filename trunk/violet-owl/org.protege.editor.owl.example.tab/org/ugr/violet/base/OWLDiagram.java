@@ -23,9 +23,9 @@ public class OWLDiagram extends Diagram {
 	 * Crea un nuevo diagrama para una ontologia
 	 * @param ont Ontologia OWL a partir de la cual construir el diagrama
 	 */
-	public OWLDiagram(OWLOntology ont){
+	public OWLDiagram(){
 		super();
-		OWLGraphModel model = new OWLGraphModel(ont);
+		OWLGraphModel model = new OWLGraphModel();
 		this.setGraphModel(model);
 		model.setOwner(this);
 	}
@@ -35,9 +35,9 @@ public class OWLDiagram extends Diagram {
 	 * @param name nombre del diagrama
 	 * @param ont Ontologia OWL a partir de la cual construir el diagrama
 	 */
-	public OWLDiagram(String name, OWLOntology ont){
+	public OWLDiagram(String name){
 		super(name);
-		OWLGraphModel model = new OWLGraphModel(ont);
+		OWLGraphModel model = new OWLGraphModel();
 		this.setGraphModel(model);
 		model.setOwner(this);
 	}

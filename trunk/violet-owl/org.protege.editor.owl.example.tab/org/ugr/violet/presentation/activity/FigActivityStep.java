@@ -22,7 +22,7 @@ import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeClass;
-import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeAction;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigClass;
 
@@ -45,6 +45,7 @@ public class FigActivityStep extends FigActivityDiagram {
 	private FigText className;
 	private OWLIndividual actividad = null;
 	private OWLIndividual step = null;
+	private OWLIndividual role = null;
 
 	public FigRect getPuertoNorte(){
 		return puertoNorte;
@@ -54,8 +55,8 @@ public class FigActivityStep extends FigActivityDiagram {
 	 * 
 	 * @param oc
 	 */
-	public FigActivityStep(OWLIndividual actividad, OWLIndividual paso) {
-		this(actividad, paso, defaultFunction);
+	public FigActivityStep(OWLIndividual actividad, OWLIndividual paso, OWLIndividual r) {
+		this(actividad, paso, r, defaultFunction);
 	}
 	
 	/**
@@ -63,10 +64,11 @@ public class FigActivityStep extends FigActivityDiagram {
 	 * @param oc
 	 * @param function
 	 */
-	public FigActivityStep(OWLIndividual oc, OWLIndividual paso, int function){
+	public FigActivityStep(OWLIndividual oc, OWLIndividual paso, OWLIndividual r, int function){
 
 		actividad = oc;
 		step = paso;
+		role = r;
 		colorRelleno = Color.WHITE;
 		box = new FigRRect(x, y, ancho, alto, Color.black, colorRelleno);
 		makeFigure();
@@ -95,7 +97,14 @@ public class FigActivityStep extends FigActivityDiagram {
 		className.setLineWidth(0);
 		className.setJustification(FigText.JUSTIFY_CENTER);
 		className.setFilled(false);
-		className.setText(actividad.toString());
+		String roleLabel = "";
+		
+		if (role != null){
+			roleLabel = "{"+ role +"}\n";
+			box.setHeight(box.getHeight()+10);
+		}
+			
+		className.setText(roleLabel + actividad.toString());
 		className.setFillColor(colorRelleno);
 
 		
@@ -110,7 +119,7 @@ public class FigActivityStep extends FigActivityDiagram {
 	public void setOwner(Object own) {
 		super.setOwner(own);
 		//if (!(own instanceof NodeClass)) return;
-		NodeActivityStep node = (NodeActivityStep) own;
+		NodeAction node = (NodeAction) own;
 		bindPort(node.north, puertoNorte);
 		bindPort(node.south, puertoSur);
 		bindPort(node.east, puertoEste);

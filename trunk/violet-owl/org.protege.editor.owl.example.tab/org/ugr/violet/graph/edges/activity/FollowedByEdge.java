@@ -43,24 +43,14 @@ public class FollowedByEdge extends OWLEdge {
 	private OWLIndividual range = null;
 	private OWLIndividual relation = null;
 	private OWLIndividual guard = null;
-	private String guard_label;
+	private String guard_label = null;
 	
-	public FollowedByEdge(OWLIndividual p, OWLIndividual pp, OWLIndividual r,  OWLIndividual g){
+	public FollowedByEdge(OWLIndividual source, OWLIndividual target, OWLIndividual rel,  String guard_expression){
 		super();
-		domain = p;
-		range = pp;
-		relation = r;
-		guard = g;
-		
-		// fetch the expression of the guard
-		if (guard != null){
-			OWLDataProperty dp = ExampleViewComponent.manager.getOWLDataProperty("has_expression");
-			
-			for (OWLOntology ont : ExampleViewComponent.manager.getOntologies()) {
-				if (guard.getDataPropertyValues(ont).containsKey(dp))
-					guard_label =  guard.getDataPropertyValues(ont).get(dp).toString();
-			}
-		}
+		domain = source;
+		range = target;
+		relation = rel;
+		guard_label = guard_expression;		
 	}
 	
 	
@@ -72,12 +62,12 @@ public class FollowedByEdge extends OWLEdge {
 	    ArrowHeadGreater flechaDestino = new ArrowHeadGreater();
 	    flechaDestino.setWidth(5);
 	    
-	    if (guard != null) {
+	    if (guard_label != null && guard_label != "") {
 		    mid.setText(label);
 		    mid.setTextColor(Color.black);
 		    mid.setTextFilled(false);
 		    mid.setFilled(false);
-		    mid.setText("[ " + guard.toString() + " ]");
+		    mid.setText("[ " + guard_label + " ]");
 		    mid.setLineWidth(0);
 		    enlace.addPathItem(mid, new PathConvPercent(enlace, 50, 10));
 	    }

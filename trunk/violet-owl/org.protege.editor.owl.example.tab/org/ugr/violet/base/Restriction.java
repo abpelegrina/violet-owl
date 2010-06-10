@@ -61,9 +61,9 @@ public class Restriction{
 	 * Recupera la cardinalidad de la relaci�n. 
 	 * @return the cardinalidad; si no es aplicable devuelve -1
 	 */
-	public int getCardinalidad() {
+	public int getCardinality() {
 		int c = this.cardinalidad;
-		if (!admiteCardinalidad())
+		if (!hasCardinality())
 			c = -1;
 		
 		return c;
@@ -73,7 +73,7 @@ public class Restriction{
 	 * Comprueba si la propiedad admite el uso de cardinalidad
 	 * @return
 	 */
-	private boolean admiteCardinalidad(){
+	private boolean hasCardinality(){
 		boolean res = false;
 		if (this.restrictionType == MIN_RESTRICTION || this.restrictionType == MAX_RESTRICTION 
 				|| this.restrictionType == EXACT_RESTRICTION)
@@ -94,7 +94,7 @@ public class Restriction{
 	 * Recupera la clase referenciada en la restriccion
 	 * @return the clase
 	 */
-	public OWLClass getClase() {
+	public OWLClass getOWLClass() {
 		return clase;
 	}
 	

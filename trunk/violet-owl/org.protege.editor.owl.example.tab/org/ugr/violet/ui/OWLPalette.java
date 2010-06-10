@@ -59,7 +59,7 @@ import org.ugr.violet.actions.ModeCreateRange;
 import org.ugr.violet.actions.ModeCreateSub;
 import org.ugr.violet.actions.OWLSaveAction;
 import org.ugr.violet.graph.nodes.NodeClass;
-import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeAction;
 
 /** A class to define a custom palette for use in some demos.
  *

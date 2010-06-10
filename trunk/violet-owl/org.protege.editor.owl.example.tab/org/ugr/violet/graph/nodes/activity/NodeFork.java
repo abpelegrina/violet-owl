@@ -35,7 +35,7 @@ import org.ugr.violet.presentation.activity.FigFork;
  * @author anab
  *
  */
-public class NodeFork extends NodeActivity {
+public class NodeFork extends NodeActivityDiagram {
 
 	/**
 	 * 

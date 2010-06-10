@@ -3,6 +3,8 @@
  */
 package org.ugr.violet.base;
 
+import org.semanticweb.owl.model.OWLClass;
+import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLOntology;
 import org.tigris.gef.base.LayerPerspective;
 import org.ugr.violet.graph.ActivityGraphModel;
@@ -24,8 +26,8 @@ public class ActivityDiagram extends OWLDiagram {
 	 * @param ont Ontologia OWL a partir de la cual construir el diagrama
 	 */
 	public ActivityDiagram(OWLOntology ont){
-		super(ont);
-		OWLGraphModel model = new OWLGraphModel(ont);
+		super();
+		OWLGraphModel model = new OWLGraphModel();
 		this.setGraphModel(model);
 		model.setOwner(this);
 	}
@@ -35,9 +37,9 @@ public class ActivityDiagram extends OWLDiagram {
 	 * @param name nombre del diagrama
 	 * @param ont Ontologia OWL a partir de la cual construir el diagrama
 	 */
-	public ActivityDiagram(String name, OWLOntology ont){
-		super(name, ont);
-		OWLGraphModel model = new ActivityGraphModel(ont);
+	public ActivityDiagram(String name, OWLIndividual Task){
+		super(name);
+		OWLGraphModel model = new ActivityGraphModel(Task);
 		this.setGraphModel(model);
 		model.setOwner(this);
 	}

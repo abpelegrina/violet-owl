@@ -145,6 +145,8 @@ public class SuperClassesVisitor extends OWLDescriptionVisitorAdapter {
 		
 		for (OWLClass c: desc.getClassesInSignature())
 			v.add(new Restriction(Restriction.SOME_RESTRICTION, c));
+		
+		System.err.println("Restrictin found!!!!");
 	}
 
 	
@@ -163,6 +165,8 @@ public class SuperClassesVisitor extends OWLDescriptionVisitorAdapter {
 		
 		for (OWLClass c: desc.getClassesInSignature())
 			v.add(new Restriction(Restriction.ALL_RESTRICTION, c));
+		
+		System.err.println("Restrictin found!!!!");
 	}
 	
 	/**
@@ -180,6 +184,8 @@ public class SuperClassesVisitor extends OWLDescriptionVisitorAdapter {
 		
 		for (OWLClass c: desc.getClassesInSignature())
 			v.add(new Restriction(Restriction.MAX_RESTRICTION, c, desc.getCardinality()));
+		
+		System.err.println("Restrictin found!!!!");
 	}
 	
 	/**
@@ -197,6 +203,8 @@ public class SuperClassesVisitor extends OWLDescriptionVisitorAdapter {
 
 		for (OWLClass c: desc.getClassesInSignature())
 			v.add(new Restriction(Restriction.MIN_RESTRICTION, c, desc.getCardinality()));
+		
+		System.err.println("Restrictin found!!!!");
 	}
 	
 	/**
@@ -214,6 +222,8 @@ public class SuperClassesVisitor extends OWLDescriptionVisitorAdapter {
 
 		for (OWLClass c: desc.getClassesInSignature())
 			v.add(new Restriction(Restriction.EXACT_RESTRICTION, c, desc.getCardinality()));
+		
+		System.err.println("Restrictin found!!!!");
 	}
 	
 	/**
@@ -231,6 +241,8 @@ public class SuperClassesVisitor extends OWLDescriptionVisitorAdapter {
 
 		for (OWLClass c: desc.getClassesInSignature())
 			v.add(new Restriction(Restriction.VALUE_RESTRICTION, c));
+		
+		System.err.println("Restrictin found!!!!");
 	}
 	
 	public void visit(OWLDataSomeRestriction desc){
