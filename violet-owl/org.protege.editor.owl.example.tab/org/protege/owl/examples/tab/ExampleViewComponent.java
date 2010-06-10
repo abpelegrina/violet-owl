@@ -49,9 +49,6 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     @Override
     protected void disposeOWLView() {
     	manager.removeOntologyChangeListener(oocl);
-    	
-    	
-    	
     }
     
     private void inicializaRecursosGEF(){

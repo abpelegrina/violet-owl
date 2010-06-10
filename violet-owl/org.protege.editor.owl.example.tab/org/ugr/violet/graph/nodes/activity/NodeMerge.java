@@ -31,7 +31,7 @@ import org.ugr.violet.presentation.activity.FigMerge;
  * @author anab
  *
  */
-public class NodeMerge extends NodeActivity {
+public class NodeMerge extends NodeActivityDiagram {
 
 	/**
 	 * 

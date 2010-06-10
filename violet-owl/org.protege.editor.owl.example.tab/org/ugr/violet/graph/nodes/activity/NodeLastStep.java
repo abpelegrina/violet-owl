@@ -35,7 +35,7 @@ import org.ugr.violet.presentation.activity.FigLastStep;
  * @author anab
  *
  */
-public class NodeLastStep extends NodeActivity {
+public class NodeLastStep extends NodeActivityDiagram {
 	/**
 	 * 
 	 */
@@ -51,13 +51,13 @@ public class NodeLastStep extends NodeActivity {
      */
     public NodeLastStep ( ){
     	super();
-    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.lienzoActual.getTarea() + "_end_" + cont));
+    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_end_" + cont));
     	cont++;
-		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Final_Step"));
+		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Final_Step"));
 		
 		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
-		((ActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
+		ExampleViewComponent.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
+		gm.addStepToSequence(step);
 		
     	addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));
@@ -78,16 +78,7 @@ public class NodeLastStep extends NodeActivity {
         addPort(south = new OWLPort(this));
     }
     
-    /** Initialize a new SampleNode from the given default node and
-     *  application specific model. <p>
-     *
-     *  Needs-More-Work: for now we construct the FigNode
-     *  programatically, but eventually we will store it in a class
-     *  variable and just refer to it, or copy it(?). That way the user
-     *  can edit the FigNode(s) stored in the class variable and
-     *  have those changes shown for all existing nodes, or for all
-     *  future nodes. Maybe I should think about doing virtual copies?</p>
-     */
+    
     public void initialize(Hashtable args) {
         super.initialize(args);
     }

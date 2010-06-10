@@ -42,7 +42,7 @@ import org.ugr.violet.base.OWLDiagram;
 import org.ugr.violet.changefilters.ChangeFilterDiagram;
 import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.nodes.activity.NodeActivity;
+import org.ugr.violet.graph.nodes.activity.NodeActivityDiagram;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 import org.protege.owl.examples.tab.ExampleViewComponent;
@@ -124,8 +124,16 @@ public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetL
 		});*/
 	}
 	
+	public boolean isOWLActivityGraph(){
+		return false;
+	}
+	
+	
 	protected OWLGraphModel generateGraphModel(){
-		return new OWLGraphModel(activa);
+		if (ogm == null)
+			return new OWLGraphModel();
+		else
+			return ogm;
 	}
 	
 	public boolean isViewCanvas(){

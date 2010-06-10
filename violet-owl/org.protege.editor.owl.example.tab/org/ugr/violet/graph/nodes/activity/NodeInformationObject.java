@@ -7,6 +7,6 @@ package org.ugr.violet.graph.nodes.activity;
  * @author anab
  *
  */
-public class NodeMergeStep extends NodeActivity {
+public class NodeInformationObject extends NodeActivityDiagram {
 
 }

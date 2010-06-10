@@ -30,7 +30,7 @@ import org.tigris.gef.graph.MutableGraphModel;
 import org.tigris.gef.graph.presentation.NetNode;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.NodeNAryRelation;
-import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeAction;
 
 /**
  * @author anab
@@ -50,7 +50,7 @@ public class CmdCreateActivityStep extends CmdCreateNode {
 	 * @param name
 	 */
 	public CmdCreateActivityStep() {
-		super(NodeActivityStep.class, false, "ClaseOWL");
+		super(NodeAction.class, false, "ClaseOWL");
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class CmdCreateActivityStep extends CmdCreateNode {
 			ExampleViewComponent.manager.applyChange(new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e));
 	        
 	        
-	        nodo = new NodeActivityStep(actividad, step);
+	        nodo = new NodeAction(actividad, step);
 	        
 	        LOG.debug("New node created " + nodo);
 

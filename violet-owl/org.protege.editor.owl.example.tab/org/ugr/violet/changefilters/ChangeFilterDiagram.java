@@ -506,7 +506,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 				ogm.removeEdge(aBorrar);
 		}
 		else if (this.isAdd()){
-			RestrictionEdge r = new RestrictionEdge(sujeto, objeto);
+			RestrictionEdge r = new RestrictionEdge(sujeto, objeto, null);
 			r.setLabel(propiedad.toString());
 
 			ogm.addConnection(sujeto, objeto, r);
@@ -759,7 +759,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 			if (axiom.getSuperClass().isAnonymous()){
 
 				// utilizamos el visitante de restricciones
-				SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(Collections.singleton(ogm.getOntology()));
+				SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(Collections.singleton(ogm.getActiveOntology()));
 				axiom.getSuperClass().accept(restrictionVisitor);
 
 				ogm.deleteUnions(axiom.getSubClass().asOWLClass(), restrictionVisitor.getUnions());
@@ -781,7 +781,7 @@ public class ChangeFilterDiagram extends OWLOntologyChangeFilter {
 				System.err.println("Super clase es anonima");
 				
 				// utilizamos el visitante de restricciones
-				SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(Collections.singleton(ogm.getOntology()));
+				SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(Collections.singleton(ogm.getActiveOntology()));
 				axiom.getSuperClass().accept(restrictionVisitor);
 
 				ogm.updateUnions(axiom.getSubClass().asOWLClass(), restrictionVisitor.getUnions());

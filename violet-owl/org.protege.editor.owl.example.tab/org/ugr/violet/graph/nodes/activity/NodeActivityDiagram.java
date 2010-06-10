@@ -3,7 +3,9 @@
  */
 package org.ugr.violet.graph.nodes.activity;
 
+import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.OWLIndividual;
+import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.NodeIndividual;
 import org.ugr.violet.graph.nodes.NodeIntersection;
@@ -17,11 +19,18 @@ import org.ugr.violet.presentation.OntologyFig;
  * @author anab
  *
  */
-public abstract class NodeActivity extends OWLNode {
+public abstract class NodeActivityDiagram extends OWLNode {
 
+	protected ActivityGraphModel gm = null;
 	
-	protected NodeActivity(){
+	protected NodeActivityDiagram(){
 		super();
+
+    	if (ExampleViewComponent.lienzoActual.isOWLActivityGraph()){
+			gm = (ActivityGraphModel) ExampleViewComponent.lienzoActual.getOWLGraphModel();
+			
+		}
+		else return;
 	}
 	
 	
@@ -164,7 +173,7 @@ public abstract class NodeActivity extends OWLNode {
 		return false;
 	}
 	
-	public NodeActivityStep asNodeActivityStep(){
+	public NodeAction asNodeActivityStep(){
 		return null;
 	}
 	

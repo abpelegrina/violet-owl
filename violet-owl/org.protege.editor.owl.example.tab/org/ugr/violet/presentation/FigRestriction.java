@@ -102,17 +102,17 @@ public class FigRestriction extends OntologyFig {
 			label.setFilled(false);
 			
 			if (r.getRestrictionType() == Restriction.SOME_RESTRICTION)
-				label.setText("someValuesFrom : " + r.getClase().toString());
+				label.setText("someValuesFrom : " + r.getOWLClass().toString());
 			else if (r.getRestrictionType() == Restriction.ALL_RESTRICTION)
-				label.setText("onlyValuesFrom : " + r.getClase().toString());
+				label.setText("onlyValuesFrom : " + r.getOWLClass().toString());
 			else if (r.getRestrictionType() == Restriction.MAX_RESTRICTION)
-				label.setText("MaxCardinality : " + r.getCardinalidad() + ", "  + r.getClase().toString());
+				label.setText("MaxCardinality : " + r.getCardinality() + ", "  + r.getOWLClass().toString());
 			else if (r.getRestrictionType() == Restriction.MIN_RESTRICTION)
-				label.setText("MinCardinality : " + r.getCardinalidad() + ", " + r.getClase().toString());
+				label.setText("MinCardinality : " + r.getCardinality() + ", " + r.getOWLClass().toString());
 			else if (r.getRestrictionType() == Restriction.EXACT_RESTRICTION)
-				label.setText("ExactCardinality : " + r.getCardinalidad() + ", " + r.getClase().toString());
+				label.setText("ExactCardinality : " + r.getCardinality() + ", " + r.getOWLClass().toString());
 			else if (r.getRestrictionType() == Restriction.VALUE_RESTRICTION)
-				label.setText("hasValue : " + r.getCardinalidad() + ", " + r.getClase().toString());
+				label.setText("hasValue : " + r.getCardinality() + ", " + r.getOWLClass().toString());
 			
 			label.setLineWidth(0);
 			label.setJustification(FigText.JUSTIFY_CENTER);

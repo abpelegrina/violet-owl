@@ -28,35 +28,15 @@
 
 package org.ugr.violet.ui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.CmdAlign;
 import org.tigris.gef.base.CmdCreateNode;
 import org.tigris.gef.base.CmdSetMode;
-import org.tigris.gef.base.CreateNodeAction;
 import org.tigris.gef.base.ModeBroom;
 import org.tigris.gef.base.ModeSelect;
-import org.tigris.gef.base.PrintAction;
-import org.tigris.gef.base.SaveSVGAction;
-import org.tigris.gef.graph.presentation.PaletteFig;
-import org.ugr.violet.actions.CmdCreateActivityStep;
-import org.ugr.violet.actions.CmdCreateNodeRelation;
-import org.ugr.violet.actions.ModeCreateComplement;
-import org.ugr.violet.actions.ModeCreateDisjoint;
-import org.ugr.violet.actions.ModeCreateDomain;
-import org.ugr.violet.actions.ModeCreateEquivalent;
 import org.ugr.violet.actions.ModeCreateFollowedBy;
-import org.ugr.violet.actions.ModeCreateObjectProperty;
-import org.ugr.violet.actions.ModeCreateRange;
-import org.ugr.violet.actions.ModeCreateSub;
-import org.ugr.violet.graph.nodes.NodeClass;
-import org.ugr.violet.graph.nodes.activity.NodeActivity;
-import org.ugr.violet.graph.nodes.activity.NodeActivityStep;
+import org.ugr.violet.graph.nodes.activity.NodeAction;
 import org.ugr.violet.graph.nodes.activity.NodeDecision;
-import org.ugr.violet.graph.nodes.activity.NodeDecisionStep;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeFork;
 import org.ugr.violet.graph.nodes.activity.NodeJoin;
@@ -96,7 +76,7 @@ public class ActivityDiagramPalette extends OWLPalette {
         
 		this.addSeparator();
 		
-		add(new CmdCreateNode(NodeActivityStep.class, "Activity"));
+		add(new CmdCreateNode(NodeAction.class, "Activity"));
 		add(new CmdCreateNode(NodeFirstStep.class, "Initial"));
 		add(new CmdCreateNode(NodeLastStep.class, "FinalState"));
 		this.addSeparator();
@@ -104,24 +84,5 @@ public class ActivityDiagramPalette extends OWLPalette {
 		add(new CmdCreateNode(NodeJoin.class, "Join"));
 		this.addSeparator();
 		add(new CmdCreateNode(NodeDecision.class, "Decision"));
-		
-		
-		/*this.addSeparator();
-		add(new CmdCreateNode(NodeActivityStep.class, "Signal"));
-		add(new CmdCreateNode(NodeActivityStep.class, "SignalReceiving"));*/
-		
-		//add(new CmdCreateNode(NodeClass.class, "ClaseOWL"));
-		/*add(new CmdCreateNodeIndividual());
-		add(new CmdCreateNodeDataProperty());
-		add(new CmdCreateNodeObjectProperty());*/
-
-		
-		/*
-		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));		
-		add(new CmdSetMode(ModeCreateSub.class, "Sub"));		
-		add(new CmdSetMode(ModeCreateDisjoint.class, "Disjoint"));		
-		add(new CmdSetMode(ModeCreateEquivalent.class, "Equivalence"));
-		add(new CmdSetMode(ModeCreateComplement.class, "Not"));
-		*/
     }
 } /* end class SamplePalette */

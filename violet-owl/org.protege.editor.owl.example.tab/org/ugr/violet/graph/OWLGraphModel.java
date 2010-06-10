@@ -3,7 +3,6 @@ package org.ugr.violet.graph;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -40,6 +39,7 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLNode;
 import org.ugr.violet.graph.nodes.OWLPort;
+import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.OntologyFig;
 import org.ugr.violet.visitors.BooleanDescriptionDeleteVisitor;
@@ -55,11 +55,9 @@ import org.ugr.violet.visitors.SuperClassesVisitor;
 public class OWLGraphModel extends DefaultGraphModel {
 
 	private static final long serialVersionUID = -6702060722699798339L;
+	
+	protected OWLModelManager manager = ExampleViewComponent.manager;
 
-	/**
-	 * Ontología representada por el modelo
-	 */
-	protected OWLOntology ontologia = null;
 
 	/**
 	 * Diagrama asociado al modelo
@@ -72,12 +70,21 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * Constructor
 	 * @param ont ontología asociada al diagrama
 	 */
-	public OWLGraphModel(OWLOntology ont) {
-		ontologia = ont;
+	public OWLGraphModel() {
+		super();
 	}
 
 	/********************************* GETTERS AND SETTERS ***********************************/
 
+	
+	public OWLOntology activeOntology(){
+		return ExampleViewComponent.manager.getActiveOntology();
+	}
+	
+	public Set<OWLOntology> ontologies(){
+		return ExampleViewComponent.manager.getOntologies();
+	}
+	
 	/**
 	 * @return the owner
 	 */
@@ -105,7 +112,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		for (Object n : getNodes()){
 			aux = (OWLNode) n;
 			
-			System.err.println(n.toString());
+			System.err.println("A buscar " + nombre + " a comparar " + n.toString());
 			
 			if (aux.toString().equals(nombre))
 				nodo = aux;
@@ -141,8 +148,8 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * 
 	 * @return
 	 */
-	public OWLOntology getOntology(){
-		return this.ontologia;
+	public OWLOntology getActiveOntology(){
+		return this.activeOntology();
 	}
 
 	/**
@@ -295,9 +302,9 @@ public class OWLGraphModel extends DefaultGraphModel {
 	}
 
 	/**
-	 * 
-	 * @param d
-	 * @return
+	 * Search for the node of an entity in the diagram
+	 * @param d the entity to find
+	 * @return The Node, if exists. Otherwise, it returns null.
 	 */
 	public OWLNode findOntologyNode(OWLDescription d){
 		OWLNode nodo = null;
@@ -321,18 +328,18 @@ public class OWLGraphModel extends DefaultGraphModel {
 	}
 	
 	/**
-	 * 
-	 * @param complemento
-	 * @param entidad
-	 * @return
+	 * Search for the complement node of an OWLEntity
+	 * @param complement
+	 * @param entity
+	 * @return The node complement, if exists. Otherwise, it returs null
 	 */
-	public NodeComplement findComplementNode(OWLObjectComplementOf complemento, OWLEntity entidad){
+	public NodeComplement findComplementNode(OWLObjectComplementOf complement, OWLEntity entity){
 		NodeComplement n = null;
 
 		for (Object o : getNodes()){
 			NodeComplement aux = ((OWLNode) o).asNodeComplement();
 
-			if (aux != null && aux.getOWLObjectComplementOf().equals(complemento) && aux.getOWLEntity().equals(entidad)){
+			if (aux != null && aux.getOWLObjectComplementOf().equals(complement) && aux.getOWLEntity().equals(entity)){
 				n = aux;
 			}
 		}
@@ -341,9 +348,9 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 	/*************************************** CONSULTA *****************************************/
 	/**
-	 * Comprueba si una clase OWL se encuentra en el modelo
-	 * @param className nombre de la clase
-	 * @return true si exite y false en caso contrario
+	 * Check if an OWL class is in the diagram
+	 * @param className name of the class
+	 * @return true if the node exists and false otherwise
 	 */
 	public boolean isThisClassPresent(String className){
 		if (getNode(className) == null)
@@ -358,8 +365,8 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 	/************************************* Seleccion ********************************************/
 	/**
-	 * Resalta una determinada entidad OWL dentro del diagrama
-	 * @param entidad
+	 * Selects a node in the diagram corresponding with an OWL entity
+	 * @param entidad entity to select
 	 */
 	public void setSelection(OWLEntity entidad) {
 
@@ -395,10 +402,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 	/****************************************** Adds ********************************************/
 	/**
-	 * Agrega un nuevo individuo al modelo
-	 * @param individual Name nombre del individuo
-	 * @param location punto del lienzo donde se colocar� el nodo
-	 * @return true si se ha agregado el individuo con �xito y false en caso contrario
+	 * Add a new individual to the diagrma
+	 * @param individual individual name
+	 * @param location location of the node
+	 * @return true if success and false otherwise
 	 */
 	public boolean addIndividual(String individualName, Point location){
 		individualName=individualName.trim();
@@ -417,16 +424,18 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 			this.updateOnesOf(ind);
 
-			// recorremos todas las asercinoes de propiedades de objetos asociadas al nuevo individuo
-			for(OWLObjectPropertyAssertionAxiom ax : ontologia.getObjectPropertyAssertionAxioms(ind)){
-				OWLIndividual objeto = ax.getObject();
-				OWLIndividual sujeto = ax.getSubject();
-				OWLObjectProperty propiedad = ax.getProperty().asOWLObjectProperty();
-
-				RestrictionEdge r = new RestrictionEdge(sujeto, objeto);
-				r.setLabel(propiedad.toString());
-
-				this.addConnection(sujeto, objeto, r);
+			for (OWLOntology ont : ontologies()) {
+				// recorremos todas las asercinoes de propiedades de objetos asociadas al nuevo individuo
+				for(OWLObjectPropertyAssertionAxiom ax : ont.getObjectPropertyAssertionAxioms(ind)){
+					OWLIndividual objeto = ax.getObject();
+					OWLIndividual sujeto = ax.getSubject();
+					OWLObjectProperty propiedad = ax.getProperty().asOWLObjectProperty();
+	
+					RestrictionEdge r = new RestrictionEdge(sujeto, objeto, null);
+					r.setLabel(propiedad.toString());
+	
+					this.addConnection(sujeto, objeto, r);
+				}
 			}
 			return true;
 		}
@@ -435,10 +444,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	}
 
 	/**
-	 * Agrega un nuevo individuo al modelo
-	 * @param individual Name nombre del individuo
-	 * @param location punto del lienzo donde se colocar� el nodo
-	 * @return true si se ha agregado el individuo con �xito y false en caso contrario
+	 * Adds an object property to the diagram
+	 * @param objectPropertyName Name of the property
+	 * @param location location of the node
+	 * @return true if success and false otherwise
 	 */
 	public boolean addObjectProperty(String objectPropertyName, Point location){
 		objectPropertyName=objectPropertyName.trim();
@@ -467,11 +476,13 @@ public class OWLGraphModel extends DefaultGraphModel {
 	}
 
 	/**
-	 * @param dataPropertyName
-	 * @param nodeLocation
+	 * Add a new data property to the diagram
+	 * @param dataPropertyName the name of the property
+	 * @param nodeLocation location of the node
+	 * @return true if success and false otherwise
 	 */
 	public boolean addDataProperty(String dataPropertyName, Point nodeLocation) {
-		// TODO Auto-generated method stub
+		
 		dataPropertyName=dataPropertyName.trim();
 		OWLDataProperty propiedad = this.getOwlDataPropertyByName(dataPropertyName);
 
@@ -482,7 +493,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 			DataPropertyDomainAddVisitor v= new DataPropertyDomainAddVisitor(this, propiedad);
 
-			for (OWLDescription e : propiedad.getDomains(ontologia))
+			for (OWLDescription e : propiedad.getDomains(ontologies()))
 				e.accept(v);
 			return true;
 		}	
@@ -491,11 +502,14 @@ public class OWLGraphModel extends DefaultGraphModel {
 	}
 
 	/**
-	 * Agrega un nodo clase al modelo. Agrega al modelo todos los nodos, restricciones, nodos restriccion, relaciones
-	 * de herencia, etc. necesarios, de acuerdo con la ontología.
-	 * @param className nombre de la clase
-	 * @param location punto en el que colocar el nodo en el lienzo
-	 * @return true si se ha agregado el nodo con exito y false en caso contrario
+	 * Adds a new class to the diagram and updates a lot of connections:
+	 * <p>- Sub/super class</p>
+	 * <p>- Equivalent / disjoint classes</p>
+	 * <p>- Restrictions</p>
+	 * <p>- etc.</p>
+	 * @param className class name
+	 * @param location location of the node
+	 * @return true if success and false otherwise
 	 */
 	public boolean addClass(String className, Point location){
 
@@ -518,7 +532,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 				// creamos el nodo a agregar al modelo	
 				
 				// comprobamos si es una clase especial relacion
-				if (NodeNAryRelation.claseBase.getSubClasses(ExampleViewComponent.manager.getActiveOntology()).contains(claseOWL)){
+				if (NodeNAryRelation.claseBase.getSubClasses(activeOntology()).contains(claseOWL)){
 					nodo = new NodeNAryRelation(claseOWL);
 				}
 				else 			
@@ -567,22 +581,24 @@ public class OWLGraphModel extends DefaultGraphModel {
 	
 
 	/**
-	 * Agrega al modelo las restricciones asociadas a un nuevo nodo representando a una clase OWL
-	 * @param nodo nodo recién agregado
+	 * Add to the model the restrictions of a OWL class
+	 * @param nodo The node
 	 */
 	private void addRestrictions(NodeClass nodo){
 		// creamos el aante de restricciones
-		SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(Collections.singleton(ontologia));
+		SuperClassesVisitor restrictionVisitor = new SuperClassesVisitor(ontologies());
 		OWLClass claseOWL = nodo.getOWLClass(); // recuperamos la clase del nodo
 
 
-		// visitamos todas las super clases (incluidas las restricciones, of course) de la nueva clase
-		for(OWLSubClassAxiom ax : ontologia.getSubClassAxiomsForLHS(claseOWL)) {
-			OWLDescription superCls = ax.getSuperClass();
-			superCls.accept(restrictionVisitor);
-
-			if (!superCls.isAnonymous() && isThisClassPresent(superCls.asOWLClass().toString()))
-				addInheritanceLink( claseOWL, superCls.asOWLClass());
+		for (OWLOntology ont : ontologies()){
+			// visitamos todas las super clases (incluidas las restricciones, of course) de la nueva clase
+			for(OWLSubClassAxiom ax : ont.getSubClassAxiomsForLHS(claseOWL)) {
+				OWLDescription superCls = ax.getSuperClass();
+				superCls.accept(restrictionVisitor);
+	
+				if (!superCls.isAnonymous() && isThisClassPresent(superCls.asOWLClass().toString()))
+					addInheritanceLink( claseOWL, superCls.asOWLClass());
+			}
 		}
 		
 		// recuperamos la tabla hash con todas las restricciones asociadas a la clase; utilizando como clave la propiedad 
@@ -591,9 +607,9 @@ public class OWLGraphModel extends DefaultGraphModel {
 		Hashtable<OWLObjectProperty, Vector<Restriction>> a = restrictionVisitor.getRestricciones();
 
 		// calculamos las coordenadas iniciales de las figuras asociadas 
-		Point location = nodo.getLocation();
+		/*Point location = nodo.getLocation();
 		int x = nodo.getOntologyFig().getWidth()+20 + location.x;
-		int y = location.y;
+		int y = location.y;*/
 
 		List<OWLClass> relacionadas = new ArrayList<OWLClass>();
 
@@ -601,7 +617,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		for(OWLObjectProperty key : a.keySet()){
 
 			/*
-			// agregamos un nodo que engloga a todas las restricciones asociadas a la propiedad
+			// agregamos un nodo que engloba a todas las restricciones asociadas a la propiedad
 			NodeRestriction r = new NodeRestriction(claseOWL, key, a.get(key));
 			addNode(r);
 			r.getOntologyFig().setLocation(x, y);
@@ -614,14 +630,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 			// para cada clase incluida en la definición de las restricciones asociadas a la propiedad...
 			for (Restriction rr:a.get(key)){
 
-				// nos aseguramos que no se haya incluido ya le link
-				if (!relacionadas.contains(rr.getClase())){
-					
-					System.err.println("Restricción con:" + rr.getClase());
-					
-					// ... incluimos un enlace entre este y la nueva clase
-					addRestrictionLink(claseOWL, rr.getClase(), key);
-					relacionadas.add(rr.getClase());
+				// nos aseguramos que no se haya incluido ya el link
+				if (!relacionadas.contains(rr.getOWLClass())){
+					addRestrictionLink(claseOWL, key, rr);
+					relacionadas.add(rr.getOWLClass());
 				}
 			}
 			relacionadas.clear();
@@ -663,7 +675,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		Set<OWLObjectProperty> propertiesDomain = new HashSet<OWLObjectProperty>();
 		Set<OWLObjectProperty> propertiesRange = new HashSet<OWLObjectProperty>();
 		
-		for (OWLOntology ont : ExampleViewComponent.manager.getOntologies()){
+		for (OWLOntology ont : ontologies()){
 		
 			domain = ont.getAxioms(AxiomType.OBJECT_PROPERTY_DOMAIN);
 			range = ont.getAxioms(AxiomType.OBJECT_PROPERTY_RANGE);
@@ -694,12 +706,17 @@ public class OWLGraphModel extends DefaultGraphModel {
 		
 	}
 	
+	/**
+	 * Updates the domain of an object property
+	 * @param prop
+	 * @param domainClass
+	 */
 	private void updateDomain(OWLObjectProperty prop, OWLClass domainClass){
 		// Recuperar todos los rangos de la propiedad y construir enganches con la clase del dominio
 		
 		DomainRangeEdge edge;
 		
-		for (OWLOntology ont : ExampleViewComponent.manager.getOntologies())			
+		for (OWLOntology ont : ontologies())			
 			for (OWLObjectPropertyRangeAxiom ax : ont.getObjectPropertyRangeAxioms(prop))
 				if (!ax.getRange().isAnonymous()) {
 					 edge =  new DomainRangeEdge(domainClass,ax.getRange().asOWLClass(),prop);
@@ -709,11 +726,17 @@ public class OWLGraphModel extends DefaultGraphModel {
 		
 	}
 	
+	
+	/**
+	 * Updates the
+	 * @param prop
+	 * @param rangeClass
+	 */
 	private void updateRange(OWLObjectProperty prop, OWLClass rangeClass){
 		// Recuperar todos los dominios de la propiedad y contruir enganches con la clase del rango
 		DomainRangeEdge edge;
 		
-		for (OWLOntology ont : ExampleViewComponent.manager.getOntologies())			
+		for (OWLOntology ont : ontologies())			
 			for (OWLObjectPropertyDomainAxiom ax : ont.getObjectPropertyDomainAxioms(prop))
 				if (!ax.getDomain().isAnonymous()) {
 					 edge =  new DomainRangeEdge(ax.getDomain().asOWLClass(),rangeClass,prop);
@@ -739,8 +762,8 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 				for(Restriction rr : vRes){
 					// si la restriccion incluye a la nueva clase ...
-					if (rr.getClase().toString().equals(nuevaClase.getOWLClass().toString())){
-						addRestrictionLink(r.getClase(), nuevaClase.getOWLClass(), r.getProperty());
+					if (rr.getOWLClass().toString().equals(nuevaClase.getOWLClass().toString())){
+						addRestrictionLink(r.getClase(), r.getProperty(), rr);
 						break;
 					}
 				}
@@ -753,12 +776,17 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param nuevaClase nueva clase agregada
 	 */
 	private void updatesSubClasses(OWLClass nuevaClase) {
-		// recorrermos las subclases
-		for(OWLSubClassAxiom ax : ontologia.getSubClassAxiomsForRHS(nuevaClase)) {
-			OWLClass superCls = ax.getSubClass().asOWLClass();
-
-			if (!superCls.isAnonymous() && isThisClassPresent(superCls.toString()))
-				addInheritanceLink(superCls, nuevaClase);
+		
+		
+		for (OWLOntology ont : ontologies()){
+		
+			// recorrermos las subclases
+			for(OWLSubClassAxiom ax : ont.getSubClassAxiomsForRHS(nuevaClase)) {
+				OWLClass superCls = ax.getSubClass().asOWLClass();
+	
+				if (!superCls.isAnonymous() && isThisClassPresent(superCls.toString()))
+					addInheritanceLink(superCls, nuevaClase);
+			}
 		}
 	}
 
@@ -772,17 +800,19 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 			// si se trata de un nodo restriccion
 			if (n != null){
-				for(OWLObjectPropertyAssertionAxiom ax : ontologia.getObjectPropertyAssertionAxioms(n.getOWLIndividual())){
-					if (ax.getObject().toString().equals(ind.toString())){
-
-						OWLIndividual objeto = ax.getObject();
-						OWLIndividual sujeto = ax.getSubject();
-						OWLObjectProperty propiedad = ax.getProperty().asOWLObjectProperty();
-
-						RestrictionEdge r = new RestrictionEdge(sujeto, objeto);
-						r.setLabel(propiedad.toString());
-
-						this.addConnection(sujeto, objeto, r);
+				for (OWLOntology ont : ontologies()){
+					for(OWLObjectPropertyAssertionAxiom ax : ont.getObjectPropertyAssertionAxioms(n.getOWLIndividual())){
+						if (ax.getObject().toString().equals(ind.toString())){
+	
+							OWLIndividual objeto = ax.getObject();
+							OWLIndividual sujeto = ax.getSubject();
+							OWLObjectProperty propiedad = ax.getProperty().asOWLObjectProperty();
+	
+							RestrictionEdge r = new RestrictionEdge(sujeto, objeto, null);
+							r.setLabel(propiedad.toString());
+	
+							this.addConnection(sujeto, objeto, r);
+						}
 					}
 				}
 			}
@@ -794,79 +824,87 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * 
 	 */
 	private void updateDisjointLinks(OWLObjectProperty propiedad) {
-
-		for (OWLDisjointObjectPropertiesAxiom ax : ontologia.getDisjointObjectPropertiesAxiom(propiedad)){
-
-			Object[] clases = ax.getObjectPropertiesInSignature().toArray();
-
-
-			OWLObjectProperty c1 = (OWLObjectProperty) clases[0];
-			OWLObjectProperty c2 = (OWLObjectProperty) clases[1];
-			DisjointEdge eje = new DisjointEdge(c1, c2);
-			eje.setLabel("Disjoint");
-
-			if (c1 != null && c2 != null)
-				this.addConnection(c1, c2, eje);
+		
+		for (OWLOntology ont : ontologies()){
+			for (OWLDisjointObjectPropertiesAxiom ax : ont.getDisjointObjectPropertiesAxiom(propiedad)){
+	
+				Object[] clases = ax.getObjectPropertiesInSignature().toArray();
+	
+	
+				OWLObjectProperty c1 = (OWLObjectProperty) clases[0];
+				OWLObjectProperty c2 = (OWLObjectProperty) clases[1];
+				DisjointEdge eje = new DisjointEdge(c1, c2);
+				eje.setLabel("Disjoint");
+	
+				if (c1 != null && c2 != null)
+					this.addConnection(c1, c2, eje);
+			}
 		}
 	}
 
 	/**
-	 * @param claseOWL 
+	 * @param owlClass 
 	 * 
 	 */
-	private void updateDisjointLinks(OWLClass claseOWL) {
+	private void updateDisjointLinks(OWLClass owlClass) {
 
-		for (OWLDisjointClassesAxiom ax : ontologia.getDisjointClassesAxioms(claseOWL)){
-
-			Object[] clases = ax.getClassesInSignature().toArray();
-
-
-			OWLClass c1 = (OWLClass) clases[0];
-			OWLClass c2 = (OWLClass) clases[1];
-
-			DisjointEdge eje = new DisjointEdge(c1, c2);
-			eje.setLabel("Disjoint");
-
-			if (c1 != null && c2 != null)
-				this.addConnection(c1, c2, eje);
+		for (OWLOntology ont : ontologies()){
+			for (OWLDisjointClassesAxiom ax : ont.getDisjointClassesAxioms(owlClass)){
+	
+				Object[] clases = ax.getClassesInSignature().toArray();
+	
+	
+				OWLClass c1 = (OWLClass) clases[0];
+				OWLClass c2 = (OWLClass) clases[1];
+	
+				DisjointEdge eje = new DisjointEdge(c1, c2);
+				eje.setLabel("Disjoint");
+	
+				if (c1 != null && c2 != null)
+					this.addConnection(c1, c2, eje);
+			}
 		}
 	}
 
 	/**
-	 * Actualiza las clases equivalentes
-	 * @param claseOWL
+	 * Update the equivalent classes for an OWL class
+	 * @param owlClass the OWL class
 	 */
-	private void updateEquivalentClasses(OWLClass claseOWL) {
-		for (OWLEquivalentClassesAxiom ax : ontologia.getEquivalentClassesAxioms(claseOWL)){
-
-			Object[] clases = ax.getClassesInSignature().toArray();
-
-			OWLClass c1 = (OWLClass) clases[0];
-			OWLClass c2 = (OWLClass) clases[1];
-
-			EquivalentEdge eje = new EquivalentEdge(c1, c2);
-
-			if (c1 != null && c2 != null)
-				this.addConnection(c1, c2, eje);
+	private void updateEquivalentClasses(OWLClass owlClass) {
+		for (OWLOntology ont : ontologies()){
+			for (OWLEquivalentClassesAxiom ax : ont.getEquivalentClassesAxioms(owlClass)){
+	
+				Object[] clases = ax.getClassesInSignature().toArray();
+	
+				OWLClass c1 = (OWLClass) clases[0];
+				OWLClass c2 = (OWLClass) clases[1];
+	
+				EquivalentEdge eje = new EquivalentEdge(c1, c2);
+	
+				if (c1 != null && c2 != null)
+					this.addConnection(c1, c2, eje);
+			}
 		}
 	}
 
 	/**
-	 * Actualiza las clases equivalentes
-	 * @param propiedad
+	 * Update the equivalent object properties for an OWL Object Property
+	 * @param property
 	 */
-	private void updateEquivalentObjectProperties(OWLObjectProperty propiedad) {
-		for (OWLEquivalentObjectPropertiesAxiom ax : ontologia.getEquivalentObjectPropertiesAxioms(propiedad)){
-
-			Object[] clases = ax.getObjectPropertiesInSignature().toArray();
-
-			OWLObjectProperty c1 = (OWLObjectProperty) clases[0];
-			OWLObjectProperty c2 = (OWLObjectProperty) clases[1];
-
-			EquivalentEdge eje = new EquivalentEdge(c1, c2);
-
-			if (c1 != null && c2 != null)
-				this.addConnection(c1, c2, eje);
+	private void updateEquivalentObjectProperties(OWLObjectProperty property) {
+		for (OWLOntology ont : ontologies()){
+			for (OWLEquivalentObjectPropertiesAxiom ax : ont.getEquivalentObjectPropertiesAxioms(property)){
+	
+				Object[] clases = ax.getObjectPropertiesInSignature().toArray();
+	
+				OWLObjectProperty c1 = (OWLObjectProperty) clases[0];
+				OWLObjectProperty c2 = (OWLObjectProperty) clases[1];
+	
+				EquivalentEdge eje = new EquivalentEdge(c1, c2);
+	
+				if (c1 != null && c2 != null)
+					this.addConnection(c1, c2, eje);
+			}
 		}
 	}
 
@@ -874,7 +912,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param propiedad
 	 */
 	private void updateRangesAndDomains(OWLObjectProperty propiedad) {
-		for (OWLDescription d: propiedad.getRanges(ontologia)){
+		for (OWLDescription d: propiedad.getRanges(ontologies())){
 			for (OWLClass c : d.getClassesInSignature()){
 				RangeEdge r = new RangeEdge(propiedad, c);
 				r.setLabel("Range");
@@ -883,7 +921,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 		}
 
-		for (OWLDescription d: propiedad.getDomains(ontologia)){
+		for (OWLDescription d: propiedad.getDomains(ontologies())){
 			for (OWLClass c : d.getClassesInSignature()){
 				RangeEdge r = new RangeEdge(propiedad, c);
 				r.setLabel("Domain");
@@ -896,7 +934,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param propiedad
 	 */
 	private void updateInverseObjectProperty(OWLObjectProperty propiedad) {
-		for (OWLObjectPropertyExpression d: propiedad.getInverses(ontologia)){
+		for (OWLObjectPropertyExpression d: propiedad.getInverses(ontologies())){
 
 			InverseOfEdge r = new InverseOfEdge(propiedad, d.asOWLObjectProperty());
 			r.setLabel("InverseOf");
@@ -908,11 +946,11 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param propiedad
 	 */
 	private void updateSubProperties(OWLObjectProperty propiedad) {
-		for (OWLObjectPropertyExpression c:propiedad.getSuperProperties(ontologia)){
+		for (OWLObjectPropertyExpression c:propiedad.getSuperProperties(ontologies())){
 			this.addInheritanceLink(propiedad, c.asOWLObjectProperty());
 		}
 
-		for (OWLObjectPropertyExpression c:propiedad.getSubProperties(ontologia)){
+		for (OWLObjectPropertyExpression c:propiedad.getSubProperties(ontologies())){
 			this.addInheritanceLink(c.asOWLObjectProperty(), propiedad);
 		}
 
@@ -922,18 +960,20 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param ind
 	 */
 	private void updateDisjointLinks(OWLIndividual ind) {
-		for (OWLDifferentIndividualsAxiom ax : ontologia.getDifferentIndividualAxioms(ind)){
-
-			Object[] individuos = ax.getIndividuals().toArray();
-
-			OWLIndividual c1 = (OWLIndividual) individuos[0];
-			OWLIndividual c2 = (OWLIndividual) individuos[1];
-
-			DisjointEdge eje = new DisjointEdge(c1, c2);
-			eje.setLabel("Different");
-
-			if (c1 != null && c2 != null)
-				this.addConnection(c1, c2, eje);
+		for (OWLOntology ont : ontologies()){
+			for (OWLDifferentIndividualsAxiom ax : ont.getDifferentIndividualAxioms(ind)){
+	
+				Object[] individuos = ax.getIndividuals().toArray();
+	
+				OWLIndividual c1 = (OWLIndividual) individuos[0];
+				OWLIndividual c2 = (OWLIndividual) individuos[1];
+	
+				DisjointEdge eje = new DisjointEdge(c1, c2);
+				eje.setLabel("Different");
+	
+				if (c1 != null && c2 != null)
+					this.addConnection(c1, c2, eje);
+			}
 		}
 	}
 
@@ -941,17 +981,18 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param ind
 	 */
 	private void updateEquivalentIndividuals(OWLIndividual ind) {
-
-		for (OWLSameIndividualsAxiom ax : ontologia.getSameIndividualAxioms(ind)){
-			Object[] individuos = ax.getIndividuals().toArray();
-
-			OWLIndividual c1 = (OWLIndividual) individuos[0];
-			OWLIndividual c2 = (OWLIndividual) individuos[1];
-
-			EquivalentEdge eje = new EquivalentEdge(c1, c2);
-
-			if (c1 != null && c2 != null)
-				this.addConnection(c1, c2, eje);
+		for (OWLOntology ont : ontologies()){
+			for (OWLSameIndividualsAxiom ax : ont.getSameIndividualAxioms(ind)){
+				Object[] individuos = ax.getIndividuals().toArray();
+	
+				OWLIndividual c1 = (OWLIndividual) individuos[0];
+				OWLIndividual c2 = (OWLIndividual) individuos[1];
+	
+				EquivalentEdge eje = new EquivalentEdge(c1, c2);
+	
+				if (c1 != null && c2 != null)
+					this.addConnection(c1, c2, eje);
+			}
 		}
 	}
 
@@ -965,13 +1006,13 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 			if ( n!= null){
 				// comprobamos si esta en el rango
-				if (n.getPropiedad().getRanges(ontologia).contains(claseOWL)){
+				if (n.getPropiedad().getRanges(ontologies()).contains(claseOWL)){
 					//creamos el enlace de rango
 					RangeEdge r = new RangeEdge(n.getPropiedad(), claseOWL);
 					r.setLabel("Range");
 					this.addConnection(n.getPropiedad(), claseOWL, r);
 				}
-				if (n.getPropiedad().getDomains(ontologia).contains(claseOWL)){
+				if (n.getPropiedad().getDomains(ontologies()).contains(claseOWL)){
 					// creamos el enlace dominio
 					//creamos el enlace de rango
 					RangeEdge r = new RangeEdge(n.getPropiedad(), claseOWL);
@@ -1220,7 +1261,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 				OWLClass c = nodoClase.getOWLClass();
 
-				for (OWLDescription d : c.getSuperClasses(ontologia)){
+				for (OWLDescription d : c.getSuperClasses(ontologies())){
 					d.accept(v);
 				}
 
@@ -1370,10 +1411,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 					for (Restriction rr:restricciones.get(propiedad)){
 
 						// nos aseguramos que no se haya incluido ya le link
-						if (!relacionadas.contains(rr.getClase())){
+						if (!relacionadas.contains(rr.getOWLClass())){
 							// ... incluimos un enlace entre este y la nueva clase
-							addRestrictionLink(clase, rr.getClase(), propiedad);
-							relacionadas.add(rr.getClase());
+							addRestrictionLink(clase, rr.getOWLClass(), propiedad);
+							relacionadas.add(rr.getOWLClass());
 						}
 					}
 
@@ -1697,9 +1738,45 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param prop propiedad sobre la que existe la restricción
 	 */
 	private void addRestrictionLink(OWLClass sub, OWLClass sup, OWLObjectProperty prop){
-		RestrictionEdge eg = new RestrictionEdge(sub, sup);
+		RestrictionEdge eg = new RestrictionEdge(sub, sup, null);
 		eg.setLabel(prop.toString());
 		addConnection(sub, sup, eg);
+	}
+	
+	private void addRestrictionLink(OWLClass sub, OWLObjectProperty prop, Restriction r){
+		RestrictionEdge eg = new RestrictionEdge(sub, r.getOWLClass(), r);
+		
+		
+		
+		String prefix = "";
+		
+		switch (r.getRestrictionType()){
+		case Restriction.ALL_RESTRICTION:
+			prefix = "only";
+			break;
+		case Restriction.EXACT_RESTRICTION:
+			prefix = "exactly" + r.getCardinality();
+			break;
+		case  Restriction.MAX_RESTRICTION:
+			prefix = "max " + r.getCardinality();
+			break;
+		case Restriction.MIN_RESTRICTION:
+			prefix = "min " + r.getCardinality();
+			break;
+		case  Restriction.SOME_RESTRICTION:
+			prefix = "some";
+			break;
+		case  Restriction.VALUE_RESTRICTION:
+			prefix = "value";
+			break;
+		}
+		
+		String label = prop.toString() + " " + prefix;
+		
+		System.err.println("Creating the connection between " + sub + " y " + r.getOWLClass());
+		
+		eg.setLabel(label);
+		addConnection(sub, r.getOWLClass(), eg);
 	}
 
 	/**
@@ -1837,7 +1914,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		else {
 			System.err.println("No se ha encontrado el nodo para el origen o el destino");
 			System.err.println("Origen: " + entidadOrigen);
-			System.err.println("Origen: " + entidadDestino);
+			System.err.println("Destino: " + entidadDestino);
 			
 		}
 	}
@@ -1906,7 +1983,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addDisjointClassAxiom(OWLClass claseOWL, OWLClass claseOWL2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
 		OWLDisjointClassesAxiom a = fact.getOWLDisjointClassesAxiom(claseOWL, claseOWL2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1921,7 +1998,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLDisjointObjectPropertiesAxiom a = fact.getOWLDisjointObjectPropertiesAxiom(p1,p2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1933,7 +2010,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addDifferentIndividualAxiom(OWLIndividual ind1, OWLIndividual ind2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLDifferentIndividualsAxiom a = fact.getOWLDifferentIndividualsAxiom(ind1, ind2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1945,7 +2022,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addDisjointDataPropertyAxiom(OWLDataProperty dp1, OWLDataProperty dp2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
 		OWLDisjointDataPropertiesAxiom a = fact.getOWLDisjointDataPropertiesAxiom(dp1, dp2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1957,7 +2034,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addEquivalentClassAxiom(OWLClass c1, OWLClass c2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLEquivalentClassesAxiom a = fact.getOWLEquivalentClassesAxiom(c1, c2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1969,7 +2046,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addEquivalentObjectPropertyAxiom(OWLObjectProperty p1, OWLObjectProperty p2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLEquivalentObjectPropertiesAxiom a = fact.getOWLEquivalentObjectPropertiesAxiom(p1,p2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1981,7 +2058,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addEquivalentDataPropertyAxiom(OWLDataProperty p1, OWLDataProperty p2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLEquivalentDataPropertiesAxiom a = fact.getOWLEquivalentDataPropertiesAxiom(p1,p2);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -1996,7 +2073,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		iguales.add(ind1);
 		iguales.add(ind2);
 		OWLSameIndividualsAxiom a = fact.getOWLSameIndividualsAxiom(iguales);		
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2007,7 +2084,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addRangeAxiom(OWLObjectProperty prop, OWLClass clase) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLObjectPropertyRangeAxiom a = fact.getOWLObjectPropertyRangeAxiom(prop, clase);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2018,7 +2095,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addDomainAxiom(OWLObjectProperty prop, OWLClass clase) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLObjectPropertyDomainAxiom a = fact.getOWLObjectPropertyDomainAxiom(prop, clase);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2029,7 +2106,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addSubClassAxiom(OWLClass c1, OWLClass c2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(c1, c2);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2040,7 +2117,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void addSubObjectPropertyAxiom(OWLObjectProperty p1, OWLObjectProperty p2) {
 		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
 		OWLObjectSubPropertyAxiom a = fact.getOWLSubObjectPropertyAxiom(p1, p2);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2050,7 +2127,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		OWLObjectOneOf oneOf = fact.getOWLObjectOneOf(individuos);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(clase, oneOf);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2060,7 +2137,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		OWLObjectUnionOf oneOf = fact.getOWLObjectUnionOf(clases);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(clase, oneOf);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2070,7 +2147,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		OWLObjectIntersectionOf oneOf = fact.getOWLObjectIntersectionOf(clases);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(clase, oneOf);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 
@@ -2080,7 +2157,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		OWLObjectComplementOf oneOf = fact.getOWLObjectComplementOf(c1);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(c2, oneOf);
-		AddAxiom addAxiomChange = new AddAxiom(ontologia, a);         
+		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
 		ExampleViewComponent.manager.applyChange(addAxiomChange);
 	}
 

@@ -36,7 +36,7 @@ import org.ugr.violet.presentation.activity.FigFork;
  * @author anab
  *
  */
-public class NodeDecision extends NodeActivity {
+public class NodeDecision extends NodeActivityDiagram {
 
 	/**
 	 * 
@@ -51,14 +51,14 @@ public class NodeDecision extends NodeActivity {
 	public  NodeDecision ( ){
     	super();
     	
-    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.lienzoActual.getTarea() + "_decision_" + cont));
+    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_decision_" + cont));
 		cont++;
-		OWLClass claseDecision = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Decision_Step"));
+		OWLClass claseDecision = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Decision_Step"));
 		
 		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseDecision);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
+		ExampleViewComponent.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		
-		((ActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
+		gm.addStepToSequence(step);
     	
     	addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));

@@ -9,6 +9,7 @@ import org.tigris.gef.presentation.ArrowHeadGreater;
 import org.tigris.gef.presentation.FigEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
 import org.tigris.gef.presentation.FigText;
+import org.ugr.violet.base.Restriction;
 
 public class RestrictionEdge extends OWLEdge {
 
@@ -22,10 +23,17 @@ public class RestrictionEdge extends OWLEdge {
 	private String label = "";
 	private OWLEntity objeto = null;
 	private OWLEntity sujeto = null;
+	private Restriction restriccion = null;
 	
-	public RestrictionEdge(OWLEntity sujeto, OWLEntity objeto){
+/*	public RestrictionEdge(OWLEntity sujeto, OWLEntity objeto){
 		this.objeto = objeto;
 		this.sujeto = sujeto;
+	}*/
+	
+	public RestrictionEdge(OWLEntity sujeto, OWLEntity objeto, Restriction restr){
+		this.objeto = objeto;
+		this.sujeto = sujeto;
+		restriccion = restr;
 	}
 	
 	public boolean isSujeto(OWLEntity entidad){

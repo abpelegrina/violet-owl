@@ -30,7 +30,7 @@ public class OWLViewGraphModel extends OWLGraphModel {
 	 * @param ont
 	 */
 	public OWLViewGraphModel(OWLOntology ont) {
-		super(ont);
+		super();
 		manager = new ViewManager("<<file_name>>");
 		
 		

@@ -35,7 +35,7 @@ import org.ugr.violet.presentation.activity.FigJoin;
  * @author anab
  *
  */
-public class NodeJoin extends NodeActivity {
+public class NodeJoin extends NodeActivityDiagram {
 	/**
 	 * 
 	 */
@@ -51,14 +51,14 @@ public class NodeJoin extends NodeActivity {
 		
 		super();
 		
-		step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.lienzoActual.getTarea() + "_join_" + cont));
+		step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_join_" + cont));
 		cont++;
-		OWLClass claseJoin = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Join_Step"));
+		OWLClass claseJoin = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Join_Step"));
 		
 		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseJoin);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
+		ExampleViewComponent.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		
-		((ActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
+		gm.addStepToSequence(step);
 		
 		
 		addPort(east = new OWLPort(this));

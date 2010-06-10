@@ -45,7 +45,7 @@ import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
 import org.ugr.violet.changefilters.ChangeFilterDiagram;
 import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.nodes.activity.NodeActivity;
+import org.ugr.violet.graph.nodes.activity.NodeActivityDiagram;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 import org.ugr.violet.ui.ActivityDiagramPalette;
@@ -67,22 +67,6 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	
 	private OWLIndividual secuencia = null;
 	
-	/**
-	 * @return the tarea
-	 */
-	@Override
-	public OWLIndividual getTarea() {
-		return tarea;
-	}
-
-	/**
-	 * @return the secuencia
-	 */
-	@Override
-	public OWLIndividual getSecuencia() {
-		return secuencia;
-	}
-	
 	@Override
 	public boolean isViewCanvas(){
 		return true;
@@ -102,13 +86,14 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 		super(ont, p);
 		
 		// creamos el diagrama asociado a la ontolog�a
-		ogm = new ActivityGraphModel(activa);
+		ogm = new ActivityGraphModel(null);
 		od = new ActivityDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( ogm );
 		
+		/*
 		this.createNewTask("prueba");
 		this.createDiagramSkeleton("prueba");
-		//}
+		*/
 	}
 	
 	
@@ -124,97 +109,15 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 		tarea = task;
 		
 		// creamos el diagrama asociado a la ontolog�a
-		ogm = new ActivityGraphModel(activa);
+		ogm = new ActivityGraphModel(tarea);
 		od = new ActivityDiagram(activa.getURI().toString(), ogm);
 		this.setGraphModel( ogm );
 		
+		/*
 		// creamos la nueva tarea
 		this.createNewTask("prueba");
 		this.createDiagramSkeleton(tarea.toString());
-	}
-	
-	private void createNewTask(String taskName){
-		// 1. Creamos un nuevo individuo de la clase tarea:
-		tarea = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + taskName));
-		OWLClass ClaseTarea = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Task"));
-		
-		// Creamos la relación de jerarquía
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (tarea, ClaseTarea);
-
-		// agregamos el axioma a la ontología
-		AddAxiom addAx3 = new AddAxiom(activa, d);
-
-		// aplicamos los cambios
-		ExampleViewComponent.manager.applyChange(addAx3);
-	}
-	
-	
-	private void createDiagramSkeleton(String taskName){
-		
-		
-		// 2. Creamos una nueva secuencia y se la asociamos
-		secuencia = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#"+ taskName + "_Sequence"));
-		OWLClass ClaseSecuencia = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Sequence"));
-		
-		// Creamos la relación de jerarquía
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (secuencia, ClaseSecuencia);
-
-		// agregamos el axioma a la ontología
-		AddAxiom addAx3 = new AddAxiom(activa, d);
-
-		// aplicamos los cambios
-		ExampleViewComponent.manager.applyChange(addAx3);
-		
-		// Asociamos la secuencia y la tarea
-		OWLObjectProperty descritaEn = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#described_in"));
-		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(tarea, descritaEn, secuencia);
-
-		// aplicamos los cambios
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		
-		/*
-		
-		// 3. Creamos pasos de inicio y de fin y los conectamos para que veamos lo bonito que queda
-		OWLIndividual inicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + taskName + "_start"));
-		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#First_Step"));
-		
-		OWLIndividual fin = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + taskName + "_end"));
-		OWLClass ClaseFin = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Final_Step"));
-		
-		d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (inicio, ClaseInicio);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, d));
-		d  = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (fin, ClaseFin);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, d));
-		
-		// Asociamos la secuencia a los steps
-		OWLObjectProperty hasPart = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#has_part"));
-		OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#part_of"));
-		
-		// inicio
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(inicio, partOf, secuencia);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, inicio);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		
-		// fin
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(fin, partOf, secuencia);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, fin);
-		ExampleViewComponent.manager.applyChange(new AddAxiom(activa, e));
-		
-		// Asociamos los pasos entre si???
-		
-		// 4. Pintamos el inicio y el fin => necesitamos las figuras y nodos en cuestión
-		
-		NodeActivity nodo = new NodeFirstStep(inicio);
-		ogm.addNode(nodo);
-		nodo.getOntologyFig().setLocation(new Point(100, 20));
-		
-		nodo = new NodeLastStep(fin);
-		ogm.addNode(nodo);
-		nodo.getOntologyFig().setLocation(new Point(100, 420)); */
+		*/
 	}
 	
 	public void modeChange(ModeChangeEvent mce) {
@@ -286,8 +189,12 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	@Override
 	public OWLOntologyChangeFilter getChangeListener(){
 		if (changeListener == null)
-			changeListener = new ChangeFilterActivityDiagram((OWLGraphModel) getGraphModel());
+			changeListener = new ChangeFilterActivityDiagram((ActivityGraphModel) getGraphModel());
 		
 		return changeListener;
+	}
+	
+	public boolean isOWLActivityGraph(){
+		return true;
 	}
 }

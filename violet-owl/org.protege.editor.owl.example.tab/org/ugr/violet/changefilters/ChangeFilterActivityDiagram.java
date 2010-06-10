@@ -29,7 +29,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 	/**
 	 * @param o
 	 */
-	public ChangeFilterActivityDiagram(OWLGraphModel o) {
+	public ChangeFilterActivityDiagram(ActivityGraphModel o) {
 		super(o);
 		
 		
@@ -39,6 +39,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 	public void visit(OWLClassAssertionAxiom axiom){
 		if (axiom.getClassesInSignature().contains(Followed_by_Relation)){
 			if (this.isRemove()){
+				
 				FollowedByEdge aBorrar = null;
 
 				// borrar el enlace entre las clases disjuntas
@@ -54,7 +55,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 					ogm.removeEdge(aBorrar);
 			}
 			else if(this.isAdd()) {
-				((ActivityGraphModel)ogm).addFlow(axiom.getIndividual());
+				//((ActivityGraphModel)ogm).addFlow(axiom.getIndividual());
 			}
 		}
 	}
@@ -75,7 +76,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 		
 		// evaluates property
 		OWLObjectProperty evaluates = factory.getOWLObjectProperty(URI
-				.create(ont.getURI() + "#evaluates"));
+				.create(ActivityGraphModel.URIAmenities + "#evaluates"));
 		OWLDeclarationAxiom axiom1 = factory.getOWLDeclarationAxiom(evaluates);
 
 		AddAxiom addAxiom = new AddAxiom(ont, axiom1);
