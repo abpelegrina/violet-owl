@@ -18,7 +18,7 @@ import org.ugr.violet.graph.nodes.NodeComplement;
  * @author anab
  *
  */
-public class FigComplement extends OntologyFig{
+public class FigComplement extends OWLFigure{
 
 	/**
 	 * 

@@ -41,7 +41,7 @@ import org.ugr.violet.graph.nodes.OWLNode;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.owl.examples.tab.ExampleViewComponent;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.visitors.BooleanDescriptionDeleteVisitor;
 import org.ugr.violet.visitors.BooleanDescriptionVisitor;
 import org.ugr.violet.visitors.ComplementsOfVisitor;
@@ -539,7 +539,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 					nodo = new NodeClass(claseOWL);
 				
 				addNode(nodo);
-				OntologyFig f = nodo.getOntologyFig();
+				OWLFigure f = nodo.getOntologyFig();
 				f.setLocation(location);
 
 				// Actualizamos la restricciones, por si existe alguna aplicada a esta clase.

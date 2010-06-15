@@ -20,7 +20,7 @@ import org.ugr.violet.graph.nodes.NodeDataProperty;
  * 
  * @author Ana B. Pelegrina
  */
-public class FigDataProperty extends OntologyFig {
+public class FigDataProperty extends OWLFigure {
 
 	private static final long serialVersionUID = 8151944926067219396L;
 	private FigText dataPropertyName;

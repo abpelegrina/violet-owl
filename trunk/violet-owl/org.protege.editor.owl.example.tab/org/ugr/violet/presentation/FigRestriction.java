@@ -23,7 +23,7 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
  * 
  * @author Ana B. Pelegrina
  */
-public class FigRestriction extends OntologyFig {
+public class FigRestriction extends OWLFigure {
 	private static final long serialVersionUID = 8151944926067219396L;
 	private FigLine separator;
 	private FigText className;

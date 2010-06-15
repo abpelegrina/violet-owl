@@ -19,7 +19,7 @@ import org.ugr.violet.graph.nodes.NodeIntersection;
  * @author anab
  *
  */
-public class FigIntersection extends OntologyFig {
+public class FigIntersection extends OWLFigure {
 
 	/**
 	 * 

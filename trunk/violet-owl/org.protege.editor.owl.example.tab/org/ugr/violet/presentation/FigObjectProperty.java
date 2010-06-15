@@ -23,7 +23,7 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
  * @author anab
  *
  */
-public class FigObjectProperty extends OntologyFig {
+public class FigObjectProperty extends OWLFigure {
 
 	OWLObjectProperty propiedad = null;
 	private FigText nombrePropiedad;

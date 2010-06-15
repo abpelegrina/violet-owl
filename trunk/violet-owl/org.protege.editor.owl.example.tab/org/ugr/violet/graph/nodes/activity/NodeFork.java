@@ -28,7 +28,7 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.FigIndividual;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.presentation.activity.FigFork;
 
 /**
@@ -113,7 +113,7 @@ public class NodeFork extends NodeActivityDiagram {
      * Gets the figure associated with the node
      * @return la figura
      */
-    public OntologyFig getFigDataProperty(){
+    public OWLFigure getFigDataProperty(){
     	return figura;
     }
 
@@ -122,7 +122,7 @@ public class NodeFork extends NodeActivityDiagram {
      * @param lay layer where we want to draw the node
      * @return the new figure
      */
-    public OntologyFig makePresentation(Layer lay) {
+    public OWLFigure makePresentation(Layer lay) {
     	
     	if (step != null){
 	    	figura = new FigFork (step);
@@ -178,7 +178,7 @@ public class NodeFork extends NodeActivityDiagram {
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

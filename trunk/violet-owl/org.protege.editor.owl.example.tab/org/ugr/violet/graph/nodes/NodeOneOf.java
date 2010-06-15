@@ -11,7 +11,7 @@ import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectOneOf;
 import org.tigris.gef.base.Layer;
 import org.ugr.violet.presentation.FigOneOf;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -113,7 +113,7 @@ public class NodeOneOf extends OWLNode {
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

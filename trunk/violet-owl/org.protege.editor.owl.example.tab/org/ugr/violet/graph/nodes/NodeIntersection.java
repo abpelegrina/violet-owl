@@ -10,7 +10,7 @@ import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectIntersectionOf;
 import org.tigris.gef.base.Layer;
 import org.ugr.violet.presentation.FigIntersection;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -121,7 +121,7 @@ public class NodeIntersection extends OWLNode {
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

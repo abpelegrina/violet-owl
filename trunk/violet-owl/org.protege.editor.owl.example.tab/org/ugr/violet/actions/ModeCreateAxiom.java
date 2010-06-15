@@ -13,7 +13,7 @@ import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigPoly;
 import org.tigris.gef.undo.UndoManager;
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -26,8 +26,8 @@ public abstract class ModeCreateAxiom extends ModeCreatePolyEdge {
 	 */
 	private static final long serialVersionUID = 7163880810951001691L;
 	
-	protected OntologyFig sourceFigNode = null;
-	protected OntologyFig destFigNode = null;
+	protected OWLFigure sourceFigNode = null;
+	protected OWLFigure destFigNode = null;
 	
 	abstract public boolean checkCondicionOrigen(Fig f);
 	abstract public boolean checkCondicionDestino(Fig f);
@@ -70,7 +70,7 @@ public abstract class ModeCreateAxiom extends ModeCreatePolyEdge {
 	            return;
 	        }
 	        if (sourceFigNode == null) { // _npoints == 0) {
-	            sourceFigNode = (OntologyFig) underMouse;
+	            sourceFigNode = (OWLFigure) underMouse;
 	            startPort = sourceFigNode.getPuertoNorte();
 	        }
 	        if (startPort == null) {
@@ -121,7 +121,7 @@ public abstract class ModeCreateAxiom extends ModeCreatePolyEdge {
         OWLGraphModel ogm = (OWLGraphModel) graphModel;
 
         if (checkCondicionDestino(f)) {
-        	destFigNode = (OntologyFig) f;
+        	destFigNode = (OWLFigure) f;
         	accionReleaseMouse(ogm);
         	/*        	
         	if (!destFigNode.toString().equals(sourceFigNode.toString())) {

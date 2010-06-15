@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,6 +23,7 @@ import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.model.OWLOntologyCreationException;
+import org.ugr.violet.graph.nodes.view.ViewNode;
 import org.ugr.violet.presentation.view.FigViewParameter;
 import org.xml.sax.SAXException;
 
@@ -221,8 +221,12 @@ public class ViewManager {
 	public boolean addOWLClass(OWLClass c){
 		FigViewParameter figura = classes.get(c);
 		
-		if (figura != null)
+		// buscamos la clase
+		if (figura != null){
+			
+			ViewNode node = new ViewNode(figura, c);
 			return true;
+		}
 		else
 			return false;
 	}

@@ -27,7 +27,7 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.presentation.activity.FigFirstStep;
 import org.ugr.violet.presentation.activity.FigLastStep;
 
@@ -163,7 +163,7 @@ public class NodeLastStep extends NodeActivityDiagram {
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

@@ -13,7 +13,7 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLNode;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -101,7 +101,7 @@ public abstract class NodeActivityDiagram extends OWLNode {
 	 * @see org.ugr.violet.graph.nodes.OntologyNode#getOntologyFig()
 	 */
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		// TODO Auto-generated method stub
 		return null;
 	}

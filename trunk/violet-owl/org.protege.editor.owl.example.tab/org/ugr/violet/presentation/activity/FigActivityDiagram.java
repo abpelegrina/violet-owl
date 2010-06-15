@@ -5,13 +5,13 @@ package org.ugr.violet.presentation.activity;
 
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.presentation.FigRect;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
  *
  */
-public class FigActivityDiagram extends OntologyFig {
+public class FigActivityDiagram extends OWLFigure {
 
 	/**
 	 * 

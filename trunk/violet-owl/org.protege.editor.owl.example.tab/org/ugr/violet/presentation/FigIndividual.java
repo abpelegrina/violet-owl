@@ -20,7 +20,7 @@ import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeIndividual;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 
-public class FigIndividual extends OntologyFig {
+public class FigIndividual extends OWLFigure {
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

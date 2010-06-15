@@ -10,7 +10,7 @@ import org.tigris.gef.base.CmdChangeFig;
 import org.tigris.gef.base.Layer;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigNAryRelation;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -49,7 +49,7 @@ public class NodeNAryRelation extends NodeClass {
     }
 	
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		// TODO Auto-generated method stub
 		return figura;
 	}

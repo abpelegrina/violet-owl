@@ -17,7 +17,7 @@ import org.tigris.gef.graph.GraphModel;
 import org.ugr.violet.layout.LayoutedNode;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigIndividual;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 
 public class NodeIndividual extends OWLNode implements Serializable, LayoutedNode {
@@ -169,7 +169,7 @@ public class NodeIndividual extends OWLNode implements Serializable, LayoutedNod
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 
