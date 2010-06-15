@@ -23,10 +23,7 @@ import org.tigris.gef.presentation.Fig;
 import org.tigris.gef.presentation.FigPoly;
 import org.tigris.gef.undo.UndoManager;
 import org.ugr.violet.graph.ActivityGraphModel;
-import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.activity.FollowedByEdge;
-import org.ugr.violet.presentation.FigClass;
-import org.ugr.violet.presentation.OntologyFig;
 import org.ugr.violet.presentation.activity.FigActivityDiagram;
 
 /**
@@ -44,6 +41,11 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
 	
 	static private OWLObjectProperty followed_by = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#followed_by"));
 	static private OWLObjectProperty following_step = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#following_step"));
+	
+	
+	private OWLClass Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Followed_by_Relation"));
+	private OWLClass Control_Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Control_Followed_by_Relation"));
+	private OWLClass Followed_Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Object_Followed_by_Relation"));
 	
 	
 	/**
@@ -146,6 +148,11 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
         	destFigNode = (FigActivityDiagram) f;
         	if (!destFigNode.toString().equals(sourceFigNode.toString())) {
         		
+        		
+        		
+        		// clasificar el tipo de enlace:
+        		//1 - Si el nodo de inicio es Work_Unit_Ste, la relacion serán Followed_By_Relation
+        		
         		ActivityGraphModel agm = (ActivityGraphModel) graphModel;
 	        	
         		OWLEntity e1 = destFigNode.getOWLEntity();
@@ -184,7 +191,7 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
         			OWLObjectProperty evaluates = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#evaluates"));
         			OWLDataProperty has_expression = ExampleViewComponent.manager.getOWLDataFactory().getOWLDataProperty(URI.create(ActivityGraphModel.URIAmenities + "#has_expression"));
         			
-        			// creamos el individuo guarda
+        			// creamos el individuo guard
         			axm = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom(guard, GuardClass);
         			ax = new AddAxiom(agm.activeOntology(), axm);
         			ExampleViewComponent.manager.applyChange(ax);

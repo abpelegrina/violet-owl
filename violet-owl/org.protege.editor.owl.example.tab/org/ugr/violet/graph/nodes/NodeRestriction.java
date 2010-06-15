@@ -17,7 +17,7 @@ import org.tigris.gef.base.Layer;
 import org.ugr.violet.base.Restriction;
 import org.ugr.violet.layout.LayoutedNode;
 import org.ugr.violet.presentation.FigRestriction;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 public class NodeRestriction extends OWLNode implements Serializable, LayoutedNode {
 
@@ -273,7 +273,7 @@ public class NodeRestriction extends OWLNode implements Serializable, LayoutedNo
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

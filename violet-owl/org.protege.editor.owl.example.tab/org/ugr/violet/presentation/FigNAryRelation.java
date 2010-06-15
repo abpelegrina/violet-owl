@@ -20,7 +20,7 @@ import org.ugr.violet.graph.nodes.NodeClass;
  * @author anab
  *
  */
-public class FigNAryRelation extends OntologyFig {
+public class FigNAryRelation extends OWLFigure {
 
 	/**
 	 * 

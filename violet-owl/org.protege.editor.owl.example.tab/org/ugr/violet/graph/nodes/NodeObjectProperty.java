@@ -17,7 +17,7 @@ import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigObjectProperty;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -87,7 +87,7 @@ public class NodeObjectProperty extends OWLNode {
     }
 	
 	@Override
-	public OntologyFig makePresentation(Layer l){
+	public OWLFigure makePresentation(Layer l){
 
 		if (propiedad!=null){
 		
@@ -156,7 +156,7 @@ public class NodeObjectProperty extends OWLNode {
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return fig;
 	}
 

@@ -19,7 +19,7 @@ import org.ugr.violet.graph.nodes.NodeUnion;
  * @author anab
  *
  */
-public class FigUnion extends OntologyFig {
+public class FigUnion extends OWLFigure {
 
 	/**
 	 * 

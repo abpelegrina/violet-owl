@@ -33,12 +33,13 @@ import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.presentation.activity.FigActivityStep;
+import org.ugr.violet.presentation.activity.FigInfoObject;
 
 /**
  * @author anab
  *
  */
-public class NodeAction extends NodeActivityDiagram {
+public class NodeInfoIObject extends NodeActivityDiagram {
 	
 	/**
 	 * 
@@ -49,39 +50,39 @@ public class NodeAction extends NodeActivityDiagram {
 	public static final OWLClass activityStep = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Activity_Step"));
 	
 	
-	private OWLIndividual activity = null;
-	private OWLIndividual activity_step = null;
-	private OWLIndividual role = null;
-	private FigActivityStep figura = null;
+	private OWLIndividual informationObject = null;
+	private OWLIndividual informationObjectStep = null;
+	private OWLIndividual state = null;
+	private FigInfoObject figura = null;
 	
 	
 	
 	/**
 	 * Constructor sin parámentros, crea el nodo nuevo y crea tb la actividad, el paso y los enlaces asociados
 	 */
-	public NodeAction(){
+	public NodeInfoIObject(){
 		
 		String nombreActividad = JOptionPane.showInputDialog("Activity Name: "); 
 		
-		activity = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad));
+		informationObject = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad));
     	OWLClass claseAccion = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create( ActivityGraphModel.URIAmenities + "#Action"));
     	
     	
-    	OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity, claseAccion);
+    	OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (informationObject, claseAccion);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(gm.activeOntology(), d));
 		
 		// 1 Buscar el step asociado al la actividad/tarea
 		
-		activity_step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad + "_step"));
+		informationObjectStep = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad + "_step"));
 	    OWLClass claseStep = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Action_Step"));
 	    	
 	    	
-	    d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity_step, claseStep);
+	    d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (informationObjectStep, claseStep);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(gm.activeOntology(), d));
 	
 		// asociamos la tarea y el step mediante la propiedad de objetos "performs". Si ya existía la relación no pasa nada
 		OWLObjectProperty performs = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#performs"));
-		OWLObjectPropertyAssertionAxiom ax = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, performs, activity);
+		OWLObjectPropertyAssertionAxiom ax = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(informationObjectStep, performs, informationObject);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(gm.activeOntology(), ax));
 		
 		// 2 Buscamos el rol asociado con la tarea (si existe)
@@ -95,11 +96,11 @@ public class NodeAction extends NodeActivityDiagram {
 		OWLObjectProperty partOf = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#part_of"));
 		
 		// step es parte de secuencia
-		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, partOf, secuencia);
+		OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(informationObjectStep, partOf, secuencia);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(gm.activeOntology(), e));
 		
 		// secuencia tiene como parte a step
-		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, activity_step);
+		e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, informationObjectStep);
 		ExampleViewComponent.manager.applyChange(new AddAxiom(gm.activeOntology(), e));
 		
 		addPort(east = new OWLPort(this));
@@ -113,10 +114,10 @@ public class NodeAction extends NodeActivityDiagram {
      * Contructor. Creates a new node
      * @param unaPropiedadDeDatos OWL class represented by the new node
      */
-    public NodeAction (OWLIndividual act, OWLIndividual step){
+    public NodeInfoIObject (OWLIndividual act, OWLIndividual step){
     	super();
-    	this.activity = act;
-    	this.activity_step = step;
+    	this.informationObject = act;
+    	this.informationObjectStep = step;
     	addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));
         addPort(north = new OWLPort(this));
@@ -127,11 +128,11 @@ public class NodeAction extends NodeActivityDiagram {
      * Contructor. Creates a new node
      * @param unaPropiedadDeDatos OWL class represented by the new node
      */
-    public NodeAction (OWLIndividual act, OWLIndividual step, OWLIndividual rol){
+    public NodeInfoIObject (OWLIndividual act, OWLIndividual step, OWLIndividual rol){
     	super();
-    	this.activity = act;
-    	this.activity_step = step;
-    	role = rol;
+    	this.informationObject = act;
+    	this.informationObjectStep = step;
+    	state = rol;
     	addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));
         addPort(north = new OWLPort(this));
@@ -156,14 +157,14 @@ public class NodeAction extends NodeActivityDiagram {
      * @return Id of the node
      */
     public String getId() {
-        return activity_step.toString();
+        return informationObjectStep.toString();
     }
     
     /**
      * Gets the figure associated with the node
      * @return la figura
      */
-    public FigActivityStep getFigDataProperty(){
+    public FigInfoObject getFigDataProperty(){
     	return figura;
     }
 
@@ -172,10 +173,10 @@ public class NodeAction extends NodeActivityDiagram {
      * @param lay layer where we want to draw the node
      * @return the new figure
      */
-    public FigActivityStep makePresentation(Layer lay) {
+    public FigInfoObject makePresentation(Layer lay) {
     	
-    	if (activity != null){
-	    	figura = new FigActivityStep(activity, activity_step, role);	    	
+    	if (informationObject != null){
+	    	figura = new FigInfoObject(informationObject, informationObjectStep, state);	    	
 	        figura.setOwner(this);
 	    	figura.setBlinkPorts(true);
 	        return figura;
@@ -188,7 +189,7 @@ public class NodeAction extends NodeActivityDiagram {
 	 */
     @Override
 	public OWLIndividual getStep() {
-		return activity_step;
+		return informationObjectStep;
 	}
 
 	/* (non-Javadoc)
@@ -202,7 +203,7 @@ public class NodeAction extends NodeActivityDiagram {
 	}
 	
 	public OWLEntity getOWLEntity(){
-		return this.activity_step;
+		return this.informationObjectStep;
 	}
 
 
@@ -211,8 +212,8 @@ public class NodeAction extends NodeActivityDiagram {
 	 */
 	@Override
 	public String toString() {
-		if (activity_step != null)
-			return activity_step.toString();
+		if (informationObjectStep != null)
+			return informationObjectStep.toString();
 		else
 			return "";
 	}
@@ -336,7 +337,7 @@ public class NodeAction extends NodeActivityDiagram {
 	}
 	
 	public NodeAction asNodeActivityStep(){
-		return this;
+		return null;
 	}
 
 }

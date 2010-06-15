@@ -14,7 +14,7 @@ import org.tigris.gef.presentation.FigPoly;
 import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 
-public class FigComment extends OntologyFig implements MouseListener, KeyListener {
+public class FigComment extends OWLFigure implements MouseListener, KeyListener {
 	
 	/**
 	 * 

@@ -28,7 +28,7 @@
 
 package org.tigris.gef.base;
 
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * Cmd to change the back-to-front ordering of Fig's.
@@ -88,7 +88,7 @@ public class CmdChangeFig extends Cmd {
         SelectionManager sm = ce.getSelectionManager();
         
         for (Object o: sm.getSelectedFigs()){
-        	((OntologyFig) o).changeFig(function);
+        	((OWLFigure) o).changeFig(function);
         }
         
         sm.reorder(function, lm.getActiveLayer());

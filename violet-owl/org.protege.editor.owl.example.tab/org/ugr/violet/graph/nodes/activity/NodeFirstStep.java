@@ -29,7 +29,7 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.FigDataProperty;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.presentation.activity.FigFirstStep;
 
 /**
@@ -177,7 +177,7 @@ public class NodeFirstStep extends NodeActivityDiagram {
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

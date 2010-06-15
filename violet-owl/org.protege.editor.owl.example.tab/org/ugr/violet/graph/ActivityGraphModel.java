@@ -30,6 +30,7 @@ import org.ugr.violet.graph.nodes.activity.NodeAction;
 import org.ugr.violet.graph.nodes.activity.NodeDecision;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeFork;
+import org.ugr.violet.graph.nodes.activity.NodeInfoIObject;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 import org.ugr.violet.graph.nodes.activity.NodeMerge;
 
@@ -203,15 +204,64 @@ public class ActivityGraphModel extends OWLGraphModel {
 	 * @param ind
 	 * @return
 	 */
-	private OWLNode addInformationObjectStep(OWLIndividual ind) {
-		// TODO Auto-generated method stub
+	private OWLNode addInformationObjectStep(OWLIndividual informationObject) {
+		OWLIndividual ios = null;
+		OWLIndividual state = null;
 
-		// 1. Create the information object node
+		OWLOntology activa = activeOntology();
+		OWLDataFactory fact = manager.getOWLDataFactory();
 
-		// 2. Fetch all the possible relations between the information object
-		// and steps
+		NodeInfoIObject node;
 
-		return null;
+		// 1 Buscar el step asociado al la actividad/tarea
+		OWLObjectProperty produce_ = fact.getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#produce_"));
+
+		for (OWLOntology ont : ontologies())
+			for (OWLObjectPropertyAssertionAxiom ax : ont
+					.getObjectPropertyAssertionAxioms(informationObject)) {
+				OWLIndividual objeto = ax.getObject();
+				OWLIndividual sujeto = ax.getSubject();
+				OWLObjectProperty propiedad = ax.getProperty()
+						.asOWLObjectProperty();
+
+				if (propiedad.toString().equals(produce_.toString())
+						&& sujeto.toString().equals(informationObject.toString())) {
+					ios = objeto;
+				}
+			}
+
+		// Si no existe el step asociado lo creamos y lo asociamos con la tarea
+		if (ios == null) {
+			ios = fact.getOWLIndividual(URI.create(manager.getActiveOntology().getURI() + "#" + informationObject + "_step"));
+			OWLClass claseIOS = fact.getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Information_Object_Step"));
+
+			OWLClassAssertionAxiom d = fact.getOWLClassAssertionAxiom(ios, claseIOS);
+			manager.applyChange(new AddAxiom(manager.getActiveOntology(), d));
+			
+			OWLObjectPropertyAssertionAxiom e = fact.getOWLObjectPropertyAssertionAxiom(ios, produce_, informationObject);
+			
+			manager.applyChange(new AddAxiom(manager.getActiveOntology(), d));
+			manager.applyChange(new AddAxiom(manager.getActiveOntology(), e));
+
+		}
+
+		// 2 Buscamos el estado del objeto
+		OWLObjectProperty is_in_state = fact.getOWLObjectProperty(URI.create(URIAmenities + "#is_in_state"));
+		
+		for (OWLIndividual i : this.getValuesForObjectPropertyInAllOntologies(ios, is_in_state)){
+			state = i;
+			break;
+		}		
+
+		// 3 Añadir la actividad como parte de la tarea modelada
+		OWLObjectProperty hasPart = fact.getOWLObjectProperty(URI.create(manager.getActiveOntology().getURI() + "#has_part"));
+		OWLObjectPropertyAssertionAxiom e = fact.getOWLObjectPropertyAssertionAxiom(sequence, hasPart, ios);
+		manager.applyChange(new AddAxiom(activa, e));
+		
+		// 5 Cear el nodo y agregarlo al diagrama
+		node = new NodeInfoIObject(informationObject, ios, state);
+
+		return node;
 	}
 
 	/**

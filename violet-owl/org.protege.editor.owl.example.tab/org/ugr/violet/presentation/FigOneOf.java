@@ -22,7 +22,7 @@ import org.ugr.violet.graph.nodes.NodeOneOf;
  * @author anab
  *
  */
-public class FigOneOf extends OntologyFig {
+public class FigOneOf extends OWLFigure {
 
 	/**
 	 * 

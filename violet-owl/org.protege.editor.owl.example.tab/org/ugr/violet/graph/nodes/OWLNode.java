@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.presentation.NetNode;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 public abstract class OWLNode extends NetNode {
 
@@ -31,11 +31,11 @@ public abstract class OWLNode extends NetNode {
 	}
 
 	@Override
-	public OntologyFig makePresentation(Layer lay) {
+	public OWLFigure makePresentation(Layer lay) {
 		return null;
 	}
 	
-	abstract public OntologyFig getOntologyFig();
+	abstract public OWLFigure getOntologyFig();
 	
 	/**
 	 * Comprueba si se trata de un nodo clase

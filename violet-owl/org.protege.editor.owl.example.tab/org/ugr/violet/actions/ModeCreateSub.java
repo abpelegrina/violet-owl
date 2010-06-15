@@ -6,7 +6,7 @@ package org.ugr.violet.actions;
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.presentation.Fig;
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -47,7 +47,7 @@ public class ModeCreateSub extends ModeCreateAxiom {
 	 */
 	@Override
 	public boolean checkCondicionDestino(Fig f) {
-		return OntologyFig.class.isInstance(f);
+		return OWLFigure.class.isInstance(f);
 	}
 
 	/* (non-Javadoc)
@@ -55,7 +55,7 @@ public class ModeCreateSub extends ModeCreateAxiom {
 	 */
 	@Override
 	public boolean checkCondicionOrigen(Fig f) {
-		return OntologyFig.class.isInstance(f);
+		return OWLFigure.class.isInstance(f);
 	}
 
 }

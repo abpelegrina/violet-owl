@@ -22,7 +22,7 @@ import org.tigris.gef.presentation.Fig;
 import org.ugr.violet.layout.LayoutedNode;
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.ugr.violet.presentation.FigClass;
-import org.ugr.violet.presentation.OntologyFig;
+import org.ugr.violet.presentation.OWLFigure;
 
 public class NodeClass extends OWLNode implements Serializable, LayoutedNode, MouseListener {
 	/**
@@ -114,7 +114,7 @@ public class NodeClass extends OWLNode implements Serializable, LayoutedNode, Mo
      * @param lay layer where we want to draw the node
      * @return the new figure
      */
-    public OntologyFig makePresentation(Layer lay) {
+    public OWLFigure makePresentation(Layer lay) {
     	
     	if (claseOWL != null){
 	    	figura = new FigClass(claseOWL);	    	
@@ -203,7 +203,7 @@ public class NodeClass extends OWLNode implements Serializable, LayoutedNode, Mo
 	}
 
 	@Override
-	public OntologyFig getOntologyFig() {
+	public OWLFigure getOntologyFig() {
 		return figura;
 	}
 

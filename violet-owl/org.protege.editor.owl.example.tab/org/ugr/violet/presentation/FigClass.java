@@ -23,7 +23,7 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
  * 
  * @author Ana B. Pelegrina
  */
-public class FigClass extends OntologyFig {
+public class FigClass extends OWLFigure {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
