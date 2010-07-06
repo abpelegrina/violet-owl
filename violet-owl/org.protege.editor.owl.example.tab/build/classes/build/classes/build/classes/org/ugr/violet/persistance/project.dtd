@@ -1,0 +1,14 @@
+<!ELEMENT project (ontologies, diagrams) >
+<!ATTLIST project name NMTOKEN #REQUIRED>
+
+<!ELEMENT ontologies (ontology*) >
+<!ELEMENT ontology EMPTY>
+<!ATTLIST ontology id ID #REQUIRED uri CDATA #REQUIRED name NMTOKEN #REQUIRED>
+
+<!ELEMENT diagrams (diagram*) >
+<!ELEMENT diagram (node+, edge+) >
+<!ATTLIST diagram id ID #REQUIRED type NMTOKEN #REQUIRED>
+<!ELEMENT node EMPTY>
+<!ELEMENT edge EMPTY>
+<!ATTLIST edge id ID #REQUIRED type NMTOKEN #REQUIRED name NMTOKEN #REQUIRED source IDREFS #REQUIRED dest IDREFS #REQUIRED>
+<!ATTLIST node id ID #REQUIRED type NMTOKEN #REQUIRED name NMTOKEN #REQUIRED>

@@ -45,7 +45,7 @@ public class CmdCreateNodeRelation extends CmdCreateNode {
 	 * @param name
 	 */
 	public CmdCreateNodeRelation() {
-		super(NodeClass.class, false, "ClaseOWL");
+		super(NodeClass.class, false, "Nary");
 	}
 	
 	/**

@@ -106,7 +106,10 @@ public class OWLPalette extends PaletteFig {
 		this.addSeparator();
 		//add(new CmdSetMode(ModeCreateFollowedBy.class, "ObjectProperty"));
 		
-		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));		
+		add(new CmdSetMode(ModeCreateObjectProperty.class, "ObjectProperty"));
+		add(new CmdCreateNodeRelation());
+		
+		this.addSeparator();
 		add(new CmdSetMode(ModeCreateSub.class, "Sub"));		
 		add(new CmdSetMode(ModeCreateDisjoint.class, "Disjoint"));		
 		add(new CmdSetMode(ModeCreateEquivalent.class, "Equivalence"));

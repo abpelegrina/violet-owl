@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "project.dtd">
+<project name="UnProyecto">
+	<ontologies>
+		<ontology name='unaOntologia' uri='http://www.ugr.es' id='zdjf'  />
+	</ontologies>
+	<diagrams>
+		<diagram id='c' type='sfadsf'>
+			<node id='a' type='xxxxxxxx' name='xxxxxxxxxxxxx'/>
+			<edge id='b' type='fdfdsf' name='zzzzzzzzz' source='a' dest='a'/>
+		</diagram>
+		<diagram id='x' type='sfadsf'>
+			<node id='s' type='yyyyyyyy' name='yyyyyyyyyyyyyy'/>
+			<node id='t' type='yyyyyyyy' name='kkkkkkkkkkkkkk'/>
+			<edge id='d' type='fdfdsf' name='zzzfdsafdsf' source='x' dest='s'/>
+		</diagram>
+	</diagrams>
+</project>
