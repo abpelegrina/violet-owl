@@ -14,6 +14,7 @@ import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDataFactory;
+import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.model.OWLSubClassAxiom;
 import org.tigris.gef.base.Layer;
@@ -290,5 +291,14 @@ public class NodeClass extends OWLNode implements Serializable, LayoutedNode, Mo
 	@Override
 	public boolean isNodeIntersection() {
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ugr.violet.graph.nodes.OWLNode#getOWLEntity()
+	 */
+	@Override
+	public OWLEntity getOWLEntity() {
+		
+		return claseOWL;
 	}
 }

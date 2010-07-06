@@ -26,8 +26,8 @@ public abstract class NodeActivityDiagram extends OWLNode {
 	protected NodeActivityDiagram(){
 		super();
 
-    	if (ExampleViewComponent.lienzoActual.isOWLActivityGraph()){
-			gm = (ActivityGraphModel) ExampleViewComponent.lienzoActual.getOWLGraphModel();
+    	if (ExampleViewComponent.getLienzoActual().isOWLActivityGraph()){
+			gm = (ActivityGraphModel) ExampleViewComponent.getLienzoActual().getOWLGraphModel();
 			
 		}
 		else return;

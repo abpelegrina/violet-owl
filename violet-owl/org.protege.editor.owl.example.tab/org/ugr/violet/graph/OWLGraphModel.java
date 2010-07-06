@@ -401,6 +401,19 @@ public class OWLGraphModel extends DefaultGraphModel {
 	}
 
 	/****************************************** Adds ********************************************/
+	
+	
+	public void addEntity(String name, Point location){
+		if (!addClass(name, location)){
+			if (!addIndividual(name, location)){
+				if (!addDataProperty(name, location)){
+					addObjectProperty(name, location);
+				}
+			}
+		}
+	}
+	
+	
 	/**
 	 * Add a new individual to the diagrma
 	 * @param individual individual name
