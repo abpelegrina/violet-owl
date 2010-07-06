@@ -15,6 +15,7 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
+import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
@@ -51,14 +52,14 @@ public class NodeFork extends NodeActivityDiagram {
 		
 		super();
 		
-		step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.lienzoActual.getTarea() + "_fork_" + cont));
+		step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.getLienzoActual().getTarea() + "_fork_" + cont));
 		cont++;
 		OWLClass claseFork = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Fork_Step"));
 		
 		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseFork);
 		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
 		
-		((ActivityGraphModel)ExampleViewComponent.lienzoActual.getGraphModel()).addStepToSequence(step);
+		((ActivityGraphModel)ExampleViewComponent.getLienzoActual().getGraphModel()).addStepToSequence(step);
 		
 		addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));
@@ -272,6 +273,15 @@ public class NodeFork extends NodeActivityDiagram {
 	}
 	public boolean isDataProperty(){
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ugr.violet.graph.nodes.OWLNode#getOWLEntity()
+	 */
+	@Override
+	public OWLEntity getOWLEntity() {
+		// TODO Auto-generated method stub
+		return step;
 	}
 
 }

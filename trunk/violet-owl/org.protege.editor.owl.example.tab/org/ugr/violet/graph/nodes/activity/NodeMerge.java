@@ -10,6 +10,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
+import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
@@ -248,6 +249,15 @@ public class NodeMerge extends NodeActivityDiagram {
 	}
 	public boolean isDataProperty(){
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ugr.violet.graph.nodes.OWLNode#getOWLEntity()
+	 */
+	@Override
+	public OWLEntity getOWLEntity() {
+		// TODO Auto-generated method stub
+		return step;
 	}
 
 }

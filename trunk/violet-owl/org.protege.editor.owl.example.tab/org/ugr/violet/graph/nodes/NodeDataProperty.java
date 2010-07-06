@@ -14,6 +14,7 @@ import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLAxiom;
 import org.semanticweb.owl.model.OWLDataFactory;
 import org.semanticweb.owl.model.OWLDataProperty;
+import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
 import org.ugr.violet.layout.LayoutedNode;
@@ -263,5 +264,13 @@ public class NodeDataProperty extends OWLNode implements Serializable, LayoutedN
 	}
 	public boolean isDataProperty(){
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ugr.violet.graph.nodes.OWLNode#getOWLEntity()
+	 */
+	@Override
+	public OWLEntity getOWLEntity() {
+		return propiedadDeDatos;
 	}
 }

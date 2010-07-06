@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
@@ -41,7 +42,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     public static OWLModelManager manager = null;
     public static OWLWorkspace workspace = null;
     public static List<JOWLGraph> lienzos = null;
-    public static JOWLGraph lienzoActual = null;
+    private static JOWLGraph lienzoActual = null;
     OWLOntologyChangeListener oocl;
     //ChangeListener cl = null;
     JTabbedPane tabs;
@@ -92,8 +93,19 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
         tabs.addTab("Activity Diagram", lienzoActividad);
         add(tabs);
         
-        tabs.setSelectedIndex(1);
-        lienzoActual = lienzoActividad;
+        lienzoActual = lienzoBasico;
+        
+        tabs.setSelectedIndex(0);
+        
+        tabs.addChangeListener(
+        		new ChangeListener(){
+
+					public void stateChanged(ChangeEvent e) {
+						lienzoActual = lienzos.get(tabs.getSelectedIndex());
+					}
+        			
+        		}
+        );
   
         
         oocl = new OWLOntologyChangeListener(){
@@ -113,6 +125,10 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
         manager.addOntologyChangeListener(oocl);
         
         log.info("Example View Component initialized");        
-    }    
+    }   
+    
+    public static JOWLGraph getLienzoActual(){
+    	return lienzoActual;
+    }
 
 }

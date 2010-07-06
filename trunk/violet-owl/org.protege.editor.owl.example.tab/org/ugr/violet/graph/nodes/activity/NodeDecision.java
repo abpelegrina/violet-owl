@@ -15,6 +15,7 @@ import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
+import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
@@ -272,6 +273,15 @@ public class NodeDecision extends NodeActivityDiagram {
 	}
 	public boolean isDataProperty(){
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ugr.violet.graph.nodes.OWLNode#getOWLEntity()
+	 */
+	@Override
+	public OWLEntity getOWLEntity() {
+		// TODO Auto-generated method stub
+		return step;
 	}
 
 }

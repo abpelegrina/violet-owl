@@ -35,6 +35,9 @@ public abstract class OWLNode extends NetNode {
 		return null;
 	}
 	
+	
+	abstract public OWLEntity getOWLEntity();
+	
 	abstract public OWLFigure getOntologyFig();
 	
 	/**

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLDataFactory;
 import org.semanticweb.owl.model.OWLDeclarationAxiom;
+import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
@@ -220,6 +221,15 @@ public class NodeObjectProperty extends OWLNode {
 	public boolean isNodeIntersection() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ugr.violet.graph.nodes.OWLNode#getOWLEntity()
+	 */
+	@Override
+	public OWLEntity getOWLEntity() {
+		return propiedad;
 	}
 
 }

@@ -57,7 +57,8 @@ import org.ugr.violet.actions.ModeCreateFollowedBy;
 import org.ugr.violet.actions.ModeCreateObjectProperty;
 import org.ugr.violet.actions.ModeCreateRange;
 import org.ugr.violet.actions.ModeCreateSub;
-import org.ugr.violet.actions.OWLSaveAction;
+import org.ugr.violet.actions.OWLOpenCmd;
+import org.ugr.violet.actions.OWLSaveCmd;
 import org.ugr.violet.graph.nodes.NodeClass;
 import org.ugr.violet.graph.nodes.activity.NodeAction;
 
@@ -88,7 +89,8 @@ public class OWLPalette extends PaletteFig {
         this.addSeparator();
         
         //add(new CmdOpen("Open") );
-        add(new OWLSaveAction());
+        add(new OWLSaveCmd());
+        add(new OWLOpenCmd());
         
        
         this.addSeparator();
