@@ -54,7 +54,7 @@ public class ViewParser {
 		dataPropertyConnectors = new ArrayList<FigViewParameter>();
 	}
 	
-	public void parse()throws ParserConfigurationException, SAXException, 
+	public void parse() throws ParserConfigurationException, SAXException, 
     IOException, XPathExpressionException {
 		
 		XPath xpath = XPathFactory.newInstance().newXPath();
@@ -94,7 +94,7 @@ public class ViewParser {
 	}
 	
 	private void findFigures(String filterEntity, String filterFigure, XPath xpath, List<FigViewParameter> parameters) 
-			throws XPathExpressionException{
+	throws XPathExpressionException{
 		XPathExpression exprEntity = xpath.compile(filterEntity);
 		XPathExpression exprFigure = xpath.compile(filterFigure);
 

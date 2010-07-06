@@ -54,8 +54,7 @@ public class ViewManager {
 	 */
 	public ViewManager(String file){
 		
-		try {
-			
+		try {			
 			// parses the view file
 			parser = new ViewParser("");
 			parser.parse(); 
@@ -109,6 +108,7 @@ public class ViewManager {
 		int numDataProperty = parser.getDataPropertyConnectors().size();
 		FigViewParameter param;
 		
+		// 
 		for (int i=0; i<numDataProperty; i++){
 			
 			param = parser.getDataPropertyConnectors().get(i);
@@ -188,8 +188,7 @@ public class ViewManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return uri;
-		
+		return uri;		
 	}
 	
 	/**

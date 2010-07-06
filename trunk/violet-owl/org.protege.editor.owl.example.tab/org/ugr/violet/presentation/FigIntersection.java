@@ -43,6 +43,7 @@ public class FigIntersection extends OWLFigure {
 		else if (function == CmdChangeFig.RRECT)
 			box = new FigRRect(x, y, ancho, alto, Color.black, colorRelleno);
 		this.makeFigure();
+		this.setShadowSize(0);
 	}
 	
 	/**
@@ -64,13 +65,20 @@ public class FigIntersection extends OWLFigure {
 		box.setY(y);
 		
 		// el letrero
-		simbolo = new FigText(x+10, y-5, 1, 1);
-		simbolo.setLineWidth(0);
+		simbolo = new FigText(x-5, y-5, 1, 1);
+		
 		//simbolo.setJustification(FigText.JUSTIFY_CENTER);
 		simbolo.setText("∩");
 		simbolo.setFontSize(16);
+		simbolo.setLineWidth(0);
+		simbolo.setFontSize(16);
 		simbolo.setFilled(false);
+		
 		simbolo.setTextColor(Color.white);
+		simbolo.setLeftMargin(0);
+		simbolo.setRightMargin(0);
+		simbolo.setTopMargin(0);
+		simbolo.setBotMargin(0);
 
 		//box.setWidth(simbolo.getWidth());
 

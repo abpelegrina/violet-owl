@@ -1,0 +1,72 @@
+
+
+<view>
+
+	<ontologies>
+		<ontology URI='' />
+	</ontologies>
+
+	<nodes>
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Activity'>
+			<figure class='org.ugr.violet.presentation.activity.FigActivityStep'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Action'>
+			<figure class='org.ugr.violet.presentation.activity.FigActivityStep'>
+		</node>
+		
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#First_Step'>
+			<figure class='org.ugr.violet.presentation.activity.FigFirstStep'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Final_Step'>
+			<figure class='org.ugr.violet.presentation.activity.FigLastStep'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Fork_Step'>
+			<figure class='org.ugr.violet.presentation.activity.FigFork'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Join_Step'>
+			<figure class='org.ugr.violet.presentation.activity.FigJoin'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Merge_Step'>
+			<figure class='org.ugr.violet.presentation.activity.FigMerge'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Decision_Step'>
+			<figure class='org.ugr.violet.presentation.activity.FigActivity'>
+		</node>
+		
+		<node>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Information_Object'>
+			<figure class='org.ugr.violet.presentation.activity.FigInfoObject'>
+		</node>
+		
+	</nodes>
+	
+	<edges>
+		<edge>
+			<owlentity URI='http://dl.dropbox.com/u/1475213/amenities.owl#Followed_by_Relation'>
+				<reification>
+					<property URI='http://dl.dropbox.com/u/1475213/amenities.owl#Information_Object#followed_by' />
+					<property URI='http://dl.dropbox.com/u/1475213/amenities.owl#Information_Object#following_step' />
+				</reification>
+			</owlentity>
+			<figure class=''>
+		</edge>
+		<edge>
+		</edge>
+	</edges>
+
+</view>
