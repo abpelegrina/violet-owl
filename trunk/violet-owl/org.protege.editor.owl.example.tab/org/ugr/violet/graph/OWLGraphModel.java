@@ -1,3 +1,4 @@
+
 package org.ugr.violet.graph;
 
 import java.awt.Point;
@@ -49,7 +50,7 @@ import org.ugr.violet.visitors.DataPropertyDomainAddVisitor;
 import org.ugr.violet.visitors.SuperClassesVisitor;
 
 /**
- * Clase que representa el modelo del grafo asociado a la ontolog�a
+ * Clase que representa el modelo del grafo asociado a la ontologa
  * @author Ana B. Pelegrina
  */
 public class OWLGraphModel extends DefaultGraphModel {
@@ -208,8 +209,8 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 	/**
 	 * Busca el nodo asociado a una determinada entidad OWL dentro del diagrama.
-	 * NOTA: si la entidad es una propiedad de objetos se devuleve la 1� ocurrencia,
-	 * pudiendo haber m�s ocurrencias en el diagrama.
+	 * NOTA: si la entidad es una propiedad de objetos se devuleve la 1 ocurrencia,
+	 * pudiendo haber ms ocurrencias en el diagrama.
 	 * @param entidad entidad OWL a buscar
 	 * @return el nodo asociado a al entidad
 	 */
@@ -615,7 +616,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		}
 		
 		// recuperamos la tabla hash con todas las restricciones asociadas a la clase; utilizando como clave la propiedad 
-		// de objeto sobre la que se aplica la restricci�n. Esto es por cada restricci�n tendremos un vector de pares <clase, tipo_restriccion>
+		// de objeto sobre la que se aplica la restriccin. Esto es por cada restriccin tendremos un vector de pares <clase, tipo_restriccion>
 		// Ver clases Restriccion y RestrictionVisitor en este mismo paquete
 		Hashtable<OWLObjectProperty, Vector<Restriction>> a = restrictionVisitor.getRestricciones();
 
@@ -734,9 +735,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 				if (!ax.getRange().isAnonymous()) {
 					 edge =  new DomainRangeEdge(domainClass,ax.getRange().asOWLClass(),prop);
 					 this.addConnection(domainClass, ax.getRange().asOWLClass(), edge);
-				}
-			
-		
+				}		
 	}
 	
 	
@@ -749,12 +748,19 @@ public class OWLGraphModel extends DefaultGraphModel {
 		// Recuperar todos los dominios de la propiedad y contruir enganches con la clase del rango
 		DomainRangeEdge edge;
 		
+		if (prop == null || rangeClass == null) return;
+		
+		try {
 		for (OWLOntology ont : ontologies())			
 			for (OWLObjectPropertyDomainAxiom ax : ont.getObjectPropertyDomainAxioms(prop))
 				if (!ax.getDomain().isAnonymous()) {
 					 edge =  new DomainRangeEdge(ax.getDomain().asOWLClass(),rangeClass,prop);
 					 this.addConnection(ax.getDomain().asOWLClass(), rangeClass, edge);
 				}
+		}
+		catch (NullPointerException e){
+			
+		}
 	}
 
 	/**
@@ -1210,7 +1216,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 				}
 				else {
 
-					// A�adir un enlace con cada clase...
+					// Aadir un enlace con cada clase...
 					c = (NodeClass) this.getNode(d.asOWLClass().toString());
 
 					// si el nodo no existe, lo creamos
@@ -1420,7 +1426,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 					// agregamos el enlace con la clase a la que se aplican las restricciones
 					this.addInheritanceLink(clase, propiedad);
 
-					// para cada clase incluida en la definici�n de las restricciones asociadas a la propiedad...
+					// para cada clase incluida en la definicin de las restricciones asociadas a la propiedad...
 					for (Restriction rr:restricciones.get(propiedad)){
 
 						// nos aseguramos que no se haya incluido ya le link
@@ -1446,6 +1452,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		//1- buscar la clase
 		OWLNode nodo = this.getNode(clase.toString());
 		this.removeNode(nodo);
+		nodo.deleteFromModel();
 	}
 
 	/**
@@ -1455,6 +1462,8 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void deleteIndividual(OWLIndividual i){
 		OWLNode nodo = this.getNode(i.toString());
 		this.removeNode(nodo);
+		nodo.deleteFromModel();
+		
 	}
 
 	/**
@@ -1464,6 +1473,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	public void deleteDataProperty(OWLDataProperty d){
 		OWLNode nodo = this.getNode(d.toString());
 		this.removeNode(nodo);
+		nodo.deleteFromModel();
 	}
 
 	/**
@@ -1476,7 +1486,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 		List<Object> nodosAEliminar = new ArrayList<Object>();
 		List<Object> aristasAEliminar = new ArrayList<Object>();
 
-		// 1 - buscar todos los nodos restricci�n que hagan referencia a esa propiedad y borrarlos
+		// 1 - buscar todos los nodos restriccin que hagan referencia a esa propiedad y borrarlos
 		for (Object o : getNodes()){
 			NodeRestriction nr = ((OWLNode) o).asNodeRestriction();
 			if (nr != null  && nr.getProperty().toString().equals(d.toString())){
@@ -1637,10 +1647,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 						System.err.println("Comparando con la arista " + o);
 
 						if (!ce.checkLink(comp.getOperand().asOWLClass()))
-							System.err.println("Falla la comparaci�n con la clase ");
+							System.err.println("Falla la comparacin con la clase ");
 
 						if (!ce.checkLink(comp))
-							System.err.println("Falla la comparaci�n con el complemento");
+							System.err.println("Falla la comparacin con el complemento");
 
 						if (ce.checkLink(comp.getOperand().asOWLClass()) && ce.checkLink(comp)){
 							aEliminar.add(ce);
@@ -1840,7 +1850,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 					puertoOrigen = nodoOrigen.north;
 				}
 			}
-			// el nodo origen est� al sur del destino
+			// el nodo origen est al sur del destino
 			else if ( yOrigen + altoOrigen < yDestino){				
 				if (xDestino < xOrigen + anchoOrigen) {
 					puertoOrigen = nodoOrigen.west;
@@ -1855,7 +1865,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 					puertoDestino = nodoDestino.north;
 				}
 			}
-			// los nodos est�n a la misma altura
+			// los nodos estn a la misma altura
 			else if (xDestino < xOrigen + anchoOrigen) {
 				puertoDestino = nodoDestino.east;
 				puertoOrigen = nodoOrigen.west;
@@ -1966,7 +1976,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 			for (Object o : getNodes()){
 				NodeRestriction nr = ((OWLNode) o).asNodeRestriction();
 
-				// si el nodo es una restricci�n
+				// si el nodo es una restriccin
 				if (nr != null){
 					if ( nr.getOWLClass().toString().equals(nc.getOWLClass().toString()) ){
 						aEliminar.add(nr);

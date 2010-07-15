@@ -1,10 +1,6 @@
-/**
- * 
- */
 package org.ugr.violet.actions;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,10 +9,10 @@ import java.util.Hashtable;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.protege.owl.examples.tab.ExampleViewComponent;
 import org.tigris.gef.base.CmdSave;
-import org.tigris.gef.base.SaveAction;
 import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.nodes.OWLNode;
 
@@ -26,12 +22,16 @@ import org.ugr.violet.graph.nodes.OWLNode;
  */
 public class OWLSaveCmd extends CmdSave {
 
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2383517249910284242L;
 	private Hashtable<String, Point> nodos = new Hashtable<String, Point>();
+	public static String filename = "";
+	public static JFileChooser fc = new JFileChooser();
 
+	
 	/* (non-Javadoc)
 	 * @see org.tigris.gef.base.SaveAction#actionPerformed(java.awt.event.ActionEvent)
 	 */
@@ -39,40 +39,42 @@ public class OWLSaveCmd extends CmdSave {
 	public void doIt() {
     	
 		
-		//1. Recuperar el nombre del fichero
-		String filename = dameNombreFichero();
+		//1. si todavía no hemos guardado el fichero
+		if (filename == ""){
 		
-		if (filename == "") return;
+			//1. Recuperar el nombre del fichero
+			filename = dameNombreFichero();
+		
+			if (filename == "") return;
+		}
 		
     	//2. Recuperar el graph model
 		OWLGraphModel m = (OWLGraphModel) ExampleViewComponent.getLienzoActual().getGraphModel(); 
 		
-		//3. Recorrer todos los nodos, guardando la entidad y la posición
+		//3. Recuperar las ontologías
+		String URIactiva = m.getActiveOntology().getURI().toString();
+		
+		//4. Recorrer todos los nodos, guardando la entidad y la posición
 		OWLNode nodo;
 		for (Object n : m.getNodes()){
-			
-			System.err.println("Vuelta");
 			
 			// si el nodo es instancia de OWLNode
 			if (OWLNode.class.isInstance(n)){
 				
 				nodo = (OWLNode) n;
-				
 				nodos.put(nodo.getOWLEntity().toString(), nodo.getOntologyFig().getLocation());
-				
-				System.err.println("("+ nodo.getOWLEntity() +","+nodo.getOntologyFig().getLocation()+")");
 			}
 		}
 		
-		//4. Gaurdarlo todo en un fichero
-		
+		//5. Gaurdarlo todo en un fichero
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		
 		try
 		{
-			fos = new FileOutputStream(filename + ".diagram");
+			fos = new FileOutputStream(filename);
 			out = new ObjectOutputStream(fos);
+			out.writeObject(URIactiva);
 			out.writeObject(nodos);
 			out.close();
 		}
@@ -82,9 +84,9 @@ public class OWLSaveCmd extends CmdSave {
 		}
 		
 		
-		//5. ??
+		//6. ??????
 		
-		//6. Profit!
+		//7. Profit!
 	}
 
 	/**
@@ -93,7 +95,40 @@ public class OWLSaveCmd extends CmdSave {
 	public static String dameNombreFichero() {
 		String filename = "";
 		
-		JFileChooser fc = new JFileChooser();
+		fc = new JFileChooser();
+		fc.setFileFilter(new FileFilter(){
+			public final static String diagExt = "diagram";
+
+			/* (non-Javadoc)
+			 * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
+			 */
+			@Override
+			public boolean accept(File f) {
+				if (f.isDirectory()) {
+					return true;
+				}
+				
+				String s = f.getName();
+		        int i = s.lastIndexOf('.');
+		        String ext = "";
+
+		        if (i > 0 &&  i < s.length() - 1) {
+		            ext = s.substring(i+1).toLowerCase();
+		        }
+		        
+		        if (ext.equals(diagExt)){
+		        	return true;
+		        }
+		        else			
+		        	return false;
+			}
+
+			@Override
+			public String getDescription() {
+				// TODO Auto-generated method stub
+				return "Filter for OWL diagrams";
+			}
+		});
 		
 		int rc = fc.showDialog(null, "Select Data File");
 		
@@ -104,5 +139,6 @@ public class OWLSaveCmd extends CmdSave {
 		}
 		return filename;
 	}
+
 
 }
