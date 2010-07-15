@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Editor - Primeros Pasos
+Bundle-Name: VIOLET-OWL
 Bundle-SymbolicName: org.protege.editor.owl.examples.tab;singleton:=true
 Bundle-Category: protege
 Bundle-ContactAddress: p4-feedback@lists.stanford.edu

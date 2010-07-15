@@ -15,6 +15,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.ugr.violet.actions.OWLSaveCmd;
 import org.ugr.violet.presentation.view.FigViewParameter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,6 +38,24 @@ public class ViewParser {
 	List<FigViewParameter> objectPropertyConnectors = null;
 	List<FigViewParameter> dataPropertyConnectors = null;
 	
+	public ViewParser() throws ParserConfigurationException, SAXException, 
+    IOException{
+		//construimos el documento
+		String Filename = OWLSaveCmd.dameNombreFichero();
+		
+		if (Filename == "") return;
+		
+		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+        domFactory.setNamespaceAware(true); 
+        DocumentBuilder builder = domFactory.newDocumentBuilder();		
+		doc = builder.parse(Filename);
+		
+		classNodes = new ArrayList<FigViewParameter>();
+		individualNodes = new ArrayList<FigViewParameter>();
+		dataTypeNodes = new ArrayList<FigViewParameter>();
+		objectPropertyConnectors = new ArrayList<FigViewParameter>();
+		dataPropertyConnectors = new ArrayList<FigViewParameter>();
+	}
 	
 	public ViewParser(String Filename) throws ParserConfigurationException, SAXException, 
     IOException{
@@ -45,7 +64,7 @@ public class ViewParser {
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
         domFactory.setNamespaceAware(true); 
         DocumentBuilder builder = domFactory.newDocumentBuilder();		
-		doc = builder.parse("/Users/anab/Desktop/prueba.view.xml");
+		doc = builder.parse(Filename);
 		
 		classNodes = new ArrayList<FigViewParameter>();
 		individualNodes = new ArrayList<FigViewParameter>();
@@ -60,22 +79,71 @@ public class ViewParser {
 		XPath xpath = XPathFactory.newInstance().newXPath();
 		
 		// recuperamos las ontologías
-		XPathExpression expr = xpath.compile("/view/ontology/@file");
-		XPathExpression expr2 = xpath.compile("/view/ontology/@uri");
-	    NodeList ontologyList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-	    NodeList URIs = (NodeList) expr2.evaluate(doc, XPathConstants.NODESET);
+		XPathExpression expr = xpath.compile("/view/ontology/@id");
+	    NodeList URIs = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 	    
-	    ontologyFile = ontologyList.item(0).getNodeValue();
-	    ontologyURI = URIs.item(0).getNodeValue();
-		
+	    ontologyFile = URIs.item(0).getNodeValue();
+	    
+	    // class nodes
+	    XPathExpression exprEntity = xpath.compile("/view/ontology/nodes/nodeclass/owlentity/@uri");
+	    XPathExpression exprFigure = xpath.compile("/view/ontology/nodes/nodeclass/figure/@class");
+	    
+	    NodeList entities = (NodeList) exprEntity.evaluate(doc, XPathConstants.NODESET);	    
+	    NodeList figures = (NodeList) exprFigure.evaluate(doc, XPathConstants.NODESET);
+	    
+	    for (int i=0; i<entities.getLength(); ++i){
+	    	System.out.println(entities.item(i).getNodeValue());
+	    	System.out.println(figures.item(i).getNodeValue());
+	    }
+	    
+	    
+	    // entitiy nodes
+	    exprEntity = xpath.compile("/view/ontology/nodes/nodeindividual/owlentity/@uri");
+	    exprFigure = xpath.compile("/view/ontology/nodes/nodeindividual/figure/@class");
+	    
+	    entities = (NodeList) exprEntity.evaluate(doc, XPathConstants.NODESET);	    
+	    figures = (NodeList) exprFigure.evaluate(doc, XPathConstants.NODESET);
+	    
+	    for (int i=0; i<entities.getLength(); ++i){
+	    	System.out.println(entities.item(i).getNodeValue());
+	    	System.out.println(figures.item(i).getNodeValue());
+	    }
+	    
+	    // dataproperty nodes
+	    exprEntity = xpath.compile("/view/ontology/nodes/nodedataproperty/owlentity/@uri");
+	    exprFigure = xpath.compile("/view/ontology/nodes/nodedataproperty/figure/@class");
+	    
+	    entities = (NodeList) exprEntity.evaluate(doc, XPathConstants.NODESET);	    
+	    figures = (NodeList) exprFigure.evaluate(doc, XPathConstants.NODESET);
+	    
+	    for (int i=0; i<entities.getLength(); ++i){
+	    	System.out.println(entities.item(i).getNodeValue());
+	    	System.out.println(figures.item(i).getNodeValue());
+	    }
+	    
+	    // objectproperty nodes
+	    exprEntity = xpath.compile("/view/ontology/nodes/nodeobjectproperty/owlentity/@uri");
+	    exprFigure = xpath.compile("/view/ontology/nodes/nodeobjectproperty/figure/@class");
+	    
+	    entities = (NodeList) exprEntity.evaluate(doc, XPathConstants.NODESET);	    
+	    figures = (NodeList) exprFigure.evaluate(doc, XPathConstants.NODESET);
+	    
+	    for (int i=0; i<entities.getLength(); ++i){
+	    	System.out.println(entities.item(i).getNodeValue());
+	    	System.out.println(figures.item(i).getNodeValue());
+	    }
+	    
+	    
+	    
+	    /*
 		// recuperamos los nodos para clases
-	    this.findFigures("/view/nodes/node/owlentity[@type='class']/text()",
+	    this.findFigures("/view/nodes/nodeclass",
 				 "/view/nodes/node/figure",
 				 xpath,
 				 classNodes);
 	    
 	    // recuperamos los nodos para individuos
-	    this.findFigures("/view/nodes/node/owlentity[@type='individual']/text()",
+	    this.findFigures("/view/nodes/nodeindividual",
 				 "/view/nodes/node/figure",
 				 xpath,
 				 individualNodes);
@@ -91,6 +159,7 @@ public class ViewParser {
 	    				 "/view/connectors/connector/figure",
 	    				 xpath,
 	    				 dataPropertyConnectors);	    
+	    				 */
 	}
 	
 	private void findFigures(String filterEntity, String filterFigure, XPath xpath, List<FigViewParameter> parameters) 
@@ -135,11 +204,10 @@ public class ViewParser {
 			return null;
 		}
 		return params;
-		
 	}
 	
 	/***********************************************************************
-	 ************************* GETTERS'N SETTERS *************************** 
+	 ************************* GETTERS & SETTERS *************************** 
 	 ***********************************************************************/
 	
 	/**
@@ -189,7 +257,8 @@ public class ViewParser {
 	public static void main(String[] args){
 		ViewParser v;
 		try {
-			v = new ViewParser("");
+			v = new ViewParser("/Users/anab/Desktop/view.xml");
+			
 			v.parse();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block

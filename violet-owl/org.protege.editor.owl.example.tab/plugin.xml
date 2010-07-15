@@ -6,7 +6,7 @@
          id="ExampleViewComponent"
          point="org.protege.editor.core.application.ViewComponent">
       <label
-            value="Violet-OWL">
+            value="Violet-OWL Editor">
       </label>
       <class
             value="org.protege.owl.examples.tab.ExampleViewComponent">
