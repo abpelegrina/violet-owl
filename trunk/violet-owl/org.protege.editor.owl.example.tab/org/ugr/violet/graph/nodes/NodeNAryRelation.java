@@ -8,7 +8,7 @@ import java.net.URI;
 import org.semanticweb.owl.model.OWLClass;
 import org.tigris.gef.base.CmdChangeFig;
 import org.tigris.gef.base.Layer;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.presentation.FigNAryRelation;
 import org.ugr.violet.presentation.OWLFigure;
 
@@ -22,7 +22,7 @@ public class NodeNAryRelation extends NodeClass {
 	 * 
 	 */
 	private static final long serialVersionUID = 3865216979601064706L;
-	public static final OWLClass claseBase = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Reified_Relation"));
+	public static final OWLClass claseBase = VioletEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#Reified_Relation"));
 	private FigNAryRelation figura = null;
 
 

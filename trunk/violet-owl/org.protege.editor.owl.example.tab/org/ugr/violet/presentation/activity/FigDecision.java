@@ -6,20 +6,14 @@ package org.ugr.violet.presentation.activity;
 import java.awt.Color;
 import java.util.Vector;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.OWLAnnotation;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
-import org.tigris.gef.base.CmdChangeFig;
-import org.tigris.gef.presentation.FigCircle;
 import org.tigris.gef.presentation.FigDiamond;
-import org.tigris.gef.presentation.FigRRect;
 import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
-import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.activity.NodeDecision;
-import org.ugr.violet.graph.nodes.activity.NodeFork;
-import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab
@@ -87,7 +81,7 @@ public class FigDecision extends FigActivityDiagram {
 		label.setLineWidth(0);
 		//label.setText(step.getAnnotations(ExampleViewComponent.manager.getActiveOntology()).toString());
 		
-		for (OWLAnnotation anot : step.getAnnotations(ExampleViewComponent.manager.getActiveOntology())){
+		for (OWLAnnotation anot : step.getAnnotations(VioletViewEditor.manager.getActiveOntology())){
 			label.setText(label.getText() + anot.getAnnotationValueAsConstant().getLiteral());
 		}
 		

@@ -11,7 +11,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -28,7 +28,6 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
-import org.ugr.violet.presentation.FigIndividual;
 import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.presentation.activity.FigFork;
 
@@ -52,14 +51,14 @@ public class NodeFork extends NodeActivityDiagram {
 		
 		super();
 		
-		step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" +  ExampleViewComponent.getLienzoActual().getTarea() + "_fork_" + cont));
+		step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#" +  VioletViewEditor.getLienzoActual().getTarea() + "_fork_" + cont));
 		cont++;
-		OWLClass claseFork = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Fork_Step"));
+		OWLClass claseFork = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Fork_Step"));
 		
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseFork);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( ExampleViewComponent.manager.getActiveOntology(), d));
+		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseFork);
+		VioletViewEditor.manager.applyChange(new AddAxiom( VioletViewEditor.manager.getActiveOntology(), d));
 		
-		((ActivityGraphModel)ExampleViewComponent.getLienzoActual().getGraphModel()).addStepToSequence(step);
+		((ActivityGraphModel)VioletViewEditor.getLienzoActual().getGraphModel()).addStepToSequence(step);
 		
 		addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));

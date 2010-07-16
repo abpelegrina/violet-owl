@@ -2,7 +2,7 @@ package org.ugr.violet.changefilters;
 
 import java.net.URI;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -13,9 +13,7 @@ import org.semanticweb.owl.model.OWLObjectProperty;
 import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owl.model.OWLOntology;
 import org.ugr.violet.graph.ActivityGraphModel;
-import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.edges.OWLEdge;
-import org.ugr.violet.graph.edges.RestrictionEdge;
 import org.ugr.violet.graph.edges.activity.FollowedByEdge;
 
 /**
@@ -24,7 +22,7 @@ import org.ugr.violet.graph.edges.activity.FollowedByEdge;
  */
 public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 
-	private static OWLClass Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Followed_by_Relation"));
+	private static OWLClass Followed_by_Relation = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Followed_by_Relation"));
 	
 	/**
 	 * @param o
@@ -64,9 +62,9 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 	@Override
 	public void visit(OWLObjectPropertyAssertionAxiom axiom) {
 		
-		OWLDataFactory factory = ExampleViewComponent.manager
+		OWLDataFactory factory = VioletViewEditor.manager
 		.getOWLDataFactory();
-		OWLOntology ont = ExampleViewComponent.manager.getActiveOntology();
+		OWLOntology ont = VioletViewEditor.manager.getActiveOntology();
 
 		OWLIndividual objeto = axiom.getObject();
 		OWLIndividual sujeto = axiom.getSubject();
@@ -80,7 +78,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 		OWLDeclarationAxiom axiom1 = factory.getOWLDeclarationAxiom(evaluates);
 
 		AddAxiom addAxiom = new AddAxiom(ont, axiom1);
-		ExampleViewComponent.manager.applyChange(addAxiom);
+		VioletViewEditor.manager.applyChange(addAxiom);
 		
 		
 		if (this.isRemove()){

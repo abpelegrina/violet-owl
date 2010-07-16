@@ -7,7 +7,7 @@ import java.net.URI;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDataFactory;
@@ -47,12 +47,12 @@ public class ModeCreateObjectProperty extends ModeCreateAxiom {
     		OWLClass destClass = destFigNode.getOWLEntity().asOWLClass();
     		
     		// comprobamos si el destino o el origen son subclases de la clase N-Aria
-    		if (NodeNAryRelation.claseBase.getSubClasses(ExampleViewComponent.manager.getActiveOntology()).contains(sourceClass)){
+    		if (NodeNAryRelation.claseBase.getSubClasses(VioletEditor.manager.getActiveOntology()).contains(sourceClass)){
     			nombreNueva = JOptionPane.showInputDialog("New role name, please:");
     			
     			System.err.println("La clase origen es una propiedad de objetos");
     		}
-    		else if (NodeNAryRelation.claseBase.getSubClasses(ExampleViewComponent.manager.getActiveOntology()).contains(destClass)){
+    		else if (NodeNAryRelation.claseBase.getSubClasses(VioletEditor.manager.getActiveOntology()).contains(destClass)){
     			nombreNueva = JOptionPane.showInputDialog("New role name, please:");
     			System.err.println("La clase destino es una propiedad de objetos");
     		}
@@ -63,13 +63,13 @@ public class ModeCreateObjectProperty extends ModeCreateAxiom {
         	if (nombreNueva != null && nombreNueva != ""){
         	
             	//Creamos la nueva clase
-            	OWLDataFactory  factory = ExampleViewComponent.manager.getOWLDataFactory();
+            	OWLDataFactory  factory = VioletEditor.manager.getOWLDataFactory();
             	        	
-            	OWLObjectProperty propiedad = factory.getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
+            	OWLObjectProperty propiedad = factory.getOWLObjectProperty(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#" + nombreNueva));
     	        OWLDeclarationAxiom axiom = factory.getOWLDeclarationAxiom(propiedad);
     	        
-    	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
-    	        ExampleViewComponent.manager.applyChange(addAxiom);
+    	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);
+    	        VioletEditor.manager.applyChange(addAxiom);
     	        
     	        ogm.addRangeAxiom(propiedad, destClass);
     	        ogm.addDomainAxiom(propiedad, sourceClass);

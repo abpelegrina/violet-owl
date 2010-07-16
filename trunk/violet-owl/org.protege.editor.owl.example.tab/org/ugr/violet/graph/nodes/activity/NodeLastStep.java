@@ -11,7 +11,8 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -29,7 +30,6 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.OWLFigure;
-import org.ugr.violet.presentation.activity.FigFirstStep;
 import org.ugr.violet.presentation.activity.FigLastStep;
 
 /**
@@ -52,12 +52,12 @@ public class NodeLastStep extends NodeActivityDiagram {
      */
     public NodeLastStep ( ){
     	super();
-    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_end_" + cont));
+    	step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_end_" + cont));
     	cont++;
-		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Final_Step"));
+		OWLClass ClaseInicio = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Final_Step"));
 		
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
+		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
+		VioletViewEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		gm.addStepToSequence(step);
 		
     	addPort(east = new OWLPort(this));

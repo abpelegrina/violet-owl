@@ -11,11 +11,10 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
-import org.semanticweb.owl.model.OWLDataProperty;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.Layer;
@@ -29,7 +28,6 @@ import org.ugr.violet.graph.nodes.NodeObjectProperty;
 import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
-import org.ugr.violet.presentation.FigDataProperty;
 import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.presentation.activity.FigFirstStep;
 
@@ -55,12 +53,12 @@ public class NodeFirstStep extends NodeActivityDiagram {
     	super();
     	
     	
-    	step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_start_" + cont));
+    	step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_start_" + cont));
     	cont++;
-		OWLClass ClaseInicio = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#First_Step"));
+		OWLClass ClaseInicio = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#First_Step"));
 		
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
+		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, ClaseInicio);
+		VioletViewEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		
 		gm.addStepToSequence(step);
 		

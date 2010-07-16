@@ -6,7 +6,7 @@ package org.ugr.violet.presentation.view;
 import java.awt.Color;
 import java.util.Set;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.presentation.FigCircle;

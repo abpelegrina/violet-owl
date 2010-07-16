@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLAxiom;
 import org.semanticweb.owl.model.OWLClass;
@@ -58,37 +59,37 @@ public class CmdCreateActivityStep extends CmdCreateNode {
      * next mode to ModePlace
      */
     public void doIt() {
-    	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();
+    	OWLDataFactory  f = VioletViewEditor.manager.getOWLDataFactory();
 
     	String nombreActividad = JOptionPane.showInputDialog("New activity name, please:");
     	String nombreStep = nombreActividad+"_step";
     	
     	
     	if (nombreActividad != null && nombreActividad != ""){
-	        OWLIndividual actividad = f.getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreActividad));
-	        OWLClass claseActividad = f.getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Activity"));
-	        OWLIndividual step = f.getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreStep));
-	        OWLClass claseStep = f.getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#Activity_Step"));
+	        OWLIndividual actividad = f.getOWLIndividual(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#" + nombreActividad));
+	        OWLClass claseActividad = f.getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Activity"));
+	        OWLIndividual step = f.getOWLIndividual(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#" + nombreStep));
+	        OWLClass claseStep = f.getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Activity_Step"));
 	        
 	        OWLAxiom axiom = f.getOWLClassAssertionAxiom (actividad, claseActividad);
 	        OWLAxiom axiom2 = f.getOWLClassAssertionAxiom (step, claseStep);
 	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletViewEditor.manager.getActiveOntology(), axiom);
 	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        VioletViewEditor.manager.applyChange(addAxiom);
 	        
-	        addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom2);
+	        addAxiom = new AddAxiom(VioletViewEditor.manager.getActiveOntology(), axiom2);
 	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        VioletViewEditor.manager.applyChange(addAxiom);
 	        
 	        
 	     // Asociamos la secuencia a los steps
-			OWLObjectProperty performs = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#performs"));
+			OWLObjectProperty performs = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#performs"));
 			
 			
 			// inicio
-			OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step, performs, actividad);
-			ExampleViewComponent.manager.applyChange(new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e));
+			OWLObjectPropertyAssertionAxiom e = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(step, performs, actividad);
+			VioletViewEditor.manager.applyChange(new AddAxiom(VioletViewEditor.manager.getActiveOntology(), e));
 	        
 	        
 	        nodo = new NodeAction(actividad, step);

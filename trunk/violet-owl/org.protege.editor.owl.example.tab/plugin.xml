@@ -3,18 +3,48 @@
 
 <plugin>
    <extension
-         id="ExampleViewComponent"
+         id="VioletEditor"
          point="org.protege.editor.core.application.ViewComponent">
       <label
             value="Violet-OWL Editor">
       </label>
       <class
-            value="org.protege.owl.examples.tab.ExampleViewComponent">
+            value="org.protege.owl.examples.tab.VioletEditor">
       </class>
       <category
             value="@org.protege.ontologycategory">
       </category>
    </extension>
+   
+   
+   <extension
+         id="ProjectNavigator"
+         point="org.protege.editor.core.application.ViewComponent">
+      <label
+            value="Violet-OWL Project">
+      </label>
+      <class
+            value="org.protege.owl.examples.tab.ProjectNavigator">
+      </class>
+      <category
+            value="@org.protege.ontologycategory">
+      </category>
+   </extension>
+   
+   <extension
+         id="VioletViewEditor"
+         point="org.protege.editor.core.application.ViewComponent">
+      <label
+            value="Violet-OWL Activity Diagram">
+      </label>
+      <class
+            value="org.protege.owl.examples.tab.VioletViewEditor">
+      </class>
+      <category
+            value="@org.protege.ontologycategory">
+      </category>
+   </extension>
+   
    <extension
          id="ExampleWorkspaceTab"
          point="org.protege.editor.core.application.WorkspaceTab">
@@ -34,6 +64,7 @@
             value="Resources/viewconfig-exampleTab.xml">
       </defaultViewConfigFileName>
    </extension>
+
 
 
 </plugin>

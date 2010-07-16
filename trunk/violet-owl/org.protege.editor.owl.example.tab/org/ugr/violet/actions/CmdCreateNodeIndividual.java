@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLDataFactory;
 import org.semanticweb.owl.model.OWLDeclarationAxiom;
@@ -51,13 +51,13 @@ public class CmdCreateNodeIndividual extends CmdCreateNode {
     	
 
         	//Creamos la nueva clase
-        	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();
+        	OWLDataFactory  f = VioletEditor.manager.getOWLDataFactory();
         	        	
-	        OWLIndividual individuo = f.getOWLIndividual(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
+	        OWLIndividual individuo = f.getOWLIndividual(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#" + nombreNueva));
 	        OWLDeclarationAxiom axiom = f.getOWLDeclarationAxiom(individuo);
 	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);
+	        VioletEditor.manager.applyChange(addAxiom);
 	        
 	        NodeIndividual nodo = new NodeIndividual(individuo);
 	        

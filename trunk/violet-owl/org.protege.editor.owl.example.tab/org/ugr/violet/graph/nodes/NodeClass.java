@@ -21,7 +21,7 @@ import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.presentation.Fig;
 import org.ugr.violet.layout.LayoutedNode;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.presentation.FigClass;
 import org.ugr.violet.presentation.OWLFigure;
 
@@ -48,18 +48,18 @@ public class NodeClass extends OWLNode implements Serializable, LayoutedNode, Mo
     	super();
     	
     	//Creamos la nueva clase
-    	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();
+    	OWLDataFactory  f = VioletEditor.manager.getOWLDataFactory();
 
     	//TODO reemplazar mecanismo "cutre", por otro mas elegante
     	String nombreNueva = JOptionPane.showInputDialog("New class name, please:");
     	
     	if (nombreNueva != null && nombreNueva != ""){
-	        claseOWL = f.getOWLClass(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
+	        claseOWL = f.getOWLClass(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#" + nombreNueva));
 	        OWLAxiom axiom = f.getOWLDeclarationAxiom(claseOWL);
 	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);
 	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        VioletEditor.manager.applyChange(addAxiom);
 	        
 	    	addPort(east = new PortClass(this));
 	        addPort(west = new PortClass(this));
@@ -138,7 +138,7 @@ public class NodeClass extends OWLNode implements Serializable, LayoutedNode, Mo
 		NodeClass n = (NodeClass) anotherNode;
 		OWLClass superC = n.getOWLClass();		
 		boolean yaEsSuperclase = false;
-		OWLOntology ont = ExampleViewComponent.manager.getActiveOntology();
+		OWLOntology ont = VioletEditor.manager.getActiveOntology();
 		
 		
 		// comprobamos que no se trate de la super clase		
@@ -149,10 +149,10 @@ public class NodeClass extends OWLNode implements Serializable, LayoutedNode, Mo
 		
 		if (!yaEsSuperclase){
 			//Creamos la nueva clase
-	    	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();	    	
+	    	OWLDataFactory  f = VioletEditor.manager.getOWLDataFactory();	    	
 	        OWLAxiom axiom = f.getOWLSubClassAxiom(claseOWL, superC);	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);	        
+	        VioletEditor.manager.applyChange(addAxiom);
 		}
 	}
 
