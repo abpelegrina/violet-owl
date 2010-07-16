@@ -14,7 +14,7 @@ import org.tigris.gef.presentation.FigEdge;
 import org.tigris.gef.presentation.FigEdgePoly;
 import org.tigris.gef.presentation.FigText;
 import org.ugr.violet.graph.nodes.NodeNAryRelation;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 
 /**
  * @author anab
@@ -80,9 +80,9 @@ public class DomainRangeEdge extends OWLEdge {
 	    mid.setText(propiedad.toString());
 	    mid.setLineWidth(0);
 	    int porcentaje = 50;
-	    if (NodeNAryRelation.claseBase.getSubClasses(ExampleViewComponent.manager.getActiveOntology()).contains(this.dominio))
+	    if (NodeNAryRelation.claseBase.getSubClasses(VioletEditor.manager.getActiveOntology()).contains(this.dominio))
 	    	porcentaje = 80;
-	    else if (NodeNAryRelation.claseBase.getSubClasses(ExampleViewComponent.manager.getActiveOntology()).contains(this.rango))
+	    else if (NodeNAryRelation.claseBase.getSubClasses(VioletEditor.manager.getActiveOntology()).contains(this.rango))
 	    	porcentaje = 20;
 	    else {
 	    	ArrowHeadGreater flechaDestino = new ArrowHeadGreater();

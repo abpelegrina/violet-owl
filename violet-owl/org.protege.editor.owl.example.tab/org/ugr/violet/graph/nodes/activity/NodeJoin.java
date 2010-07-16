@@ -11,7 +11,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -29,7 +29,6 @@ import org.ugr.violet.graph.nodes.NodeRestriction;
 import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.ugr.violet.presentation.OWLFigure;
-import org.ugr.violet.presentation.activity.FigFork;
 import org.ugr.violet.presentation.activity.FigJoin;
 
 /**
@@ -52,12 +51,12 @@ public class NodeJoin extends NodeActivityDiagram {
 		
 		super();
 		
-		step = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_join_" + cont));
+		step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_join_" + cont));
 		cont++;
-		OWLClass claseJoin = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Join_Step"));
+		OWLClass claseJoin = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Join_Step"));
 		
-		OWLClassAssertionAxiom d = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseJoin);
-		ExampleViewComponent.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
+		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseJoin);
+		VioletViewEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		
 		gm.addStepToSequence(step);
 		

@@ -18,7 +18,7 @@ import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeIndividual;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 
 public class FigIndividual extends OWLFigure {
 
@@ -78,7 +78,7 @@ public class FigIndividual extends OWLFigure {
 		nombreIndv = new FigText( x+10, y+5, 100, 50);
 		nombreIndv.setLineWidth(0);
 		String label = ""; 
-		Set<OWLDescription> clases = individuo.getTypes(ExampleViewComponent.manager.getActiveOntologies());
+		Set<OWLDescription> clases = individuo.getTypes(VioletEditor.manager.getActiveOntologies());
 		for(OWLDescription d:clases) {
 			label += " " + d.toString();
 		}

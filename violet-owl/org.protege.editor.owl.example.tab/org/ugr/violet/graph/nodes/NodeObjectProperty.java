@@ -16,7 +16,7 @@ import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectProperty;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.presentation.FigObjectProperty;
 import org.ugr.violet.presentation.OWLFigure;
 
@@ -63,13 +63,13 @@ public class NodeObjectProperty extends OWLNode {
     	
 
         	//Creamos la nueva clase
-        	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();
+        	OWLDataFactory  f = VioletEditor.manager.getOWLDataFactory();
         	        	
-	        propiedad = f.getOWLObjectProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
+	        propiedad = f.getOWLObjectProperty(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#" + nombreNueva));
 	        OWLDeclarationAxiom axiom = f.getOWLDeclarationAxiom(propiedad);
 	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);
+	        VioletEditor.manager.applyChange(addAxiom);
 	        
 	    	addPort(east = new PortObjectProperty(this));
 	        addPort(west = new PortObjectProperty(this));

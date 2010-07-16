@@ -11,7 +11,6 @@ import org.semanticweb.owl.model.OWLIndividual;
 import org.tigris.gef.base.CmdChangeFig;
 import org.tigris.gef.presentation.FigCircle;
 import org.tigris.gef.presentation.FigRect;
-import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
 
 /**

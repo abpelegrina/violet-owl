@@ -6,7 +6,7 @@ package org.ugr.violet.graph.edges.activity;
 import java.awt.Color;
 import java.awt.Point;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.OWLDataProperty;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLOntology;

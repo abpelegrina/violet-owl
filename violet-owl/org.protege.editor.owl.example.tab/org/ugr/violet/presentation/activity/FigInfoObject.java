@@ -4,28 +4,14 @@
 package org.ugr.violet.presentation.activity;
 
 import java.awt.Color;
-import java.net.URI;
 import java.util.Vector;
 
-import javax.swing.JMenu;
-
-import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLDataProperty;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
-import org.tigris.gef.base.CmdChangeFig;
-import org.tigris.gef.presentation.FigCircle;
-import org.tigris.gef.presentation.FigDiamond;
-import org.tigris.gef.presentation.FigLine;
 import org.tigris.gef.presentation.FigRRect;
 import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
-import org.tigris.gef.util.Localizer;
-import org.ugr.violet.graph.nodes.NodeClass;
-import org.ugr.violet.graph.nodes.activity.NodeAction;
 import org.ugr.violet.graph.nodes.activity.NodeInfoIObject;
-import org.protege.owl.examples.tab.ExampleViewComponent;
-import org.ugr.violet.presentation.FigClass;
 
 /**
  * @author anab

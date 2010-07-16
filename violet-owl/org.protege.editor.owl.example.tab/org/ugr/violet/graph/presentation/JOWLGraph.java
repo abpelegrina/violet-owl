@@ -45,7 +45,7 @@ import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.nodes.activity.NodeActivityDiagram;
 import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
 import org.ugr.violet.graph.nodes.activity.NodeLastStep;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.ui.OWLPalette;
 
 /**
@@ -107,8 +107,8 @@ public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetL
 			public void selectionChanged(GraphSelectionEvent gse) {
 				
 				for (Object o : gse.getSelections()){
-					OWLEntity entidad = ExampleViewComponent.manager.getOWLEntity(o.toString());
-					ExampleViewComponent.workspace.getOWLSelectionModel().setSelectedEntity(entidad);
+					OWLEntity entidad = VioletEditor.manager.getOWLEntity(o.toString());
+					VioletEditor.workspace.getOWLSelectionModel().setSelectedEntity(entidad);
 				}
 			}
 		});

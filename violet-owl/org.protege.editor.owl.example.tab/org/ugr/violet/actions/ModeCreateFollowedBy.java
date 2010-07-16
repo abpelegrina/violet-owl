@@ -7,7 +7,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.net.URI;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
+import org.protege.owl.examples.tab.VioletViewEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -39,13 +40,13 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
 	private FigActivityDiagram sourceFigNode = null;
 	private FigActivityDiagram destFigNode = null;
 	
-	static private OWLObjectProperty followed_by = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#followed_by"));
-	static private OWLObjectProperty following_step = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#following_step"));
+	static private OWLObjectProperty followed_by = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#followed_by"));
+	static private OWLObjectProperty following_step = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#following_step"));
 	
 	
-	private OWLClass Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Followed_by_Relation"));
-	private OWLClass Control_Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Control_Followed_by_Relation"));
-	private OWLClass Followed_Followed_by_Relation = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Object_Followed_by_Relation"));
+	private OWLClass Followed_by_Relation = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Followed_by_Relation"));
+	private OWLClass Control_Followed_by_Relation = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Control_Followed_by_Relation"));
+	private OWLClass Followed_Followed_by_Relation = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Object_Followed_by_Relation"));
 	
 	
 	/**
@@ -161,50 +162,50 @@ public class ModeCreateFollowedBy extends ModeCreatePolyEdge {
         		if(e1.isOWLIndividual() && e2.isOWLIndividual()){
         			
         			// 1. We create the individual that reifies the flow relation
-        			OWLClass flowClass = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Followed_by_Relation"));
-        			OWLIndividual flow = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(agm.activeOntology().getURI() + "#" + e2.toString() + "_followed_by"));
+        			OWLClass flowClass = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Followed_by_Relation"));
+        			OWLIndividual flow = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(agm.activeOntology().getURI() + "#" + e2.toString() + "_followed_by"));
         			
         			// type assertion for flow
-        			OWLClassAssertionAxiom axm = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom(flow, flowClass);
+        			OWLClassAssertionAxiom axm = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom(flow, flowClass);
         			AddAxiom ax = new AddAxiom(agm.activeOntology(), axm);
-        			ExampleViewComponent.manager.applyChange(ax);
+        			VioletViewEditor.manager.applyChange(ax);
         			
         			// 2. We create the two relations between the steps: followed_by and following_step
         			
         			// followed_by
-        			OWLObjectPropertyAssertionAxiom e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(e2.asOWLIndividual(), followed_by, flow);
+        			OWLObjectPropertyAssertionAxiom e = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(e2.asOWLIndividual(), followed_by, flow);
         			
         			// creamos el cambio y lo almacenamos en la ontología
-        			ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e);
-        			ExampleViewComponent.manager.applyChange(ax);
+        			ax = new AddAxiom(VioletViewEditor.manager.getActiveOntology(), e);
+        			VioletViewEditor.manager.applyChange(ax);
         			
         			// following_step
-        			e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(flow, following_step, e1.asOWLIndividual());
+        			e = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(flow, following_step, e1.asOWLIndividual());
         			
         			// creamos el cambio y lo almacenamos en la ontología
-        			ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e);
-        			ExampleViewComponent.manager.applyChange(ax);
+        			ax = new AddAxiom(VioletViewEditor.manager.getActiveOntology(), e);
+        			VioletViewEditor.manager.applyChange(ax);
         			
         			// 3. Creamos la guarda
-        			OWLClass GuardClass = ExampleViewComponent.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Guard"));
-        			OWLIndividual guard = ExampleViewComponent.manager.getOWLDataFactory().getOWLIndividual(URI.create(agm.activeOntology().getURI() + "#" + flow + "_guard"));
-        			OWLObjectProperty evaluates = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#evaluates"));
-        			OWLDataProperty has_expression = ExampleViewComponent.manager.getOWLDataFactory().getOWLDataProperty(URI.create(ActivityGraphModel.URIAmenities + "#has_expression"));
+        			OWLClass GuardClass = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Guard"));
+        			OWLIndividual guard = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(agm.activeOntology().getURI() + "#" + flow + "_guard"));
+        			OWLObjectProperty evaluates = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#evaluates"));
+        			OWLDataProperty has_expression = VioletViewEditor.manager.getOWLDataFactory().getOWLDataProperty(URI.create(ActivityGraphModel.URIAmenities + "#has_expression"));
         			
         			// creamos el individuo guard
-        			axm = ExampleViewComponent.manager.getOWLDataFactory().getOWLClassAssertionAxiom(guard, GuardClass);
+        			axm = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom(guard, GuardClass);
         			ax = new AddAxiom(agm.activeOntology(), axm);
-        			ExampleViewComponent.manager.applyChange(ax);
+        			VioletViewEditor.manager.applyChange(ax);
         			
         			// asociamos la relacion con la guarda
-        			e = ExampleViewComponent.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(flow, evaluates, guard);
-        			ax = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), e);
-        			ExampleViewComponent.manager.applyChange(ax);
+        			e = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(flow, evaluates, guard);
+        			ax = new AddAxiom(VioletViewEditor.manager.getActiveOntology(), e);
+        			VioletViewEditor.manager.applyChange(ax);
         			
         			// le añadimos valor a la guarda
-        			OWLDataPropertyAssertionAxiom a = ExampleViewComponent.manager.getOWLDataFactory().getOWLDataPropertyAssertionAxiom(guard, has_expression, "");
+        			OWLDataPropertyAssertionAxiom a = VioletViewEditor.manager.getOWLDataFactory().getOWLDataPropertyAssertionAxiom(guard, has_expression, "");
         			ax = new AddAxiom(agm.activeOntology(), a);
-        			ExampleViewComponent.manager.applyChange(ax);
+        			VioletViewEditor.manager.applyChange(ax);
         			
         			// creamos el edge
         			FollowedByEdge edge = new FollowedByEdge(e2.asOWLIndividual(), e1.asOWLIndividual(), flow, null);

@@ -17,7 +17,7 @@ import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
 import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeClass;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 
 /**
  * 
@@ -75,11 +75,11 @@ public class FigClass extends OWLFigure {
 
 		Vector<OWLDataProperty> v = new Vector<OWLDataProperty>();
 
-		for (OWLDataProperty odp : ExampleViewComponent.manager.getActiveOntology().getReferencedDataProperties()) {
+		for (OWLDataProperty odp : VioletEditor.manager.getActiveOntology().getReferencedDataProperties()) {
 
-			ExampleViewComponent.manager.getActiveOntology().getDataPropertyRangeAxiom(odp);
+			VioletEditor.manager.getActiveOntology().getDataPropertyRangeAxiom(odp);
 
-			if (odp.getDomains(ExampleViewComponent.manager.getActiveOntology()).contains(claseOWL)){
+			if (odp.getDomains(VioletEditor.manager.getActiveOntology()).contains(claseOWL)){
 				v.add(odp);
 			}
 		}
@@ -111,7 +111,7 @@ public class FigClass extends OWLFigure {
 		for (OWLDataProperty r:v) {
 
 			label = new FigText( x+10, y+5+i, 100, 50);			
-			label.setText(r.getRanges(ExampleViewComponent.manager.getActiveOntology()) + " " + r);
+			label.setText(r.getRanges(VioletEditor.manager.getActiveOntology()) + " " + r);
 			label.setFillColor(colorRelleno);
 			label.setLineWidth(0);
 			label.setJustification(FigText.JUSTIFY_CENTER);

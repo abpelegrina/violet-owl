@@ -41,7 +41,7 @@ import org.ugr.violet.graph.nodes.NodeUnion;
 import org.ugr.violet.graph.nodes.OWLNode;
 import org.ugr.violet.graph.nodes.OWLPort;
 import org.protege.editor.owl.model.OWLModelManager;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.presentation.OWLFigure;
 import org.ugr.violet.visitors.BooleanDescriptionDeleteVisitor;
 import org.ugr.violet.visitors.BooleanDescriptionVisitor;
@@ -57,7 +57,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 	private static final long serialVersionUID = -6702060722699798339L;
 	
-	protected OWLModelManager manager = ExampleViewComponent.manager;
+	protected OWLModelManager manager = VioletEditor.manager;
 
 
 	/**
@@ -79,11 +79,11 @@ public class OWLGraphModel extends DefaultGraphModel {
 
 	
 	public OWLOntology activeOntology(){
-		return ExampleViewComponent.manager.getActiveOntology();
+		return VioletEditor.manager.getActiveOntology();
 	}
 	
 	public Set<OWLOntology> ontologies(){
-		return ExampleViewComponent.manager.getOntologies();
+		return VioletEditor.manager.getOntologies();
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @return la clase (null si no se ha encontrado)
 	 */
 	public OWLClass getOwlClassByName(String nombre){
-		return ExampleViewComponent.manager.getOWLClass(nombre);
+		return VioletEditor.manager.getOWLClass(nombre);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @return el individuo correspondiente (null si no se ha encontrado)
 	 */
 	public OWLIndividual getOwlIndividualByName(String name){
-		return ExampleViewComponent.manager.getOWLIndividual(name);
+		return VioletEditor.manager.getOWLIndividual(name);
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 */
 	protected OWLObjectProperty getOwlObjectPropertyByName(String objectPropertyName) {
 
-		return ExampleViewComponent.manager.getOWLObjectProperty(objectPropertyName);
+		return VioletEditor.manager.getOWLObjectProperty(objectPropertyName);
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @return
 	 */
 	private OWLDataProperty getOwlDataPropertyByName(String dataPropertyName) {
-		return ExampleViewComponent.manager.getOWLDataProperty(dataPropertyName);
+		return VioletEditor.manager.getOWLDataProperty(dataPropertyName);
 	}
 
 	/**
@@ -2004,10 +2004,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param claseOWL2
 	 */
 	public void addDisjointClassAxiom(OWLClass claseOWL, OWLClass claseOWL2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();
 		OWLDisjointClassesAxiom a = fact.getOWLDisjointClassesAxiom(claseOWL, claseOWL2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2019,10 +2019,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 			OWLObjectProperty p1,
 			OWLObjectProperty p2) {
 
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLDisjointObjectPropertiesAxiom a = fact.getOWLDisjointObjectPropertiesAxiom(p1,p2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2031,10 +2031,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param ind2
 	 */
 	public void addDifferentIndividualAxiom(OWLIndividual ind1, OWLIndividual ind2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLDifferentIndividualsAxiom a = fact.getOWLDifferentIndividualsAxiom(ind1, ind2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2043,10 +2043,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param dp2
 	 */
 	public void addDisjointDataPropertyAxiom(OWLDataProperty dp1, OWLDataProperty dp2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();
 		OWLDisjointDataPropertiesAxiom a = fact.getOWLDisjointDataPropertiesAxiom(dp1, dp2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2055,10 +2055,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param c2
 	 */
 	public void addEquivalentClassAxiom(OWLClass c1, OWLClass c2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLEquivalentClassesAxiom a = fact.getOWLEquivalentClassesAxiom(c1, c2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2067,10 +2067,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLObjectProperty2
 	 */
 	public void addEquivalentObjectPropertyAxiom(OWLObjectProperty p1, OWLObjectProperty p2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLEquivalentObjectPropertiesAxiom a = fact.getOWLEquivalentObjectPropertiesAxiom(p1,p2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2079,10 +2079,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLObjectProperty2
 	 */
 	public void addEquivalentDataPropertyAxiom(OWLDataProperty p1, OWLDataProperty p2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLEquivalentDataPropertiesAxiom a = fact.getOWLEquivalentDataPropertiesAxiom(p1,p2);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2091,13 +2091,13 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLIndividual2
 	 */
 	public void addSameAsIndividualAxiom(OWLIndividual ind1, OWLIndividual ind2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		Set<OWLIndividual> iguales = new HashSet<OWLIndividual>();
 		iguales.add(ind1);
 		iguales.add(ind2);
 		OWLSameIndividualsAxiom a = fact.getOWLSameIndividualsAxiom(iguales);		
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2105,10 +2105,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLClass
 	 */
 	public void addRangeAxiom(OWLObjectProperty prop, OWLClass clase) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLObjectPropertyRangeAxiom a = fact.getOWLObjectPropertyRangeAxiom(prop, clase);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2116,10 +2116,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLClass
 	 */
 	public void addDomainAxiom(OWLObjectProperty prop, OWLClass clase) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLObjectPropertyDomainAxiom a = fact.getOWLObjectPropertyDomainAxiom(prop, clase);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2127,10 +2127,10 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLClass2
 	 */
 	public void addSubClassAxiom(OWLClass c1, OWLClass c2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(c1, c2);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	/**
@@ -2138,50 +2138,50 @@ public class OWLGraphModel extends DefaultGraphModel {
 	 * @param asOWLObjectProperty2
 	 */
 	public void addSubObjectPropertyAxiom(OWLObjectProperty p1, OWLObjectProperty p2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();		
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();		
 		OWLObjectSubPropertyAxiom a = fact.getOWLSubObjectPropertyAxiom(p1, p2);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	public void addOneOfAxiom(Set<OWLIndividual> individuos, OWLClass clase) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();
 
 		OWLObjectOneOf oneOf = fact.getOWLObjectOneOf(individuos);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(clase, oneOf);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	public void addUnionOfAxiom(Set<OWLDescription> clases, OWLClass clase) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();
 
 		OWLObjectUnionOf oneOf = fact.getOWLObjectUnionOf(clases);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(clase, oneOf);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	public void addIntersectionOfAxiom(Set<OWLDescription> clases, OWLClass clase) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();
 
 		OWLObjectIntersectionOf oneOf = fact.getOWLObjectIntersectionOf(clases);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(clase, oneOf);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 	public void addComplementOfAxiom(OWLClass c1, OWLClass c2) {
-		OWLDataFactory fact = ExampleViewComponent.manager.getOWLDataFactory();
+		OWLDataFactory fact = VioletEditor.manager.getOWLDataFactory();
 
 		OWLObjectComplementOf oneOf = fact.getOWLObjectComplementOf(c1);
 
 		OWLSubClassAxiom a = fact.getOWLSubClassAxiom(c2, oneOf);
 		AddAxiom addAxiomChange = new AddAxiom(activeOntology(), a);         
-		ExampleViewComponent.manager.applyChange(addAxiomChange);
+		VioletEditor.manager.applyChange(addAxiomChange);
 	}
 
 

@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLAxiom;
 import org.semanticweb.owl.model.OWLDataFactory;
@@ -50,13 +50,13 @@ public class CmdCreateNodeDataProperty extends CmdCreateNode {
 		String nombreNueva = JOptionPane.showInputDialog("New data proprerty name, please:");
     	
     	if (nombreNueva != null && nombreNueva != ""){
-	        OWLDataFactory f = ExampleViewComponent.manager.getOWLDataFactory();
-			OWLDataProperty propiedadDeDatos = f.getOWLDataProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
+	        OWLDataFactory f = VioletEditor.manager.getOWLDataFactory();
+			OWLDataProperty propiedadDeDatos = f.getOWLDataProperty(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#" + nombreNueva));
 	        OWLAxiom axiom = f.getOWLDeclarationAxiom(propiedadDeDatos);
 	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);
 	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        VioletEditor.manager.applyChange(addAxiom);
 	        
 	        nodo = new NodeDataProperty(propiedadDeDatos);
 	        

@@ -11,7 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.tigris.gef.base.CmdSave;
 import org.ugr.violet.graph.OWLGraphModel;
 import org.ugr.violet.graph.nodes.OWLNode;
@@ -49,7 +49,7 @@ public class OWLSaveCmd extends CmdSave {
 		}
 		
     	//2. Recuperar el graph model
-		OWLGraphModel m = (OWLGraphModel) ExampleViewComponent.getLienzoActual().getGraphModel(); 
+		OWLGraphModel m = (OWLGraphModel) VioletEditor.getLienzoActual().getGraphModel(); 
 		
 		//3. Recuperar las ontologías
 		String URIactiva = m.getActiveOntology().getURI().toString();

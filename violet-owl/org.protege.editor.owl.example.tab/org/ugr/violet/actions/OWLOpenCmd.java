@@ -12,7 +12,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.OWLOntologyCreationException;
 import org.tigris.gef.base.CmdOpen;
 import org.ugr.violet.graph.OWLGraphModel;
@@ -74,7 +74,7 @@ public class OWLOpenCmd extends CmdOpen {
 		
 		
 		// 3. Ajustamos las ontologías
-		OWLGraphModel m = (OWLGraphModel) ExampleViewComponent.getLienzoActual().getGraphModel();
+		OWLGraphModel m = (OWLGraphModel) VioletEditor.getLienzoActual().getGraphModel();
 		
 		// Comparamos la ontología activa con la del diagrama y si difieren cargar la del diagrama. Avisando antes al usuario.
 		if (!m.activeOntology().getURI().equals(URI.create(URIactiva))) {
@@ -87,7 +87,7 @@ public class OWLOpenCmd extends CmdOpen {
 			else {
 				// cargamos la ontología nueva
 				try {
-					ExampleViewComponent.manager.loadOntology(URI.create(URIactiva));
+					VioletEditor.manager.loadOntology(URI.create(URIactiva));
 				} catch (OWLOntologyCreationException e) {
 					JOptionPane.showMessageDialog(null, "Error loading the ontology. The diagram will not be opened.");
 					return;

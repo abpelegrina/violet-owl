@@ -8,17 +8,9 @@ import java.util.Vector;
 
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
-import org.tigris.gef.base.CmdChangeFig;
-import org.tigris.gef.presentation.FigCircle;
 import org.tigris.gef.presentation.FigDiamond;
-import org.tigris.gef.presentation.FigRRect;
 import org.tigris.gef.presentation.FigRect;
-import org.tigris.gef.presentation.FigText;
-import org.ugr.violet.graph.nodes.NodeUnion;
-import org.ugr.violet.graph.nodes.activity.NodeDecision;
-import org.ugr.violet.graph.nodes.activity.NodeFork;
 import org.ugr.violet.graph.nodes.activity.NodeMerge;
-import org.ugr.violet.presentation.OWLFigure;
 
 /**
  * @author anab

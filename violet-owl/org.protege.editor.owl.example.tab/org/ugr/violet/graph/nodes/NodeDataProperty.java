@@ -18,7 +18,7 @@ import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.graph.GraphModel;
 import org.ugr.violet.layout.LayoutedNode;
-import org.protege.owl.examples.tab.ExampleViewComponent;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.presentation.FigDataProperty;
 import org.ugr.violet.presentation.OWLFigure;
 
@@ -45,17 +45,17 @@ public class NodeDataProperty extends OWLNode implements Serializable, LayoutedN
     	super();
     	
     	//Creamos la nueva propiedad de datos
-    	OWLDataFactory  f = ExampleViewComponent.manager.getOWLDataFactory();
+    	OWLDataFactory  f = VioletEditor.manager.getOWLDataFactory();
     	
     	String nombreNueva = JOptionPane.showInputDialog("New data proprerty name, please:");
     	
     	if (nombreNueva != null && nombreNueva != ""){
-	        propiedadDeDatos = f.getOWLDataProperty(URI.create(ExampleViewComponent.manager.getActiveOntology().getURI() + "#" + nombreNueva));
+	        propiedadDeDatos = f.getOWLDataProperty(URI.create(VioletEditor.manager.getActiveOntology().getURI() + "#" + nombreNueva));
 	        OWLAxiom axiom = f.getOWLDeclarationAxiom(propiedadDeDatos);
 	        
-	        AddAxiom addAxiom = new AddAxiom(ExampleViewComponent.manager.getActiveOntology(), axiom);
+	        AddAxiom addAxiom = new AddAxiom(VioletEditor.manager.getActiveOntology(), axiom);
 	        
-	        ExampleViewComponent.manager.applyChange(addAxiom);
+	        VioletEditor.manager.applyChange(addAxiom);
 	        
 	    	addPort(east = new OWLPort(this));
 	        addPort(west = new OWLPort(this));
