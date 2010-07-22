@@ -33,7 +33,11 @@ public class ViewNode extends OWLNode {
 	
 	protected OWLEntity entity = null;
 	protected OWLEntity entity_aux = null;
-	protected OWLFigure figure = null;
+	
+	/**
+	 * The figure that will represent the node. It has to be a 
+	 */
+	protected FigView figure = null;
 	protected FigViewParameter params = null;
 	
 	/**
@@ -41,40 +45,23 @@ public class ViewNode extends OWLNode {
 	 */
 	public ViewNode(FigViewParameter p){
 		super();
-		
-		params = p;
-		
 		addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));
         addPort(north = new OWLPort(this));
         addPort(south = new OWLPort(this));
+		
+		params = p;
 	}
 	
 	
 	public ViewNode(FigViewParameter p, OWLEntity e){
-		super();
-		
+		this(p);
 		entity = e;
-		params = p;
-		
-		addPort(east = new OWLPort(this));
-        addPort(west = new OWLPort(this));
-        addPort(north = new OWLPort(this));
-        addPort(south = new OWLPort(this));
-		
 	}
 	
 	public ViewNode(FigViewParameter p, OWLEntity e, OWLEntity aux){
-		super();
-		
-		params = p;
-		entity = e;
+		this(p,e);
 		entity_aux = aux;
-		
-		addPort(east = new OWLPort(this));
-        addPort(west = new OWLPort(this));
-        addPort(north = new OWLPort(this));
-        addPort(south = new OWLPort(this));
 	}
 	
 	
@@ -82,11 +69,14 @@ public class ViewNode extends OWLNode {
 	        super.initialize(args);
 	  }
 	
-	 public OWLFigure makePresentation(Layer lay) {
+	 public FigView makePresentation(Layer lay) {
 	    	
 	    	if (entity != null){
+	    		
+	    		String label = entity_aux == null ? entity.toString() : entity_aux.toString();
 		    	
-				figure = new FigView(entity, params, entity.toString());
+				figure = new FigView(entity, params, label);
+				
 				
 		        figure.setOwner(this);
 		    	figure.setBlinkPorts(true);
@@ -109,7 +99,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public NodeClass asNodeClass() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -118,7 +107,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public NodeIndividual asNodeIndividual() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -127,7 +115,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public NodeIntersection asNodeIntersection() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -136,7 +123,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public NodeObjectProperty asNodeObjectProperty() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -145,7 +131,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public NodeRestriction asNodeRestriction() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -154,7 +139,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public NodeUnion asNodeUnion() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -163,8 +147,7 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public OWLFigure getOntologyFig() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.figure;
 	}
 
 	/* (non-Javadoc)
@@ -172,7 +155,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public boolean isNodeClass() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -190,7 +172,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public boolean isNodeIntersection() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -199,7 +180,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public boolean isNodeObjectProperty() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -208,7 +188,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public boolean isNodeRestriction() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -217,7 +196,6 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public boolean isNodeUnion() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -226,8 +204,7 @@ public class ViewNode extends OWLNode {
 	 */
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.entity.toString();
 	}
 
 }

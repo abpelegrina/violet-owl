@@ -1,13 +1,8 @@
 package org.protege.owl.examples.tab;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.protege.editor.owl.model.OWLModelManager;
@@ -16,18 +11,10 @@ import org.protege.editor.owl.ui.view.AbstractOWLViewComponent;
 import org.semanticweb.owl.model.OWLException;
 import org.semanticweb.owl.model.OWLOntologyChange;
 import org.semanticweb.owl.model.OWLOntologyChangeListener;
-import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.util.Localizer;
 import org.tigris.gef.util.ResourceLoader;
-import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
-import org.ugr.violet.changefilters.ChangeFilterDiagram;
-import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.presentation.JOWLActivityGraph;
 import org.ugr.violet.graph.presentation.JOWLGraph;
-import org.ugr.violet.persistance.VioletPersistance;
-import org.ugr.violet.ui.ActivityDiagramPalette;
 import org.ugr.violet.ui.OWLPalette;
-import org.ugr.violet.view.graph.presentation.JOWLViewGraph;
 
 /**
  * 
@@ -86,8 +73,7 @@ public class VioletEditor extends AbstractOWLViewComponent {
 		*/
 		
 		OWLPalette barraDeHerramientas2 = new OWLPalette();
-		JOWLGraph lienzoBasico = new JOWLViewGraph(VioletEditor.manager
-				.getActiveOntology(), barraDeHerramientas2);
+		JOWLGraph lienzoBasico = new JOWLGraph(barraDeHerramientas2);
 
 		lienzoActual = lienzoBasico;
 		this.add(lienzoBasico);

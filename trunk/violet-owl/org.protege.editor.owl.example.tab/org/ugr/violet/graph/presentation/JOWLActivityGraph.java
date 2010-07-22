@@ -42,7 +42,6 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 
 	private OWLIndividual tarea = null;
 	
-	private OWLIndividual secuencia = null;
 	
 	@Override
 	public boolean isViewCanvas(){
@@ -59,12 +58,12 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOWLActivityGraph(OWLOntology ont, OWLPalette p) {
-		super(ont, p);
+	public JOWLActivityGraph(OWLPalette p) {
+		super(p);
 		
 		// creamos el diagrama asociado a la ontolog�a
 		ogm = new ActivityGraphModel(null);
-		od = new ActivityDiagram(activa.getURI().toString(), ogm);
+		od = new ActivityDiagram("Activity Diagram", ogm);
 		this.setGraphModel( ogm );
 		
 		/*
@@ -79,15 +78,15 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOWLActivityGraph(OWLOntology ont, OWLPalette p, OWLIndividual task) {
-		super(ont, p);
+	public JOWLActivityGraph(OWLPalette p, OWLIndividual task) {
+		super(p);
 		
 		
 		tarea = task;
 		
 		// creamos el diagrama asociado a la ontolog�a
 		ogm = new ActivityGraphModel(tarea);
-		od = new ActivityDiagram(activa.getURI().toString(), ogm);
+		od = new ActivityDiagram("Activity Diagram", ogm);
 		this.setGraphModel( ogm );
 		
 		/*

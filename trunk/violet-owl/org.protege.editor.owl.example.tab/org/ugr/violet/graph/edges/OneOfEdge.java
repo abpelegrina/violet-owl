@@ -5,7 +5,6 @@ package org.ugr.violet.graph.edges;
 
 import java.awt.Color;
 
-import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLObjectOneOf;

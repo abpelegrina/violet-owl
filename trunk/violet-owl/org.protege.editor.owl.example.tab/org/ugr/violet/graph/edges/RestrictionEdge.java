@@ -23,17 +23,11 @@ public class RestrictionEdge extends OWLEdge {
 	private String label = "";
 	private OWLEntity objeto = null;
 	private OWLEntity sujeto = null;
-	private Restriction restriccion = null;
 	
-/*	public RestrictionEdge(OWLEntity sujeto, OWLEntity objeto){
-		this.objeto = objeto;
-		this.sujeto = sujeto;
-	}*/
 	
 	public RestrictionEdge(OWLEntity sujeto, OWLEntity objeto, Restriction restr){
 		this.objeto = objeto;
 		this.sujeto = sujeto;
-		restriccion = restr;
 	}
 	
 	public boolean isSujeto(OWLEntity entidad){

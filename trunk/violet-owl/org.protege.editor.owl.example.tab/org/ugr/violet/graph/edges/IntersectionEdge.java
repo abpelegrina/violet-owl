@@ -5,11 +5,8 @@ package org.ugr.violet.graph.edges;
 
 import java.awt.Color;
 
-import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDescription;
-import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLObjectIntersectionOf;
-import org.semanticweb.owl.model.OWLObjectUnionOf;
 import org.tigris.gef.base.Layer;
 import org.tigris.gef.base.PathConvPercent;
 import org.tigris.gef.presentation.ArrowHeadGreater;
