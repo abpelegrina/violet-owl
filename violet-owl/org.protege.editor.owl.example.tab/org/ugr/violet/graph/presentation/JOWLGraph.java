@@ -21,7 +21,6 @@ import java.io.IOException;
 import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.base.DeleteFromModelAction;
 import org.tigris.gef.event.GraphSelectionEvent;
@@ -58,9 +57,6 @@ public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetL
 	 * Modelo
 	 */
 	protected OWLGraphModel ogm = null;
-
-	
-	protected OWLOntology activa = null;
 	
 	protected OWLOntologyChangeFilter changeListener = null;
 	
@@ -69,16 +65,14 @@ public class JOWLGraph extends JGraph implements ModeChangeListener, DropTargetL
 	 * @param activa ontolog�a para la que se quiere contruir el modelo
 	 * @param p paleta con los controles
 	 */
-	public JOWLGraph(OWLOntology ont, OWLPalette p) {
+	public JOWLGraph( OWLPalette p) {
 		super();
 		this.setBounds(10, 10, 300, 200);
 		this.add(p, BorderLayout.NORTH);
 		
-		activa = ont;
-		
-		// creamos el diagrama asociado a la ontolog�a
+		// creamos el diagrama asociado a la ontologia
 		ogm = generateGraphModel();
-		od = new OWLDiagram(activa.getURI().toString(), ogm);
+		od = new OWLDiagram("OWL Diagram", ogm);
 		this.setGraphModel( od.getOntologyGraphModel() );
 		
 		// al darle al supr se borrara el componente seleccionado

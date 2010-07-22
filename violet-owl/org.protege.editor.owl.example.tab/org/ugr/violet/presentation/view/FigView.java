@@ -29,15 +29,12 @@ public class FigView extends OWLFigure {
 	
 	public FigView(OWLEntity e){
 		entity = e;
-		
 		this.makeFigure();
 	}
 	
 	public FigView(OWLEntity e, FigViewParameter p){
 		entity = e;
 		params = p;
-		
-		
 		this.makeFigure();
 	}
 	

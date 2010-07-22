@@ -1,6 +1,5 @@
 package org.ugr.violet.base;
 
-import org.semanticweb.owl.model.OWLOntology;
 import org.tigris.gef.base.Diagram;
 import org.tigris.gef.base.LayerPerspective;
 import org.ugr.violet.graph.OWLGraphModel;

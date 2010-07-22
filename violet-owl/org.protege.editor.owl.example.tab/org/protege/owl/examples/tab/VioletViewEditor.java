@@ -76,8 +76,7 @@ public class VioletViewEditor extends VioletEditor {
 
 		
 		ActivityDiagramPalette barraDeHerramientas = new ActivityDiagramPalette();
-		JOWLActivityGraph lienzoActividad = new JOWLActivityGraph(
-				VioletEditor.manager.getActiveOntology(), barraDeHerramientas);
+		JOWLActivityGraph lienzoActividad = new JOWLActivityGraph(barraDeHerramientas);
 		
 		/*
 		OWLPalette barraDeHerramientas2 = new OWLPalette();

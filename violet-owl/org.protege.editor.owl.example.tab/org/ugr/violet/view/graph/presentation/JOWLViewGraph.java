@@ -20,8 +20,8 @@ public class JOWLViewGraph extends JOWLGraph{
 	 * @param ont
 	 * @param p
 	 */
-	public JOWLViewGraph(OWLOntology ont, OWLPalette p) {
-		super(ont, p);
+	public JOWLViewGraph(OWLPalette p) {
+		super(p);
 	}
 
 	/* (non-Javadoc)
@@ -30,7 +30,7 @@ public class JOWLViewGraph extends JOWLGraph{
 	@Override
 	protected OWLGraphModel generateGraphModel() {
 		// TODO Auto-generated method stub
-		return new OWLViewGraphModel(activa);
+		return new OWLViewGraphModel(null);
 	}
 
 	/**

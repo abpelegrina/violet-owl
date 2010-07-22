@@ -19,6 +19,55 @@ public class FigViewParameter {
 	public static final int ARROW = 4;
 	public static final int DARROW = 5;
 	public static final int LINE = 6;
+	
+	/**
+	 * @return the shape
+	 */
+	public int getShape() {
+		return shape;
+	}
+
+	/**
+	 * @return the color
+	 */
+	public Color getColor() {
+		return color;
+	}
+
+	/**
+	 * @return the line
+	 */
+	public boolean isLine() {
+		return line;
+	}
+
+	/**
+	 * @return the linewidth
+	 */
+	public int getLinewidth() {
+		return linewidth;
+	}
+
+	/**
+	 * @return the linecolor
+	 */
+	public Color getLinecolor() {
+		return linecolor;
+	}
+
+	/**
+	 * @return the owlentity
+	 */
+	public String getOwlentity() {
+		return owlentity;
+	}
+
+	/**
+	 * @return the owlentityType
+	 */
+	public String getOwlentityType() {
+		return owlentityType;
+	}
 
 	protected int shape;
 	protected Color color;
