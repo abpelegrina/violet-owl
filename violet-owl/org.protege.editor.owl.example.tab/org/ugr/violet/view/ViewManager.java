@@ -13,7 +13,7 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDataProperty;
@@ -63,13 +63,13 @@ public class ViewManager {
 			this.loadOntology();
 			
 			// save de current active ontology
-			OWLOntology activa = VioletViewEditor.manager.getActiveOntology();
+			OWLOntology activa = VioletActivityEditor.manager.getActiveOntology();
 			
 			//load de imported ontology
-			ont = VioletViewEditor.manager.loadOntology(uri);
+			ont = VioletActivityEditor.manager.loadOntology(uri);
 			
 			// set the active ontology
-			VioletViewEditor.manager.setActiveOntology(activa);	
+			VioletActivityEditor.manager.setActiveOntology(activa);	
 			
 			// clases
 			classes = new Hashtable<OWLClass, FigViewParameter>();
@@ -115,7 +115,7 @@ public class ViewManager {
 			System.out.println("Valor de la propiedad de objetos " + param);
 			
 			//create the OWL Entitiy
-			OWLDataProperty c = VioletViewEditor.manager.getOWLDataProperty(param.getOWLEntityName());
+			OWLDataProperty c = VioletActivityEditor.manager.getOWLDataProperty(param.getOWLEntityName());
 			
 			//add the pair to the hashtable
 			dataProperties.put(c, param);
@@ -138,7 +138,7 @@ public class ViewManager {
 			System.out.println("Valor de la propiedad de objetos " + param);
 			
 			//create the OWL Entitiy
-			OWLObjectProperty c = VioletViewEditor.manager.getOWLObjectProperty(param.getOWLEntityName());
+			OWLObjectProperty c = VioletActivityEditor.manager.getOWLObjectProperty(param.getOWLEntityName());
 			
 			//add the pair to the hashtable
 			objectProperties.put(c, param);
@@ -160,7 +160,7 @@ public class ViewManager {
 			System.out.println("Valor de la propiedad de objetos " + param);
 			
 			//create the OWL Entitiy
-			OWLClass c = VioletViewEditor.manager.getOWLClass(param.getOWLEntityName());
+			OWLClass c = VioletActivityEditor.manager.getOWLClass(param.getOWLEntityName());
 			
 			//add the pair to the hashtable
 			individuals.put(c, param);
@@ -177,12 +177,12 @@ public class ViewManager {
 			uri = new URI(parser.getOntologyURIs());
 			new URI(parser.getOntologyFiles());
 			
-			OWLImportsDeclaration imprt = VioletViewEditor.manager.getOWLDataFactory().getOWLImportsDeclarationAxiom(VioletViewEditor.manager.getActiveOntology(), uri);
+			OWLImportsDeclaration imprt = VioletActivityEditor.manager.getOWLDataFactory().getOWLImportsDeclarationAxiom(VioletActivityEditor.manager.getActiveOntology(), uri);
 			// agregamos el axioma a la ontología
-			AddAxiom addAx3 = new AddAxiom(VioletViewEditor.manager.getActiveOntology(), imprt);
+			AddAxiom addAx3 = new AddAxiom(VioletActivityEditor.manager.getActiveOntology(), imprt);
 
 			// apply changes
-			VioletViewEditor.manager.applyChange(addAx3);		
+			VioletActivityEditor.manager.applyChange(addAx3);		
 			
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
@@ -206,7 +206,7 @@ public class ViewManager {
 			System.out.println("Valor de la propiedad de objetos " + param);
 			
 			//create the OWL Entitiy
-			OWLClass c = VioletViewEditor.manager.getOWLClass(param.getOWLEntityName());
+			OWLClass c = VioletActivityEditor.manager.getOWLClass(param.getOWLEntityName());
 			
 			//add the pair to the hashtable
 			classes.put(c, param);

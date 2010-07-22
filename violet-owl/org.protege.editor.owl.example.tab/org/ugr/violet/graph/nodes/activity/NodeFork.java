@@ -11,7 +11,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -51,14 +51,14 @@ public class NodeFork extends NodeActivityDiagram {
 		
 		super();
 		
-		step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#" +  VioletViewEditor.getLienzoActual().getTarea() + "_fork_" + cont));
+		step = VioletActivityEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(VioletActivityEditor.manager.getActiveOntology().getURI() + "#" +  VioletActivityEditor.getLienzoActual().getTarea() + "_fork_" + cont));
 		cont++;
-		OWLClass claseFork = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Fork_Step"));
+		OWLClass claseFork = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletActivityEditor.manager.getActiveOntology().getURI() + "#Fork_Step"));
 		
-		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseFork);
-		VioletViewEditor.manager.applyChange(new AddAxiom( VioletViewEditor.manager.getActiveOntology(), d));
+		OWLClassAssertionAxiom d = VioletActivityEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseFork);
+		VioletActivityEditor.manager.applyChange(new AddAxiom( VioletActivityEditor.manager.getActiveOntology(), d));
 		
-		((ActivityGraphModel)VioletViewEditor.getLienzoActual().getGraphModel()).addStepToSequence(step);
+		((ActivityGraphModel)VioletActivityEditor.getLienzoActual().getGraphModel()).addStepToSequence(step);
 		
 		addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));

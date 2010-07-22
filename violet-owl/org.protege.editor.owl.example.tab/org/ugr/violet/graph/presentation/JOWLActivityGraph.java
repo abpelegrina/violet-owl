@@ -16,7 +16,6 @@ import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 
 import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.event.ModeChangeEvent;
 import org.tigris.gef.event.ModeChangeListener;
@@ -65,11 +64,6 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 		ogm = new ActivityGraphModel(null);
 		od = new ActivityDiagram("Activity Diagram", ogm);
 		this.setGraphModel( ogm );
-		
-		/*
-		this.createNewTask("prueba");
-		this.createDiagramSkeleton("prueba");
-		*/
 	}
 	
 	
@@ -88,12 +82,6 @@ public class JOWLActivityGraph extends JOWLGraph implements ModeChangeListener, 
 		ogm = new ActivityGraphModel(tarea);
 		od = new ActivityDiagram("Activity Diagram", ogm);
 		this.setGraphModel( ogm );
-		
-		/*
-		// creamos la nueva tarea
-		this.createNewTask("prueba");
-		this.createDiagramSkeleton(tarea.toString());
-		*/
 	}
 	
 	public void modeChange(ModeChangeEvent mce) {

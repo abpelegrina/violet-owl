@@ -3,7 +3,7 @@
  */
 package org.ugr.violet.graph.nodes.activity;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.nodes.NodeClass;
@@ -26,8 +26,8 @@ public abstract class NodeActivityDiagram extends OWLNode {
 	protected NodeActivityDiagram(){
 		super();
 
-    	if (VioletViewEditor.getLienzoActual().isOWLActivityGraph()){
-			gm = (ActivityGraphModel) VioletViewEditor.getLienzoActual().getOWLGraphModel();
+    	if (VioletActivityEditor.getLienzoActual().isOWLActivityGraph()){
+			gm = (ActivityGraphModel) VioletActivityEditor.getLienzoActual().getOWLGraphModel();
 			
 		}
 		else return;
