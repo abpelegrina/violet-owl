@@ -223,7 +223,7 @@ public class ViewManager {
 		// buscamos la clase
 		if (figura != null){
 			
-			ViewNode node = new ViewNode(figura, c);
+			new ViewNode(figura, c);
 			return true;
 		}
 		else

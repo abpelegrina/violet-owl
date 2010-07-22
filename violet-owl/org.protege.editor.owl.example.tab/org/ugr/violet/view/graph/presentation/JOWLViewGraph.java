@@ -9,7 +9,6 @@ import org.ugr.violet.graph.presentation.JOWLGraph;
 import org.ugr.violet.ui.OWLPalette;
 import org.ugr.violet.view.graph.OWLViewGraphModel;
 
-import sun.tools.tree.ThisExpression;
 
 /**
  * @author anab

@@ -6,8 +6,6 @@ package org.ugr.violet.presentation;
 import java.awt.Color;
 import java.util.Vector;
 
-import javax.swing.JMenu;
-
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.base.CmdChangeFig;
 import org.tigris.gef.presentation.FigCircle;
@@ -15,7 +13,6 @@ import org.tigris.gef.presentation.FigDiamond;
 import org.tigris.gef.presentation.FigRRect;
 import org.tigris.gef.presentation.FigRect;
 import org.tigris.gef.presentation.FigText;
-import org.tigris.gef.util.Localizer;
 import org.ugr.violet.graph.nodes.NodeOneOf;
 
 /**

@@ -4,22 +4,15 @@
 package org.ugr.violet.persistance;
 
 import java.awt.Point;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
 
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.edges.OWLEdge;
 import org.ugr.violet.graph.nodes.OWLNode;
 
 /**
@@ -31,8 +24,6 @@ public class VioletPersistance {
 	public static void saveDiagram(OWLGraphModel model){
 		
 		//TODO guardar los nodos y su posicion
-		
-		String layout = "";
 		
 		try {
 			FileOutputStream fos = null;

@@ -17,15 +17,10 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.net.URI;
 
-import org.semanticweb.owl.model.AddAxiom;
-import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLClassAssertionAxiom;
+import org.protege.owl.examples.tab.VioletEditor;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLObjectProperty;
-import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
 import org.tigris.gef.base.DeleteFromModelAction;
@@ -37,15 +32,9 @@ import org.tigris.gef.graph.GraphEdgeRenderer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
 import org.tigris.gef.graph.presentation.JGraph;
-import org.ugr.violet.base.ActivityDiagram;
 import org.ugr.violet.base.OWLDiagram;
 import org.ugr.violet.changefilters.ChangeFilterDiagram;
-import org.ugr.violet.graph.ActivityGraphModel;
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.nodes.activity.NodeActivityDiagram;
-import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
-import org.ugr.violet.graph.nodes.activity.NodeLastStep;
-import org.protege.owl.examples.tab.VioletEditor;
 import org.ugr.violet.ui.OWLPalette;
 
 /**
