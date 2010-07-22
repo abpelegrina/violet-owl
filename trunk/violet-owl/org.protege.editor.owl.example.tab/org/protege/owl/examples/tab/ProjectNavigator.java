@@ -16,6 +16,11 @@ public class ProjectNavigator extends AbstractOWLViewComponent {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -3194191197424416839L;
+
+	/**
+	 * 
+	 */
 	public ProjectNavigator() {
 		super();
 	}

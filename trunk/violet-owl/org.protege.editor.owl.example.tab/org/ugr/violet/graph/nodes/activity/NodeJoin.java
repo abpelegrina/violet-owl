@@ -11,7 +11,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -51,12 +51,12 @@ public class NodeJoin extends NodeActivityDiagram {
 		
 		super();
 		
-		step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_join_" + cont));
+		step = VioletActivityEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_join_" + cont));
 		cont++;
-		OWLClass claseJoin = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Join_Step"));
+		OWLClass claseJoin = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Join_Step"));
 		
-		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseJoin);
-		VioletViewEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
+		OWLClassAssertionAxiom d = VioletActivityEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseJoin);
+		VioletActivityEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		
 		gm.addStepToSequence(step);
 		

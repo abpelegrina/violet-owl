@@ -35,10 +35,24 @@
          id="VioletViewEditor"
          point="org.protege.editor.core.application.ViewComponent">
       <label
-            value="Violet-OWL Activity Diagram">
+            value="Violet-OWL View">
       </label>
       <class
             value="org.protege.owl.examples.tab.VioletViewEditor">
+      </class>
+      <category
+            value="@org.protege.ontologycategory">
+      </category>
+   </extension>
+   
+   <extension
+         id="VioletActivityDiagramEditor"
+         point="org.protege.editor.core.application.ViewComponent">
+      <label
+            value="Violet-OWL Activity Diagram">
+      </label>
+      <class
+            value="org.protege.owl.examples.tab.VioletActivityEditor">
       </class>
       <category
             value="@org.protege.ontologycategory">

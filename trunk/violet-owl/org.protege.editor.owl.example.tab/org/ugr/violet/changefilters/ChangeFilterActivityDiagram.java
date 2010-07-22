@@ -2,7 +2,7 @@ package org.ugr.violet.changefilters;
 
 import java.net.URI;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -22,7 +22,7 @@ import org.ugr.violet.graph.edges.activity.FollowedByEdge;
  */
 public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 
-	private static OWLClass Followed_by_Relation = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Followed_by_Relation"));
+	private static OWLClass Followed_by_Relation = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletActivityEditor.manager.getActiveOntology().getURI() + "#Followed_by_Relation"));
 	
 	/**
 	 * @param o
@@ -62,9 +62,9 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 	@Override
 	public void visit(OWLObjectPropertyAssertionAxiom axiom) {
 		
-		OWLDataFactory factory = VioletViewEditor.manager
+		OWLDataFactory factory = VioletActivityEditor.manager
 		.getOWLDataFactory();
-		OWLOntology ont = VioletViewEditor.manager.getActiveOntology();
+		OWLOntology ont = VioletActivityEditor.manager.getActiveOntology();
 
 		OWLIndividual objeto = axiom.getObject();
 		OWLIndividual sujeto = axiom.getSubject();
@@ -78,7 +78,7 @@ public class ChangeFilterActivityDiagram extends ChangeFilterDiagram {
 		OWLDeclarationAxiom axiom1 = factory.getOWLDeclarationAxiom(evaluates);
 
 		AddAxiom addAxiom = new AddAxiom(ont, axiom1);
-		VioletViewEditor.manager.applyChange(addAxiom);
+		VioletActivityEditor.manager.applyChange(addAxiom);
 		
 		
 		if (this.isRemove()){

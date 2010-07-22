@@ -6,7 +6,7 @@ package org.ugr.violet.presentation.activity;
 import java.awt.Color;
 import java.util.Vector;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.OWLAnnotation;
 import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
@@ -81,7 +81,7 @@ public class FigDecision extends FigActivityDiagram {
 		label.setLineWidth(0);
 		//label.setText(step.getAnnotations(ExampleViewComponent.manager.getActiveOntology()).toString());
 		
-		for (OWLAnnotation anot : step.getAnnotations(VioletViewEditor.manager.getActiveOntology())){
+		for (OWLAnnotation anot : step.getAnnotations(VioletActivityEditor.manager.getActiveOntology())){
 			label.setText(label.getText() + anot.getAnnotationValueAsConstant().getLiteral());
 		}
 		

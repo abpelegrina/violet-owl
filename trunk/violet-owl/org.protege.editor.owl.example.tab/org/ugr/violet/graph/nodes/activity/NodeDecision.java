@@ -11,7 +11,7 @@ import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -50,12 +50,12 @@ public class NodeDecision extends NodeActivityDiagram {
 	public  NodeDecision ( ){
     	super();
     	
-    	step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_decision_" + cont));
+    	step = VioletActivityEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" +  gm.getTask() + "_decision_" + cont));
 		cont++;
-		OWLClass claseDecision = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Decision_Step"));
+		OWLClass claseDecision = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Decision_Step"));
 		
-		OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseDecision);
-		VioletViewEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
+		OWLClassAssertionAxiom d = VioletActivityEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (step, claseDecision);
+		VioletActivityEditor.manager.applyChange(new AddAxiom( gm.activeOntology(), d));
 		
 		gm.addStepToSequence(step);
     	

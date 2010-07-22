@@ -1,67 +1,44 @@
+/**
+ * 
+ */
 package org.protege.owl.examples.tab;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.OWLWorkspace;
-import org.protege.editor.owl.ui.view.AbstractOWLViewComponent;
 import org.semanticweb.owl.model.OWLException;
 import org.semanticweb.owl.model.OWLOntologyChange;
 import org.semanticweb.owl.model.OWLOntologyChangeListener;
-import org.semanticweb.owl.util.OWLOntologyChangeFilter;
-import org.tigris.gef.util.Localizer;
-import org.tigris.gef.util.ResourceLoader;
-import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
-import org.ugr.violet.changefilters.ChangeFilterDiagram;
-import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.presentation.JOWLActivityGraph;
 import org.ugr.violet.graph.presentation.JOWLGraph;
-import org.ugr.violet.persistance.VioletPersistance;
-import org.ugr.violet.ui.ActivityDiagramPalette;
 import org.ugr.violet.ui.OWLPalette;
 import org.ugr.violet.view.graph.presentation.JOWLViewGraph;
 
 /**
- * 
  * @author anab
+ *
  */
-public class VioletViewEditor extends VioletEditor {
-	private static final long serialVersionUID = -4515710047558710080L;
+public class VioletViewEditor extends VioletEditor{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -111047107134045889L;
 	private static final Logger log = Logger.getLogger(VioletEditor.class);
-
+	
+	
+	public static OWLModelManager manager = null;
+	public static OWLWorkspace workspace = null;
 	private static JOWLGraph lienzoActual = null;
+	OWLOntologyChangeListener oocl;
 
 	@Override
 	protected void disposeOWLView() {
 		manager.removeOntologyChangeListener(oocl);
 	}
-
-	private void inicializaRecursosGEF() {
-
-		Localizer.addResource("GefBase",
-				"org.tigris.gef.base.BaseResourceBundle");
-
-		Localizer.addResource("GefPres",
-				"org.tigris.gef.presentation.PresentationResourceBundle");
-
-		Localizer.addLocale(Locale.getDefault());
-
-		Localizer.switchCurrentLocale(Locale.getDefault());
-
-		ResourceLoader.addResourceExtension("gif");
-
-		ResourceLoader.addResourceLocation("/org/tigris/gef/Images");
-	}
-
+	
 	@Override
 	protected void initialiseOWLView() throws Exception {
 
@@ -72,38 +49,12 @@ public class VioletViewEditor extends VioletEditor {
 		manager = this.getOWLModelManager();
 		workspace = this.getOWLWorkspace();
 
-		//tabs = new JTabbedPane();
-
+		OWLPalette barraDeHerramientas = new OWLPalette();
+		JOWLViewGraph lienzoActividad = new JOWLViewGraph(barraDeHerramientas);
 		
-		ActivityDiagramPalette barraDeHerramientas = new ActivityDiagramPalette();
-		JOWLActivityGraph lienzoActividad = new JOWLActivityGraph(barraDeHerramientas);
-		
-		/*
-		OWLPalette barraDeHerramientas2 = new OWLPalette();
-		JOWLGraph lienzoBasico = new JOWLViewGraph(VioletEditor.manager
-				.getActiveOntology(), barraDeHerramientas2);
-		*/
 		lienzoActual = lienzoActividad;
 		this.add(lienzoActividad);
 		
-		//lienzos.add(lienzoActividad);
-
-		/*tabs.addTab("Basic Diagram", lienzoBasico);
-		tabs.addTab("Activity Diagram", lienzoActividad);*/
-		//add(lienzoActual);
-
-		/*
-
-		tabs.setSelectedIndex(0);
-
-		tabs.addChangeListener(new ChangeListener() {
-
-			public void stateChanged(ChangeEvent e) {
-				lienzoActual = lienzos.get(tabs.getSelectedIndex());
-			}
-
-		});*/
-
 		oocl = new OWLOntologyChangeListener() {
 
 			public void ontologiesChanged(
@@ -112,14 +63,6 @@ public class VioletViewEditor extends VioletEditor {
 				System.err.println("Cambios: " + cambio);
 
 				lienzoActual.getChangeListener().processChanges(cambio);
-				
-				/*
-				for (int i = 0; i < lienzos.size(); ++i) {
-					OWLOntologyChangeFilter filter = lienzos.get(i)
-							.getChangeListener();
-					// Process the list of changes
-					filter.processChanges(cambio);
-				}*/
 			}
 		};
 
@@ -127,7 +70,7 @@ public class VioletViewEditor extends VioletEditor {
 
 		log.info("Example View Component initialized");
 	}
-
+	
 	public static JOWLGraph getLienzoActual() {
 		return lienzoActual;
 	}

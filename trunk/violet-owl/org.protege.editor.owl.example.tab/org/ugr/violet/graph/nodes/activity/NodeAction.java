@@ -12,7 +12,7 @@ import java.util.Hashtable;
 import javax.swing.JOptionPane;
 
 import org.protege.owl.examples.tab.VioletEditor;
-import org.protege.owl.examples.tab.VioletViewEditor;
+import org.protege.owl.examples.tab.VioletActivityEditor;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLClassAssertionAxiom;
@@ -46,7 +46,7 @@ public class NodeAction extends NodeActivityDiagram {
 	private static final long serialVersionUID = 5882931174797119668L;
 
 
-	public static final OWLClass activityStep = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletViewEditor.manager.getActiveOntology().getURI() + "#Activity_Step"));
+	public static final OWLClass activityStep = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create(VioletActivityEditor.manager.getActiveOntology().getURI() + "#Activity_Step"));
 	
 	
 	private OWLIndividual activity = null;
@@ -63,26 +63,26 @@ public class NodeAction extends NodeActivityDiagram {
 		
 		String nombreActividad = JOptionPane.showInputDialog("Activity Name: "); 
 		
-		activity = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad));
-    	OWLClass claseAccion = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create( ActivityGraphModel.URIAmenities + "#Action"));
+		activity = VioletActivityEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad));
+    	OWLClass claseAccion = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create( ActivityGraphModel.URIAmenities + "#Action"));
     	
     	
-    	OWLClassAssertionAxiom d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity, claseAccion);
-		VioletViewEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), d));
+    	OWLClassAssertionAxiom d = VioletActivityEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity, claseAccion);
+		VioletActivityEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), d));
 		
 		// 1 Buscar el step asociado al la actividad/tarea
 		
-		activity_step = VioletViewEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad + "_step"));
-	    OWLClass claseStep = VioletViewEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Action_Step"));
+		activity_step = VioletActivityEditor.manager.getOWLDataFactory().getOWLIndividual(URI.create(gm.activeOntology().getURI() + "#" + nombreActividad + "_step"));
+	    OWLClass claseStep = VioletActivityEditor.manager.getOWLDataFactory().getOWLClass(URI.create(ActivityGraphModel.URIAmenities + "#Action_Step"));
 	    	
 	    	
-	    d = VioletViewEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity_step, claseStep);
-		VioletViewEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), d));
+	    d = VioletActivityEditor.manager.getOWLDataFactory().getOWLClassAssertionAxiom (activity_step, claseStep);
+		VioletActivityEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), d));
 	
 		// asociamos la tarea y el step mediante la propiedad de objetos "performs". Si ya existía la relación no pasa nada
-		OWLObjectProperty performs = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#performs"));
-		OWLObjectPropertyAssertionAxiom ax = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, performs, activity);
-		VioletViewEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), ax));
+		OWLObjectProperty performs = VioletActivityEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#performs"));
+		OWLObjectPropertyAssertionAxiom ax = VioletActivityEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, performs, activity);
+		VioletActivityEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), ax));
 		
 		// 2 Buscamos el rol asociado con la tarea (si existe)
 		// TODO buscar el rol asociado con la tarea 
@@ -91,16 +91,16 @@ public class NodeAction extends NodeActivityDiagram {
 		// 3 Añadir la actividad como parte de la tarea modelada
 		OWLIndividual secuencia = gm.getSequence();
 		// Asociamos la secuencia a los steps
-		OWLObjectProperty hasPart = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#has_part"));
-		OWLObjectProperty partOf = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#part_of"));
+		OWLObjectProperty hasPart = VioletActivityEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#has_part"));
+		OWLObjectProperty partOf = VioletActivityEditor.manager.getOWLDataFactory().getOWLObjectProperty(URI.create(ActivityGraphModel.URIAmenities + "#part_of"));
 		
 		// step es parte de secuencia
-		OWLObjectPropertyAssertionAxiom e = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, partOf, secuencia);
-		VioletViewEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), e));
+		OWLObjectPropertyAssertionAxiom e = VioletActivityEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(activity_step, partOf, secuencia);
+		VioletActivityEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), e));
 		
 		// secuencia tiene como parte a step
-		e = VioletViewEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, activity_step);
-		VioletViewEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), e));
+		e = VioletActivityEditor.manager.getOWLDataFactory().getOWLObjectPropertyAssertionAxiom(secuencia, hasPart, activity_step);
+		VioletActivityEditor.manager.applyChange(new AddAxiom(gm.activeOntology(), e));
 		
 		addPort(east = new OWLPort(this));
         addPort(west = new OWLPort(this));

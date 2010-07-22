@@ -605,7 +605,7 @@ public class ActivityGraphModel extends OWLGraphModel {
 		return related;
 	}
 	
-	private boolean checkType(OWLIndividual ind, OWLClass type){
+	protected boolean checkType(OWLIndividual ind, OWLClass type){
 		
 		boolean typeFound = false;
 		
