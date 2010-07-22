@@ -3,36 +3,11 @@
  */
 package org.ugr.violet.visitors;
 
-import java.awt.Point;
-import java.util.Set;
-
 import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLDataAllRestriction;
-import org.semanticweb.owl.model.OWLDataExactCardinalityRestriction;
-import org.semanticweb.owl.model.OWLDataMaxCardinalityRestriction;
-import org.semanticweb.owl.model.OWLDataMinCardinalityRestriction;
 import org.semanticweb.owl.model.OWLDataProperty;
-import org.semanticweb.owl.model.OWLDataSomeRestriction;
-import org.semanticweb.owl.model.OWLDataValueRestriction;
-import org.semanticweb.owl.model.OWLDescription;
-import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLObjectAllRestriction;
-import org.semanticweb.owl.model.OWLObjectComplementOf;
-import org.semanticweb.owl.model.OWLObjectExactCardinalityRestriction;
-import org.semanticweb.owl.model.OWLObjectIntersectionOf;
-import org.semanticweb.owl.model.OWLObjectMaxCardinalityRestriction;
-import org.semanticweb.owl.model.OWLObjectMinCardinalityRestriction;
-import org.semanticweb.owl.model.OWLObjectOneOf;
-import org.semanticweb.owl.model.OWLObjectProperty;
-import org.semanticweb.owl.model.OWLObjectSelfRestriction;
-import org.semanticweb.owl.model.OWLObjectSomeRestriction;
-import org.semanticweb.owl.model.OWLObjectUnionOf;
-import org.semanticweb.owl.model.OWLObjectValueRestriction;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
-import org.ugr.violet.base.Restriction;
 import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.edges.*;
-import org.ugr.violet.graph.nodes.*;
+import org.ugr.violet.graph.edges.RangeEdge;
 
 
 /**
@@ -43,12 +18,10 @@ public class DataPropertyDomainAddVisitor extends OWLDescriptionVisitorAdapter {
 
 	private OWLGraphModel ogm = null;
 	private OWLDataProperty propiedad = null;
-	private NodeDataProperty nodoProp = null;
-
 	public DataPropertyDomainAddVisitor(OWLGraphModel modelo, OWLDataProperty prop){
 		ogm = modelo;
 		propiedad = prop;
-		nodoProp = ogm.getNodeDataProperty(prop);
+		ogm.getNodeDataProperty(prop);
 	}
 
 	@Override
