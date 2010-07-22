@@ -13,6 +13,11 @@ import org.protege.editor.owl.ui.view.AbstractOWLViewComponent;
  */
 public class ViewPanel extends AbstractOWLViewComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3097259977597781287L;
+
 	/* (non-Javadoc)
 	 * @see org.protege.editor.owl.ui.view.AbstractOWLViewComponent#disposeOWLView()
 	 */

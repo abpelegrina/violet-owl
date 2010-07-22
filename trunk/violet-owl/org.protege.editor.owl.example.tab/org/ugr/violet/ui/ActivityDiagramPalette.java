@@ -48,6 +48,7 @@ import org.ugr.violet.graph.nodes.activity.NodeLastStep;
  * @see org.tigris.gef.demo.BasicApplication
  */
 
+@SuppressWarnings("deprecation")
 public class ActivityDiagramPalette extends OWLPalette {
 
     /**
@@ -61,8 +62,7 @@ public class ActivityDiagramPalette extends OWLPalette {
     }
 
     /** Define a button to make for the Example application */
-    @SuppressWarnings("deprecation")
-	public void defineButtons() {
+    public void defineButtons() {
     	add(new CmdSetMode(ModeSelect.class, "Select"));
         add(new CmdSetMode(ModeBroom.class, "Broom"));
         

@@ -4,51 +4,28 @@
 package org.ugr.violet.graph.presentation;
 
 
-import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.net.URI;
 
-import javax.swing.JOptionPane;
-
-import org.protege.owl.examples.tab.VioletEditor;
-import org.semanticweb.owl.model.AddAxiom;
-import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLClassAssertionAxiom;
-import org.semanticweb.owl.model.OWLEntity;
 import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLObjectProperty;
-import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.util.OWLOntologyChangeFilter;
-import org.tigris.gef.base.DeleteFromModelAction;
-import org.tigris.gef.event.GraphSelectionEvent;
-import org.tigris.gef.event.GraphSelectionListener;
 import org.tigris.gef.event.ModeChangeEvent;
 import org.tigris.gef.event.ModeChangeListener;
 import org.tigris.gef.graph.GraphEdgeRenderer;
 import org.tigris.gef.graph.GraphModel;
 import org.tigris.gef.graph.GraphNodeRenderer;
-import org.tigris.gef.graph.presentation.JGraph;
 import org.ugr.violet.base.ActivityDiagram;
 import org.ugr.violet.changefilters.ChangeFilterActivityDiagram;
-import org.ugr.violet.changefilters.ChangeFilterDiagram;
 import org.ugr.violet.graph.ActivityGraphModel;
-import org.ugr.violet.graph.OWLGraphModel;
-import org.ugr.violet.graph.nodes.activity.NodeActivityDiagram;
-import org.ugr.violet.graph.nodes.activity.NodeFirstStep;
-import org.ugr.violet.graph.nodes.activity.NodeLastStep;
-import org.ugr.violet.ui.ActivityDiagramPalette;
 import org.ugr.violet.ui.OWLPalette;
 
 /**

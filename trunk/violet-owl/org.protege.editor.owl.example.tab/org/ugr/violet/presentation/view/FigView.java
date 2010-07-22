@@ -4,10 +4,7 @@
 package org.ugr.violet.presentation.view;
 
 import java.awt.Color;
-import java.util.Set;
 
-import org.protege.owl.examples.tab.VioletEditor;
-import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLEntity;
 import org.tigris.gef.presentation.FigCircle;
 import org.tigris.gef.presentation.FigDiamond;
@@ -22,6 +19,10 @@ import org.ugr.violet.presentation.OWLFigure;
  */
 public class FigView extends OWLFigure {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6077224495267615056L;
 	FigViewParameter params = null;
 	OWLEntity entity = null;
 	String label = null;

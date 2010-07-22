@@ -35,32 +35,24 @@ import java.io.FileOutputStream;
 import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.CmdAlign;
 import org.tigris.gef.base.CmdCreateNode;
-import org.tigris.gef.base.CmdOpen;
-import org.tigris.gef.base.CmdSave;
 import org.tigris.gef.base.CmdSetMode;
 import org.tigris.gef.base.ModeBroom;
 import org.tigris.gef.base.ModeSelect;
 import org.tigris.gef.base.PrintAction;
-import org.tigris.gef.base.SaveAction;
 import org.tigris.gef.base.SaveSVGAction;
 import org.tigris.gef.graph.presentation.PaletteFig;
-import org.ugr.violet.actions.CmdCreateActivityStep;
-import org.ugr.violet.actions.CmdCreateNodeDataProperty;
 import org.ugr.violet.actions.CmdCreateNodeIndividual;
-import org.ugr.violet.actions.CmdCreateNodeObjectProperty;
 import org.ugr.violet.actions.CmdCreateNodeRelation;
 import org.ugr.violet.actions.ModeCreateComplement;
 import org.ugr.violet.actions.ModeCreateDisjoint;
 import org.ugr.violet.actions.ModeCreateDomain;
 import org.ugr.violet.actions.ModeCreateEquivalent;
-import org.ugr.violet.actions.ModeCreateFollowedBy;
 import org.ugr.violet.actions.ModeCreateObjectProperty;
 import org.ugr.violet.actions.ModeCreateRange;
 import org.ugr.violet.actions.ModeCreateSub;
 import org.ugr.violet.actions.OWLOpenCmd;
 import org.ugr.violet.actions.OWLSaveCmd;
 import org.ugr.violet.graph.nodes.NodeClass;
-import org.ugr.violet.graph.nodes.activity.NodeAction;
 
 /** A class to define a custom palette for use in some demos.
  *
@@ -68,6 +60,7 @@ import org.ugr.violet.graph.nodes.activity.NodeAction;
  * @see org.tigris.gef.demo.BasicApplication
  */
 
+@SuppressWarnings("deprecation")
 public class OWLPalette extends PaletteFig {
 
     /**

@@ -16,14 +16,11 @@ import org.xml.sax.SAXParseException;
 
 public class ProjectFileParser {
 
-	private String fileName = "";
-
 	/**
 	 * Crea una instancia del parseador del fichero
 	 * @param fileName
 	 */
 	public ProjectFileParser(String fileName){
-		this.fileName = fileName;
 	}
 	
 	/**

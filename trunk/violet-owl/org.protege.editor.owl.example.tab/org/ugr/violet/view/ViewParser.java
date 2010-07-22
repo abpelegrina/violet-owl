@@ -162,7 +162,7 @@ public class ViewParser {
 	    				 */
 	}
 	
-	private void findFigures(String filterEntity, String filterFigure, XPath xpath, List<FigViewParameter> parameters) 
+	public void findFigures(String filterEntity, String filterFigure, XPath xpath, List<FigViewParameter> parameters) 
 	throws XPathExpressionException{
 		XPathExpression exprEntity = xpath.compile(filterEntity);
 		XPathExpression exprFigure = xpath.compile(filterFigure);
