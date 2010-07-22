@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDataSomeRestriction;
-import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLObjectAllRestriction;
 import org.semanticweb.owl.model.OWLObjectComplementOf;
 import org.semanticweb.owl.model.OWLObjectExactCardinalityRestriction;

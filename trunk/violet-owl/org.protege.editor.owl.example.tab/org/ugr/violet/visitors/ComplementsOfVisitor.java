@@ -8,9 +8,7 @@ import java.util.Set;
 
 import org.semanticweb.owl.model.OWLClass;
 import org.semanticweb.owl.model.OWLDescription;
-import org.semanticweb.owl.model.OWLObject;
 import org.semanticweb.owl.model.OWLObjectComplementOf;
-import org.semanticweb.owl.model.OWLObjectIntersectionOf;
 import org.semanticweb.owl.util.OWLDescriptionVisitorAdapter;
 
 /**

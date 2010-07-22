@@ -19,14 +19,13 @@ public class ObjectPropertyDomainAndRangeAddVisitor extends OWLDescriptionVisito
 
 	private OWLGraphModel ogm = null;
 	private OWLObjectProperty propiedad = null;
-	private NodeObjectProperty nodoProp = null;
 	boolean flagRange;
 
 	public ObjectPropertyDomainAndRangeAddVisitor(OWLGraphModel modelo, OWLObjectProperty prop, boolean range){
 		ogm = modelo;
 		propiedad = prop;
 		flagRange = range;
-		nodoProp = ogm.getNodeObjectProperty(propiedad);
+		ogm.getNodeObjectProperty(propiedad);
 	}
 
 	@Override
